@@ -1,8 +1,14 @@
+//Express + middleware
 const express        = require('express');
 const bodyParser     = require('body-parser');
+//Database
 const dbConfig       = require('./config/database.config.js');
 const mongoose       = require('mongoose');
-const router         = require('./routes/index.js');
+//Require Routers
+const studentRouter  = require('./routes/student.routes.js');
+const teacherRouter  = require('./routes/teacher.routes.js');
+const parentRouter   = require('./routes/parent.routes.js');
+const adminRouter    = require('./routes/admin.routes.js');
 
 //Initialize express and port
 const app  = express();
@@ -12,7 +18,6 @@ const port = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 //Parse requests of content-type - application/json
 app.use(bodyParser.json());
-
 
 //Database Config
 mongoose.Promise = global.Promise;
@@ -25,15 +30,17 @@ mongoose.connect(dbConfig.url)
     process.exit();
 });
 
-
 //Starter route
 app.get('/', (req, res) => {
     res.send("Welcome to the SchoolApp API");
 });
 
 
-//Router
-app.use('/api', router);
+//Assign Routers to base paths
+app.use('/student', studentRouter);
+app.use('/teacher', teacherRouter);
+app.use('/parent', parentRouter);
+app.use('/admin', adminRouter);
 
 //Start server listening on port :3000
 app.listen( port, () => {
