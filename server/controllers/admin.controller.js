@@ -51,12 +51,15 @@ exports.addClass = (req, res) => {
 
 //Add a new Subject
 //Requires the subject info
-exports.addSubject = (req, res) => {
+exports.addSubject = async (req, res) => {
     
-    let obj = req.body;
+    let obj = {
+        name: ""
+    }
+    obj.name = req.body.name;
     console.log(obj);
 
-    res.json({"msg": obj});
+    await res.json({"msg": obj});
 };
 
 //Schedule Class
