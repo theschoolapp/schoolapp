@@ -1,12 +1,12 @@
 const express        = require('express');
 const bodyParser     = require('body-parser');
-const dbConfig       = require('./config/database.config.js');
+//const dbConfig       = require('./config/database.config.js');
 const mongoose       = require('mongoose');
 const router         = require('./routes/index.js');
 
 //Initialize express and port
 const app  = express();
-const port = 3000;
+const port = 3000; 
 
 //Parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -15,16 +15,16 @@ app.use(bodyParser.json());
 
 
 //Database Config
-mongoose.Promise = global.Promise;
+//mongoose.Promise = global.Promise;
 // Connecting to the database
-mongoose.connect(dbConfig.url)
+/*mongoose.connect(dbConfig.url)
 .then(() => {
     console.log("Successfully connected to the database");    
 }).catch(err => {
     console.log('Could not connect to the database. Exiting now...');
     process.exit();
 });
-
+*/
 
 //Starter route
 app.get('/', (req, res) => {

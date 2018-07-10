@@ -4,10 +4,10 @@ const teacher =  require('../models/teacher.model')
  exports.createTeacher = async function(req,res){
 
     try {
-        const newTeacher = await teacher(req.body).save()
+        const newTeacher = req.body
         res.status(200).json({
           message: 'Successfully created a new teacher',
-          teacher: newTeacher
+          teacher: newTeacher 
         })
       } catch (error) {
         console.log(error)
