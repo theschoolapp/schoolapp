@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const MarkScema = mongoose.Schema({
+const MarkSchema = mongoose.Schema({
 		class: String,
 	    courseCode: String,
 	    section: String,

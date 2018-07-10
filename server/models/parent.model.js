@@ -1,26 +1,24 @@
 const mongoose = require('mongoose');
 
-const TeacherSchema = mongoose.Schema({
+const ParentSchema = mongoose.Schema({
 		userId: String,
 	    email: String,
 	    password: String,
 	    firstName: String,
 	    secondName: String,
 	    lastName: String,
-	    gender: String,
-	    DOB: Date,
+	    gender: String
 	    phoneNumber1: String,
 	    phoneNumber2: String,
 	    religion: String,
-	    highestDegree: String,
-	    university: String,
-	    graduatingYear: Number,
-	    cgpa: String,
-	    otherDegrees: Array
+	    nationality: String,
+	    address: String,
+	    country: Number,
+	    studentIds: Array
 	    
 	}, 
 	{
 	    timestamps: true
 	});
 
-module.exports = mongoose.model('Teacher', TeacherSchema);
+module.exports = mongoose.model('Parent', ParentSchema);
