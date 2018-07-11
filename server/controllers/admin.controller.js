@@ -27,13 +27,7 @@ exports.getAllStudents = (req, res) => {
 exports.getStudent = (req, res) => {
     console.log("Getting a single Student...");
 
-    let student = {
-        firstName: ""
-    }
-
-    student.firstName = req.body.firstName;
-
-    studentModel.findOne(student)
+    studentModel.findOne(req.params.firstName)
     .then(student => {
         if(!student) {
             return res.status(404).send({
