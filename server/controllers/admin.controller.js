@@ -100,6 +100,8 @@ exports.addStudent = (req, res) => {
 //--------------------------------------------------//
 //--------------------------------------------------//
 
+
+
 //Teacher Functions
 //--------------------------------------------------//
 
@@ -184,6 +186,8 @@ exports.addTeacher = (req, res) => {
 //--------------------------------------------------//
 //--------------------------------------------------//
 
+
+
 //Add a new Class
 //Requires the class info
 exports.addClass = (req, res) => {
@@ -263,19 +267,43 @@ exports.addTimeSlot = (req, res) => {
     
 };
 
-
+//Attendance Functions
+//--------------------------------------------------//
 //Upload Assignment as file for a single student, for a given assignment
 //Requires the student record id and assignment record id as part of the request object
 exports.getAttendance = (req, res) => {
-    res.send('got Attendance');
+    console.log('getting All Attendance');
+
+     attendanceModel.find()
+    .then(data => {
+        res.send(data);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving students."
+        });
+    });
 };
+//--------------------------------------------------//
+//--------------------------------------------------//
 
-
+//Marks Functions
+//--------------------------------------------------//
 //Get all messages for a single student
 //Requires the student record id as part of the request object
-exports.getMarks = (req, res) => {
-    res.send('got Marks');
+exports.getAllMarks = (req, res) => {
+    console.log('getting All Marks');
+
+     markModel.find()
+    .then(data => {
+        res.send(data);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving students."
+        });
+    });
 };
+//--------------------------------------------------//
+//--------------------------------------------------//
 
 //Get all messages for a single student
 //Requires the student record id as part of the request object

@@ -19,7 +19,7 @@ routes.post('/addTimeSlot', admin.addTimeSlot);
 //Outputs
 routes.get('/getStudent', admin.getStudent);
 
-routes.get('/getAllStudent', admin.getAllStudent);
+routes.get('/getAllStudent', admin.getAllStudents);
 
 
 
