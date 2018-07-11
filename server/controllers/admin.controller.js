@@ -165,7 +165,7 @@ exports.addClass = (req, res) => {
         classId: req.body.classId,
         description: req.body.description
     });
-    //Save TEacher to the database
+    //Save Teacher to the database
     newClass.save().then(data => {
         res.send(data);
     }).catch(err => {
