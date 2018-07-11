@@ -216,17 +216,17 @@ exports.addClass = (req, res) => {
 
 //Add a new Subject
 //Requires the subject info
-exports.addSubject = async (req, res) => {
-    
-    let o = {
-        name: ""
+exports.addSubject =  (req, res) => {
+   if(!req.body.subject) {
+        return res.status(400).send({
+            message: "enter subject name"
+        });
     }
-    const obj = Object.create(o);
-    obj.name = req.body.name;
+    //Create a new timeSlot model object
+    const subject = new subjectModel({
+        name: req.body.name
+    }); 
    
-
-
-    await res.json({"msg": obj});
 };
 
 //Schedule Class
