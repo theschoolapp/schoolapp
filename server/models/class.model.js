@@ -1,11 +1,11 @@
-var mongoose =  require('../mongoose');
+var mongoose =  require('mongoose');
 
 var ClassSchema = mongoose.Schema({
 
-    classs_name:{
+    classsName:{
         type:String 
     },
-    class_code:{
+    classCode:{
        type:String
     },
     subject:{
@@ -14,7 +14,7 @@ var ClassSchema = mongoose.Schema({
     teacher:{
         type:String
     },
-    class_id:{
+    classId:{
         type:String
     },
     description:{
