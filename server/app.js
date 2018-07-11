@@ -1,12 +1,7 @@
 //Express + middleware
 const express        = require('express');
 const bodyParser     = require('body-parser');
-<<<<<<< HEAD
-//const dbConfig       = require('./config/database.config.js');
-=======
-//Database
 const dbConfig       = require('./config/database.config.js');
->>>>>>> 139a76ba5ae9de1553c34dca223b51a31920f3c7
 const mongoose       = require('mongoose');
 //Require Routers
 const studentRouter  = require('./routes/student.routes.js');
@@ -24,19 +19,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //Database Config
-//mongoose.Promise = global.Promise;
-// Connecting to the database
-/*mongoose.connect(dbConfig.url)
+mongoose.Promise = global.Promise;
+//Connecting to the database
+mongoose.connect(dbConfig.url)
 .then(() => {
     console.log("Successfully connected to the database");    
 }).catch(err => {
     console.log('Could not connect to the database. Exiting now...');
     process.exit();
 });
-<<<<<<< HEAD
-*/
-=======
->>>>>>> 139a76ba5ae9de1553c34dca223b51a31920f3c7
+
 
 //Starter route
 app.get('/', (req, res) => {

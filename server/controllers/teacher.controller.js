@@ -1,23 +1,11 @@
 const teacher =  require('../models/teacher.model')
-
+const mark  = require('../models/mark.model')
+const  student = require('../models/student.model')
+const timeslot  = require('../models/timeslot.model')
 //CREATE TEACHER
- exports.createTeacher = async function(req,res){
 
-    try {
-        const newTeacher = req.body
-        res.status(200).json({
-          message: 'Successfully created a new teacher', 
-          teacher: newTeacher 
-        })
-      } catch (error) {
-        console.log(error)
-        res.status(error.code === 11000 ? 409 : 500).json({
-          message: error.message || 'Something happened and we could not create teacher'
-        })
-      }
- }
  //find all teachers
- exports.findTeacher = async function(req,res){
+ exports.findTeacher = async (req,res)=>{
   
   try {
     const matches = await teacher.find({})
@@ -31,7 +19,89 @@ const teacher =  require('../models/teacher.model')
     })
   }
  }
-//find by id
- module.exports.findbyId = function(){
+//find by add marks
+ exports.addMarks = async(req, res)=>{
+ 
+
+   
+   try {
+    let marks = req.body // the body include the student-id which will be used to  update the  marks
+
+     res.status(200).json({
+      message: 'added marks', 
+      teacher: marks 
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(error.code).json({
+      message: error.message || 'Something happened and we could not add marks'
+    })
+  }
   
  }
+
+//adding assignment
+// file upload to be added using multer
+ exports.addassignment = async (req, res)=>{
+   
+  try {
+   const marks = req.body
+    res.status(200).json({
+     message: 'added assignment', 
+     teacher: marks 
+   })
+ } catch (error) {
+   console.log(error)
+   res.status(error.code).json({
+     message: error.message || 'Something happened and we could not add asssigment'
+   })
+ }
+ 
+}
+
+//teacher add attendence of a student
+exports.addattendence = async (req, res)=>{
+   
+  try {
+   const attendnce = req.body
+
+   //add attendence to students using student id or name
+   ////
+   //
+   //
+   //
+   //
+   
+    res.status(200).json({
+     message: 'added attendence', 
+     teacher: attendnce
+   })
+ } catch (error) {
+   console.log(error)
+   res.status(error.code).json({
+     message: error.message || 'Something happened and we could not add attendence'
+   })
+ }
+ 
+}
+
+//getMarks
+exports.getmarks = async (req ,res) =>{
+  let marks = mark.find({})
+}
+
+//get attendence  of student
+exports.getAttendence = async(req, res) =>{
+let attendence = attendence.findById({})
+}
+
+
+//get time table for the teacher
+exports.getTimeTableClass = async(req , res) =>{
+  let timetable = timeslot.find({})
+}
+
+//get time table for the teacher
+exports.getTimeTableExam = async(req , res) =>{
+  let timetable = timeslot.find({})
+}
