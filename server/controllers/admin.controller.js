@@ -2,7 +2,6 @@
 const adminModel     = require('../models/admin.model.js');
 const subjectModel   = require('../models/subject.model.js');
 
-//Welcome Delvin
 
 
 //Get all marks/results for a single student
