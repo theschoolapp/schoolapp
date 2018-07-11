@@ -54,17 +54,16 @@ exports.addClass = (req, res) => {
 
 //Add a new Subject
 //Requires the subject info
-exports.addSubject = async (req, res) => {
-    
-    let o = {
-        name: ""
-    }
-    const obj = Object.create(o);
-    obj.name = req.body.name;
-   
-
-
-    await res.json({"msg": obj});
+exports.addSubject = (req, res) => {
+  
+  if(!req.body.name){
+    return res.status(400).send({message : "Please enter subject name."
+    });
+  }  
+  //Create a new subject model object
+  const  subject = new subjectModel({
+    name : req.body.subject
+  })  
 };
 
 //Schedule Class
