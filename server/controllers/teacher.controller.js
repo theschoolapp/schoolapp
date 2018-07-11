@@ -2,6 +2,7 @@ const teacher =  require('../models/teacher.model')
 const mark  = require('../models/mark.model')
 const  student = require('../models/student.model')
 const timeslot  = require('../models/timeslot.model')
+const  attendnce = require('../models/attendence.model')
 //CREATE TEACHER
 
  //find all teachers
@@ -21,15 +22,15 @@ const timeslot  = require('../models/timeslot.model')
  }
 //find by add marks
  exports.addMarks = async(req, res)=>{
- 
 
    
    try {
-    let marks = req.body // the body include the student-id which will be used to  update the  marks
-
+    let marks = req.body 
+    new mark(marks).save()
+    // the body include the student-id which will be used to  update the  marks
      res.status(200).json({
       message: 'added marks', 
-      teacher: marks 
+      marks: marks 
     })
   } catch (error) {
     console.log(error)
@@ -44,11 +45,11 @@ const timeslot  = require('../models/timeslot.model')
 // file upload to be added using multer
  exports.addassignment = async (req, res)=>{
    
-  try {
-   const marks = req.body
-    res.status(200).json({
+   try {
+   const assigment = req.body
+    await res.status(200).json({
      message: 'added assignment', 
-     teacher: marks 
+     assginment: assigment
    })
  } catch (error) {
    console.log(error)
@@ -58,12 +59,13 @@ const timeslot  = require('../models/timeslot.model')
  }
  
 }
-
+/*
 //teacher add attendence of a student
 exports.addattendence = async (req, res)=>{
    
   try {
    const attendnce = req.body
+   new attendence(attendnce).save()
 
    //add attendence to students using student id or name
    ////
@@ -84,24 +86,36 @@ exports.addattendence = async (req, res)=>{
  }
  
 }
+*/
 
 //getMarks
 exports.getmarks = async (req ,res) =>{
-  let marks = mark.find({})
+        await mark.find({})
+                  .then(data=>{
+                    res.json(data)
+                  })
 }
 
 //get attendence  of student
 exports.getAttendence = async(req, res) =>{
-let attendence = attendence.findById({})
+          await  attendence.find({})
+                    .then(data=>{
+                      res.json(data)
+                    })
 }
 
 
 //get time table for the teacher
-exports.getTimeTableClass = async(req , res) =>{
-  let timetable = timeslot.find({})
+exports.getTimeTableClass = async (req , res) =>{
+            await timeslot.find({}).then(data=>{
+                          res.json(data)})
+                          .catch()
 }
 
 //get time table for the teacher
-exports.getTimeTableExam = async(req , res) =>{
-  let timetable = timeslot.find({})
+exports.getTimeTableExam = async (req , res) =>{
+                await timeslot.find({})
+                              .then(data=>{
+                                res.json(data)
+                              })
 }

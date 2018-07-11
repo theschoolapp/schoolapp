@@ -7,7 +7,7 @@ const ParentSchema = mongoose.Schema({
 	    firstName: String,
 	    secondName: String,
 	    lastName: String,
-	    gender: String
+	    gender: String,
 	    phoneNumber1: String,
 	    phoneNumber2: String,
 	    religion: String,
