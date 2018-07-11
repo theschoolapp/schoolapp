@@ -6,7 +6,7 @@ const teacher =  require('../models/teacher.model')
     try {
         const newTeacher = req.body
         res.status(200).json({
-          message: 'Successfully created a new teacher',
+          message: 'Successfully created a new teacher', 
           teacher: newTeacher 
         })
       } catch (error) {

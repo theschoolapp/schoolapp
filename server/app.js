@@ -1,8 +1,18 @@
+//Express + middleware
 const express        = require('express');
 const bodyParser     = require('body-parser');
+<<<<<<< HEAD
 //const dbConfig       = require('./config/database.config.js');
+=======
+//Database
+const dbConfig       = require('./config/database.config.js');
+>>>>>>> 139a76ba5ae9de1553c34dca223b51a31920f3c7
 const mongoose       = require('mongoose');
-const router         = require('./routes/index.js');
+//Require Routers
+const studentRouter  = require('./routes/student.routes.js');
+const teacherRouter  = require('./routes/teacher.routes.js');
+const parentRouter   = require('./routes/parent.routes.js');
+const adminRouter    = require('./routes/admin.routes.js');
 
 //Initialize express and port
 const app  = express();
@@ -12,7 +22,6 @@ const port = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 //Parse requests of content-type - application/json
 app.use(bodyParser.json());
-
 
 //Database Config
 //mongoose.Promise = global.Promise;
@@ -24,7 +33,10 @@ app.use(bodyParser.json());
     console.log('Could not connect to the database. Exiting now...');
     process.exit();
 });
+<<<<<<< HEAD
 */
+=======
+>>>>>>> 139a76ba5ae9de1553c34dca223b51a31920f3c7
 
 //Starter route
 app.get('/', (req, res) => {
@@ -32,8 +44,11 @@ app.get('/', (req, res) => {
 });
 
 
-//Router
-app.use('/api', router);
+//Assign Routers to base paths
+app.use('/student', studentRouter);
+app.use('/teacher', teacherRouter);
+app.use('/parent', parentRouter);
+app.use('/admin', adminRouter);
 
 //Start server listening on port :3000
 app.listen( port, () => {

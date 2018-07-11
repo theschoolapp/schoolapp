@@ -1,4 +1,7 @@
-const adminModel = require('../models/admin.model.js');
+//Required Models
+const adminModel     = require('../models/admin.model.js');
+const subjectModel   = require('../models/subject.model.js');
+
 
 //Get all marks/results for a single student
 //Requires the student record id as part of the request object
@@ -49,7 +52,11 @@ exports.addClass = (req, res) => {
 //Add a new Subject
 //Requires the subject info
 exports.addSubject = (req, res) => {
-    res.send('added subject');
+    
+    let obj = req.body;
+    console.log(obj);
+
+    res.json({"msg": obj});
 };
 
 //Schedule Class
