@@ -17,13 +17,19 @@ routes.get('/', (req, res)=>{
 routes.get('/getMarks', student.getMarks);
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1864aa7bbfbbec2f43b091fbff32a17f1ca8c5f4
 // Admin Routes
 //---------------//
 routes.get('/admin/getMarks', admin.getMarks);
 
-routes.post('/teacher',teacher.createTeacher)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1864aa7bbfbbec2f43b091fbff32a17f1ca8c5f4
 
 
 

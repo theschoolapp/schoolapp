@@ -1,7 +1,10 @@
 //Express + middleware
 const express        = require('express');
 const bodyParser     = require('body-parser');
+<<<<<<< HEAD
 //Database
+=======
+>>>>>>> 1864aa7bbfbbec2f43b091fbff32a17f1ca8c5f4
 const dbConfig       = require('./config/database.config.js');
 const mongoose       = require('mongoose');
 //Require Routers
@@ -20,8 +23,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //Database Config
+<<<<<<< HEAD
 //mongoose.Promise = global.Promise;
 // Connecting to the database
+=======
+mongoose.Promise = global.Promise;
+//Connecting to the database
+>>>>>>> 1864aa7bbfbbec2f43b091fbff32a17f1ca8c5f4
 mongoose.connect(dbConfig.url)
 .then(() => {
     console.log("Successfully connected to the database");    
