@@ -2,6 +2,8 @@
 const adminModel     = require('../models/admin.model.js');
 const subjectModel   = require('../models/subject.model.js');
 
+//Welcome Delvin
+
 
 //Get all marks/results for a single student
 //Requires the student record id as part of the request object
@@ -15,7 +17,7 @@ exports.getAllStudents = (req, res) => {
     res.send('got All students');
 };
 
-//Get all class schedules for a single student
+//Get a single student
 //Requires the student record id as part of the request object
 exports.getStudent = (req, res) => {
     res.send('got one student');
@@ -41,6 +43,8 @@ exports.getTeacher = (req, res) => {
 //Requires the teacher info
 exports.addTeacher = (req, res) => {
     res.send('added Teacher');
+
+    //
 };
 
 //Add a new Class
@@ -53,11 +57,13 @@ exports.addClass = (req, res) => {
 //Requires the subject info
 exports.addSubject = async (req, res) => {
     
-    let obj = {
+    let o = {
         name: ""
     }
+    const obj = Object.create(o);
     obj.name = req.body.name;
-    console.log(obj);
+   
+
 
     await res.json({"msg": obj});
 };
