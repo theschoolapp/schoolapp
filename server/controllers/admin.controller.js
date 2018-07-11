@@ -181,7 +181,13 @@ exports.addSubject =  (req, res) => {
     const subject = new subjectModel({
         name: req.body.name
     }); 
-   
+    newSubject.save().then(data => {
+        res.send(data);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "An error occurred while adding subject"
+        });
+    });
 };
 
 //Schedule Class
