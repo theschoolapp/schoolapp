@@ -16,12 +16,24 @@ exports.newAnnouncement = (req, res) => {
     res.send('New Announcement');
 };
 
+//Student Functions
+//--------------------------------------------------//
+
 //Get all class schedules for a single student
 //Requires the student record id as part of the request object
 exports.getAllStudents = (req, res) => {
-    res.send('got All students');
-};
+    console.log('getting All students');
 
+     studentModel.find()
+    .then(students => {
+        res.send(students);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving students."
+        });
+    });
+
+};
 //Get a single student
 //Requires the student record id as part of the request object
 exports.getStudent = (req, res) => {
@@ -47,9 +59,6 @@ exports.getStudent = (req, res) => {
     });
 
 };
-
-
-
 //Create new student object and save to db
 //Requires the full student record as part of the request object
 exports.addStudent = (req, res) => {
@@ -88,15 +97,49 @@ exports.addStudent = (req, res) => {
     });
    
 };
+//--------------------------------------------------//
+//--------------------------------------------------//
 
-//Get all events schedule
+//Teacher Functions
+//--------------------------------------------------//
+
+//Get all teachers
 exports.getAllTeachers = (req, res) => {
-    res.send('got all Teachers');
+    console.log('getting All Teachers');
+
+     teacherModel.find()
+    .then(teachers => {
+        res.send(teachers);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving students."
+        });
+    });
 };
 
-//Get all events schedule
+//Get a single Teacher
+//Requires the teacher record id as part of the request object
 exports.getTeacher = (req, res) => {
-    res.send('got one Teacher');
+     console.log("Getting a single teacher...");
+
+    teacherModel.findOne(req.params.firstName)
+    .then(data => {
+        if(!data) {
+            return res.status(404).send({
+                message: "Student not found with name " + student.firstName
+            });            
+        }
+        res.send(data);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Student not found with name " + student.firstName
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving student with name " + student.firstName
+        });
+    });
 };
 
 //Add a new Teacher
@@ -138,6 +181,8 @@ exports.addTeacher = (req, res) => {
         });
     });
 };
+//--------------------------------------------------//
+//--------------------------------------------------//
 
 //Add a new Class
 //Requires the class info
