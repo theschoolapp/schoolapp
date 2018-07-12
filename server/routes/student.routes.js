@@ -17,10 +17,6 @@ routes.get('/', (req, res)=>{
 routes.get('/getMarks', student.getMarks);
 
 
-// Admin Routes
-//---------------//
-routes.get('/admin/getMarks', admin.getMarks);
-
 
 
 
