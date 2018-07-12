@@ -78,5 +78,17 @@
   "messages": {
     "dataSource": "db",
     "public": true
+  },
+  "attendance": {
+    "dataSource": "db",
+    "public": true
+  },
+  "event": {
+    "dataSource": "db",
+    "public": true
+  },
+  "teacherAttendance": {
+    "dataSource": "db",
+    "public": true
   }
 }

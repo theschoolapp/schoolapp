@@ -67,6 +67,11 @@
       "type": "hasAndBelongsToMany",
       "model": "parent",
       "foreignKey": ""
+    },
+    "attendances": {
+      "type": "hasMany",
+      "model": "attendance",
+      "foreignKey": ""
     }
   },
   "acls": [],

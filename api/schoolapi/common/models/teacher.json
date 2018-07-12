@@ -63,6 +63,11 @@
       "type": "hasMany",
       "model": "class",
       "foreignKey": ""
+    },
+    "teacherAttendances": {
+      "type": "hasMany",
+      "model": "teacherAttendance",
+      "foreignKey": ""
     }
   },
   "acls": [],
