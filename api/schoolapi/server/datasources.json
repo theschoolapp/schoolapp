@@ -1,6 +1,6 @@
 {
   "memoryDB": {
-    "name": "db",
+    "name": "memoryDB",
     "connector": "memory"
   },
   "db": {
@@ -9,7 +9,7 @@
     "url": "",
     "database": "school",
     "password": "",
-    "name": "mongoDS",
+    "name": "db",
     "user": "",
     "connector": "mongodb"
   }

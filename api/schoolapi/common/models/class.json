@@ -1,0 +1,38 @@
+{
+  "name": "class",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "classCode": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "subject": {
+      "type": "belongsTo",
+      "model": "subject",
+      "foreignKey": ""
+    },
+    "students": {
+      "type": "hasMany",
+      "model": "student",
+      "foreignKey": ""
+    },
+    "teacher": {
+      "type": "belongsTo",
+      "model": "teacher",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
