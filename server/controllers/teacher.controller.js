@@ -92,7 +92,7 @@ exports.addattendence = async (req, res)=>{
 exports.getmarks = async (req ,res) =>{
         await mark.find({})
                   .then(data=>{
-                    res.json(data)
+                    res.json({data:"data to be parsed"})
                   })
 }
 

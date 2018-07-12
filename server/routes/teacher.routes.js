@@ -12,15 +12,20 @@ routes.get('/', (req, res)=>{
 });
 
 
-// Student Routes
+// mark
 //---------------//
-routes.get('/getMarks', student.getMarks);
-routes.post('/addmarks',teacher.addMarks)
+routes.get('/getMarks', teacher.getmarks);
+routes.post('/addmarks',teacher.addMarks);
+
+//assigments
+//___________//
+routes.get('/getattendence', teacher.getAttendence)
+//routes.post('/postattendence',teacher.addattendence)
 
 
-
-
-
+// time-table//
+routes.get('/classtimetable' ,teacher.getTimeTableClass)
+routes.get('/exmatimetable',teacher.getTimeTableExam)
 
 
 
