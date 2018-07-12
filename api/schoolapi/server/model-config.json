@@ -90,5 +90,13 @@
   "teacherAttendance": {
     "dataSource": "db",
     "public": true
+  },
+  "task": {
+    "dataSource": "db",
+    "public": true
+  },
+  "exam": {
+    "dataSource": "db",
+    "public": true
   }
 }
