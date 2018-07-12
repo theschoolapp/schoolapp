@@ -1,11 +1,12 @@
 //Required Models
-const adminModel     = require('../models/admin.model.js');
-const subjectModel   = require('../models/subject.model.js');
-const studentModel   = require('../models/student.model.js');
-const teacherModel   = require('../models/teacher.model.js');
-const classModel     = require('../models/class.model.js');
-const timeSlotModel  = require('../models/timeslot.model.js');
-
+const adminModel       = require('../models/admin.model.js');
+const subjectModel     = require('../models/subject.model.js');
+const studentModel     = require('../models/student.model.js');
+const teacherModel     = require('../models/teacher.model.js');
+const classModel       = require('../models/class.model.js');
+const timeSlotModel    = require('../models/timeslot.model.js');
+const markModel        = require('../models/mark.model.js');
+const attendanceModel  = require('../models/attendance.model.js');
 
 
 
@@ -18,7 +19,6 @@ exports.newAnnouncement = (req, res) => {
 
 //Student Functions
 //--------------------------------------------------//
-
 //Get all class schedules for a single student
 //Requires the student record id as part of the request object
 exports.getAllStudents = (req, res) => {

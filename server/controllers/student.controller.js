@@ -1,9 +1,25 @@
-const studentModel = require('../models/student.model.js');
+//Required Models
+const subjectModel     = require('../models/subject.model.js');
+const studentModel     = require('../models/student.model.js');
+const teacherModel     = require('../models/teacher.model.js');
+const classModel       = require('../models/class.model.js');
+const timeSlotModel    = require('../models/timeslot.model.js');
+const markModel        = require('../models/mark.model.js');
+const attendanceModel  = require('../models/attendance.model.js');
 
 //Get all marks/results for a single student
 //Requires the student record id as part of the request object
 exports.getMarks = (req, res) => {
-    res.send('Got Marks');
+    console.log('getting All Marks');
+
+     markModel.find(req.params.studentId)
+    .then(data => {
+        res.send(data);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving students."
+        });
+    });
 };
 
 //Get all class schedules for a single student
