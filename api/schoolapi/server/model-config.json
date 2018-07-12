@@ -98,5 +98,9 @@
   "exam": {
     "dataSource": "db",
     "public": true
+  },
+  "container": {
+    "dataSource": "fileStore",
+    "public": true
   }
 }
