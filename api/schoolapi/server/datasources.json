@@ -1,0 +1,16 @@
+{
+  "memoryDB": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "db": {
+    "host": "localhost",
+    "port": 27017,
+    "url": "",
+    "database": "school",
+    "password": "",
+    "name": "mongoDS",
+    "user": "",
+    "connector": "mongodb"
+  }
+}
