@@ -3,7 +3,21 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Admin from '@/components/Admin'
 import Teacher from '@/components/Teacher'
-import Child from '@/components/Child'
+import Student from '@/components/Student'
+import Parent from '@/components/Parent'
+import AdminTimeSlots from '@/components/Parent'
+import AdminAddStudent from '@/components/Parent'
+import AdminAddTeacher from '@/components/Parent'
+import Parent from '@/components/Parent'
+import Parent from '@/components/Parent'
+import Parent from '@/components/Parent'
+import Parent from '@/components/Parent'
+import Parent from '@/components/Parent'
+import Parent from '@/components/Parent'
+import Parent from '@/components/Parent'
+import Parent from '@/components/Parent'
+import Parent from '@/components/Parent'
+import Parent from '@/components/Parent'
 import Parent from '@/components/Parent'
 
 Vue.use(Router)
@@ -18,7 +32,13 @@ export default new Router({
     {
       path: '/admin',
       name: 'Admin',
-      component: Admin
+      component: Admin,
+      children:[
+        { path: 'addStudent', component: AdminAddStudent },
+        {path:'addTeacher',component:AdminAddTeacher},
+        { path: 'addTimeslot', component: AdminTimeSlots},
+
+      ]
     },
     {
       path: '/teacher',
@@ -26,9 +46,9 @@ export default new Router({
       component: Teacher
     },
     {
-      path: '/child',
-      name: 'Child',
-      component: Child
+      path: '/student',
+      name: 'Student',
+      component: Student
     },
     {
       path: '/parent',

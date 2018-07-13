@@ -5,6 +5,8 @@
 </template>
 
 <script>
+
+import axios from '@/modules/axios'
 export default {
   name: 'HelloWorld',
   data () {

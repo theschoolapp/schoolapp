@@ -1,20 +1,69 @@
 <template>
   <div class="hello">
     <h1>hello  teacher</h1>
+
+    <div>{{ studentPresent }} student present</div>
+     <div>{{ events }} evenyts </div>
+    <div>{{ messages }} messages</div>
+     <div>{{studentAttend }} student absent</div>
+     
+     <div>{{timeslot.time }} teacher time slot</div>
+     <div>{{examslot.time  }} teacher time slot{{examslot.subject}}</div>
   </div>
 </template>
-
 <script>
-export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+import axios from '@/modules/axios'
+export default  {
+  name:'Admin',
+  mounted(){
+   //get total no# of students present and absent
+axios.get('/students/count').then((response) => (this.studentPresent = response.data.value))
+   //get total numner of  teachers present and on leave
+
+   //total events 
+   axios.get('/events/count').then((response) => (this.events = response.data.value))
+   //total messages
+   axios.get('/messages/count').then((response) => (this.messages = response.data.value))
+   //tasks
+   axios.get('/tasks/').then((response) => (this.tasks = response.data.value))
+   //get attendex 
+   axios.get('/students/attendance/count').the(res=>(this.studentAttend = res.data.value))
+   //timeslots
+   axios.get('/timeslot').then((res)=>(this.timeslot = res.data))
+    //exams time slots
+   axios.get('/examslot').then((res)=>(this.examslot = res.data))
+   //get marks for each class
+    axios.get('/classes/{id}/students').then((res=>(this.classMarks = res.data)))
+//GET MARKS FOR EACH studentA
+axios.get('/students/{id}/marks').then((res=>(this.marks = res.data)))
+
+
+
+
   }
+
+
+  ,
+ 
+data (){
+        return{
+
+          studentPresent:0,
+          studentAttend : 0,
+          events:0,
+          messages: 0,
+          tasks: tasks ,
+          timeslot:timeslot,
+          examslot:examslot,
+          classMarks:classMarks,
+          marks:marks
+
+
+        }
+  }
+
 }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
