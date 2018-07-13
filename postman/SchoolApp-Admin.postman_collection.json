@@ -1,0 +1,741 @@
+{
+	"info": {
+		"_postman_id": "c2e52cfe-42e8-4bdf-923f-0206d04f4b13",
+		"name": "SchoolApp-Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin - Get Students",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/students",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Add Students",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/students",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Get Teachers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/teachers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"teachers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Add Teacher",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/teachers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"teachers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Get Marks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/marks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"marks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Get Attendance",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/attendances",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"attendances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Get Teacher Attendace",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/teacherAttendances",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"teacherAttendances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Set Teacher Attendace/Leave",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/teachers/{{teacherId}}/teacherAttendances",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"teachers",
+						"{{teacherId}}",
+						"teacherAttendances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Get Announcements",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/annoucements",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"annoucements"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Add Announcement",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/annoucements",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"annoucements"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Delete Announcement",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1f488bdd-9239-4f65-b222-b30bb8687798",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"announcementId\", \"someId\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/annoucements/{{announcementId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"annoucements",
+						"{{announcementId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Get Events",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Add Event",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Delete Event",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b2d99abf-973e-4c35-89c2-db605753caba",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"announcementId\", \"someId\");",
+							"pm.globals.set(\"eventId\", \"someId\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/annoucements/{{eventId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"annoucements",
+						"{{eventId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Get Tasks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Set Tasks",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Delete Task",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6900726a-7f85-42c3-a9a3-27c06a972e1a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"announcementId\", \"someId\");",
+							"pm.globals.set(\"eventId\", \"someId\");",
+							"pm.globals.set(\"taskId\", \"someId\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/annoucements/{{taskId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"annoucements",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Get Admin Messages",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a5f4d739-8f6b-41e4-9fe8-479c7cbf7489",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"adminId\", \"someId\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/admins/{{adminId}}/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admins",
+						"{{adminId}}",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Send Message to Student",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "99f2b9ac-62e1-4119-b1f5-e12f6eb6a228",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"adminId\", \"someId\");",
+							"pm.globals.set(\"studentId\", \"someId\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/admins/{{studentId}}/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admins",
+						"{{studentId}}",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Send Message to Teacher",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9ea998be-893f-401f-a43d-59b9ae4ba8b4",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"adminId\", \"someId\");",
+							"pm.globals.set(\"studentId\", \"someId\");",
+							"pm.globals.set(\"teacherId\", \"someId\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/admins/{{teacherId}}/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admins",
+						"{{teacherId}}",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Send Message to Parent",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ddbe64a3-5f87-44d3-88c4-e9cfdbe054b7",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"adminId\", \"someId\");",
+							"pm.globals.set(\"studentId\", \"someId\");",
+							"pm.globals.set(\"teacherId\", \"someId\");",
+							"pm.globals.set(\"parentId\", \"someId\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/admins/{{parentId}}/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admins",
+						"{{parentId}}",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Get Time Slots",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/timeSlots",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"timeSlots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Add Time Slot",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/timeSlots",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"timeSlots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Delete Time Slot",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "aa647de3-c472-4fb8-a122-5067d9b1f45a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"announcementId\", \"someId\");",
+							"pm.globals.set(\"eventId\", \"someId\");",
+							"pm.globals.set(\"taskId\", \"someId\");",
+							"pm.globals.set(\"timeSlotId\", \"someId\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/timeSlots/{{timeSlotId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"timeSlots",
+						"{{timeSlotId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Update Time Slot",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "aa647de3-c472-4fb8-a122-5067d9b1f45a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set(\"announcementId\", \"someId\");",
+							"pm.globals.set(\"eventId\", \"someId\");",
+							"pm.globals.set(\"taskId\", \"someId\");",
+							"pm.globals.set(\"timeSlotId\", \"someId\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/timeSlots/{{timeSlotId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"timeSlots",
+						"{{timeSlotId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Add Student Finance Record",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/students/{{studentId}}/financeRecords",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"students",
+						"{{studentId}}",
+						"financeRecords"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Get Student Finance Records",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/students/{{studentId}}/financeRecords",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"students",
+						"{{studentId}}",
+						"financeRecords"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin - Update Student Finance Record",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/students/{{studentId}}/financeRecords",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"students",
+						"{{studentId}}",
+						"financeRecords"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
