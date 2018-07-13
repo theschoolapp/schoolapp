@@ -7,8 +7,10 @@
 <script>
 export default {
   name: 'HelloWorld',
-  mounted () {
-    
+  data () {
+    return {
+      msg: 'Welcome to Your Vue.js App'
+    }
   }
 }
 </script>

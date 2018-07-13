@@ -18,6 +18,7 @@
             </div>
             <input value="Register" @click="registerStudent" class="btn btn-danger btn-block"  >
              </form>
+              <button class="btn btn-primary" @click="$router.push(`/parent/${Student.id}`)" >
   </div>
 </template>
 

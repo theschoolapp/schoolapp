@@ -10,6 +10,28 @@
 import axios from '@/modules/axios'
 export default {
 
+  mounted(){
+
+    //get fees for his child
+    //get child marks
+    //get  child attendence
+    //get 
+axios.get('').then((response) => (this.fees = response.data.value))
+axios.get('').then((response) => (this.marks = response.data.value))
+axios.get('').then((response) => (this.attendence = response.data.value))
+  },
+
+  data (){
+        return{
+
+          fees:0,
+          marks: marks ,
+          attendence:attendence
+          
+        }
+  }
+
+
 }
 </script>
 
