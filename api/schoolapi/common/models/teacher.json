@@ -78,6 +78,11 @@
       "type": "hasMany",
       "model": "timeSlot",
       "foreignKey": ""
+    },
+    "classAssignments": {
+      "type": "hasMany",
+      "model": "classAssignment",
+      "foreignKey": ""
     }
   },
   "acls": [],

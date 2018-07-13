@@ -1,0 +1,30 @@
+{
+  "name": "classAssignment",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "dueDate": {
+      "type": "date"
+    },
+    "assignmentFileName": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "class": {
+      "type": "belongsTo",
+      "model": "class",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

@@ -110,5 +110,9 @@
   "financeRecord": {
     "dataSource": "db",
     "public": true
+  },
+  "classAssignment": {
+    "dataSource": "db",
+    "public": true
   }
 }

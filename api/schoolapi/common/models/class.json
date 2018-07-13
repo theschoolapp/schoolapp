@@ -41,6 +41,16 @@
       "type": "hasMany",
       "model": "timeSlot",
       "foreignKey": ""
+    },
+    "marks": {
+      "type": "hasMany",
+      "model": "mark",
+      "foreignKey": ""
+    },
+    "classAssignments": {
+      "type": "hasMany",
+      "model": "classAssignment",
+      "foreignKey": ""
     }
   },
   "acls": [],
