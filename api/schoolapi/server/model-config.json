@@ -102,5 +102,9 @@
   "container": {
     "dataSource": "fileStore",
     "public": true
+  },
+  "admin": {
+    "dataSource": "db",
+    "public": true
   }
 }
