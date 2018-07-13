@@ -114,5 +114,9 @@
   "classAssignment": {
     "dataSource": "db",
     "public": true
+  },
+  "submission": {
+    "dataSource": "db",
+    "public": true
   }
 }

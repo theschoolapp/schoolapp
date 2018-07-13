@@ -51,6 +51,11 @@
       "type": "hasMany",
       "model": "classAssignment",
       "foreignKey": ""
+    },
+    "exams": {
+      "type": "hasMany",
+      "model": "exam",
+      "foreignKey": ""
     }
   },
   "acls": [],

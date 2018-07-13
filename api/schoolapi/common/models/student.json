@@ -82,6 +82,11 @@
       "type": "hasMany",
       "model": "financeRecord",
       "foreignKey": ""
+    },
+    "submissions": {
+      "type": "hasMany",
+      "model": "submission",
+      "foreignKey": ""
     }
   },
   "acls": [],

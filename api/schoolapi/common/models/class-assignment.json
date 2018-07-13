@@ -23,6 +23,11 @@
       "type": "belongsTo",
       "model": "class",
       "foreignKey": ""
+    },
+    "submissions": {
+      "type": "hasMany",
+      "model": "submission",
+      "foreignKey": ""
     }
   },
   "acls": [],
