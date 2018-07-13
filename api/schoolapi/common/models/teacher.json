@@ -73,6 +73,11 @@
       "type": "hasMany",
       "model": "messages",
       "foreignKey": ""
+    },
+    "timeSlots": {
+      "type": "hasMany",
+      "model": "timeSlot",
+      "foreignKey": ""
     }
   },
   "acls": [],

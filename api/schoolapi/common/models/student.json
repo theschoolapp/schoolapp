@@ -77,6 +77,11 @@
       "type": "hasMany",
       "model": "messages",
       "foreignKey": ""
+    },
+    "financeRecords": {
+      "type": "hasMany",
+      "model": "financeRecord",
+      "foreignKey": ""
     }
   },
   "acls": [],

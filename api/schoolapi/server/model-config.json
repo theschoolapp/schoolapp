@@ -106,5 +106,9 @@
   "admin": {
     "dataSource": "db",
     "public": true
+  },
+  "financeRecord": {
+    "dataSource": "db",
+    "public": true
   }
 }

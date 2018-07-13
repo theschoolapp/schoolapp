@@ -36,6 +36,11 @@
       "type": "hasMany",
       "model": "attendance",
       "foreignKey": ""
+    },
+    "timeSlots": {
+      "type": "hasMany",
+      "model": "timeSlot",
+      "foreignKey": ""
     }
   },
   "acls": [],
