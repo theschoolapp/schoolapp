@@ -40,6 +40,11 @@
       "type": "hasMany",
       "model": "student",
       "foreignKey": ""
+    },
+    "messages": {
+      "type": "hasMany",
+      "model": "messages",
+      "foreignKey": ""
     }
   },
   "acls": [],

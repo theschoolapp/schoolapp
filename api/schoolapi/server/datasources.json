@@ -12,5 +12,11 @@
     "name": "db",
     "user": "",
     "connector": "mongodb"
+  },
+  "fileStore": {
+    "name": "fileStore",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./server/storage"
   }
 }

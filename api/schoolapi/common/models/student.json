@@ -72,6 +72,11 @@
       "type": "hasMany",
       "model": "attendance",
       "foreignKey": ""
+    },
+    "messages": {
+      "type": "hasMany",
+      "model": "messages",
+      "foreignKey": ""
     }
   },
   "acls": [],

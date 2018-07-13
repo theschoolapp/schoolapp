@@ -90,5 +90,17 @@
   "teacherAttendance": {
     "dataSource": "db",
     "public": true
+  },
+  "task": {
+    "dataSource": "db",
+    "public": true
+  },
+  "exam": {
+    "dataSource": "db",
+    "public": true
+  },
+  "container": {
+    "dataSource": "fileStore",
+    "public": true
   }
 }
