@@ -1,4 +1,5 @@
-[{"firstName":"Lanny","middleName":1,"lastName":"Ducrow","gender":"Female","dob":"29/08/2010","phoneNumber":"794-405-4064","email":"lducrow0@webs.com","religion":"Christian","regNumber":"826101299-9","lastSchool":"University of Northeastern Philippines","lastSchoolMark":70},
+[
+{"firstName":"Lanny","middleName":1,"lastName":"Ducrow","gender":"Female","dob":"29/08/2010","phoneNumber":"794-405-4064","email":"lducrow0@webs.com","religion":"Christian","regNumber":"826101299-9","lastSchool":"University of Northeastern Philippines","lastSchoolMark":70},
 {"firstName":"Ephrem","middleName":2,"lastName":"Hoodless","gender":"Male","dob":"04/07/2016","phoneNumber":"699-684-4661","email":"ehoodless1@usda.gov","religion":"Christian","regNumber":"847671346-0","lastSchool":"Kanazawa College of Economics","lastSchoolMark":62},
 {"firstName":"Adora","middleName":3,"lastName":"Lewsie","gender":"Female","dob":"17/08/2013","phoneNumber":"959-459-1419","email":"alewsie2@unblog.fr","religion":"Christian","regNumber":"300842851-7","lastSchool":"Royal Danish School of Educational Sciences","lastSchoolMark":47},
 {"firstName":"Alaine","middleName":4,"lastName":"Dyter","gender":"Female","dob":"19/05/2015","phoneNumber":"803-662-1551","email":"adyter3@trellian.com","religion":"Atheist","regNumber":"525662587-X","lastSchool":"Swarthmore College","lastSchoolMark":62},
@@ -47,4 +48,5 @@
 {"firstName":"Tommy","middleName":47,"lastName":"Idney","gender":"Male","dob":"20/12/2015","phoneNumber":"799-920-3032","email":"tidney1a@google.co.uk","religion":"Christian","regNumber":"664196186-9","lastSchool":"Université du Québec en Outaouais","lastSchoolMark":56},
 {"firstName":"Wash","middleName":48,"lastName":"Malam","gender":"Male","dob":"12/08/2012","phoneNumber":"770-841-4138","email":"wmalam1b@sun.com","religion":"Christian","regNumber":"025594207-9","lastSchool":"Stevens Institute of Technology","lastSchoolMark":62},
 {"firstName":"Guido","middleName":49,"lastName":"Cyseley","gender":"Male","dob":"04/04/2006","phoneNumber":"793-288-4200","email":"gcyseley1c@barnesandnoble.com","religion":"Atheist","regNumber":"333000205-0","lastSchool":"Olivet Nazarene University","lastSchoolMark":82},
-{"firstName":"Eddy","middleName":50,"lastName":"Abelevitz","gender":"Male","dob":"21/11/2015","phoneNumber":"400-341-4690","email":"eabelevitz1d@mapy.cz","religion":"Rastafarian","regNumber":"615047735-5","lastSchool":"International Medical & Technological University","lastSchoolMark":63}]
+{"firstName":"Eddy","middleName":50,"lastName":"Abelevitz","gender":"Male","dob":"21/11/2015","phoneNumber":"400-341-4690","email":"eabelevitz1d@mapy.cz","religion":"Rastafarian","regNumber":"615047735-5","lastSchool":"International Medical & Technological University","lastSchoolMark":63}
+]
