@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
     <h1>hello tell0</h1>
+
+    adding parent
   </div>
 </template>
 

@@ -16,7 +16,7 @@
                 <input type="text" v-model="Teacher.mark"   class="form-control input-sm" placeholder="First Name"  required>
   
             </div>
-            <input value="Register" @click="registerTeacher" class="btn btn-danger btn-block"  >
+            <input type="button" value="Register" @click="registerTeacher" class="btn btn-danger btn-block"  >
              </form>
   </div>
 </template>

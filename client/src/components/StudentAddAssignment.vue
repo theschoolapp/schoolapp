@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
     <h1>hello tell0</h1>
+
+    file upload  + {{msg}}
   </div>
 </template>
 
@@ -9,7 +11,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'file upload is needed'
     }
   }
 }

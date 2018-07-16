@@ -3,7 +3,7 @@
     <h1>hello tell0</h1>
         
         <form @submit.native="preventDefault"> 
-            <div class="alert alert-danger" v-if="error">Failed to register a exmas{{error}}</div>
+            <div class="alert alert-danger" v-if="error">Failed to register a exmas</div>
              <div class="form-group" >
                 <input type="text" v-model="Exam.subject"   class="form-control input-sm" placeholder="First Name"  required>
   
@@ -16,7 +16,7 @@
                 <input type="text" v-model="Exam.time"   class="form-control input-sm" placeholder="First Name"  required>
   
             </div>
-            <input value="Register" @click="registerExam" class="btn btn-danger btn-block"  >
+            <input type="button" value="Register" @click="registerExam" class="btn btn-danger btn-block"  >
              </form>
   </div>
 </template>

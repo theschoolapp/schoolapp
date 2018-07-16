@@ -8,17 +8,17 @@
                 <input type="text" v-model="Student.firstname"   class="form-control input-sm" placeholder="First Name"  required>
   
             </div>
-             <div class="form-group" >
-                <input type="text" v-model="Student.surname"   class="form-control input-sm" placeholder="First Name"  required>
-  
-            </div>
+              <div class="form-group" >
+                  <input type="text" v-model="Student.surname"   class="form-control input-sm" placeholder="First Name"  required>
+    
+              </div>
              <div class="form-group" >
                 <input type="text" v-model="Student.mark"   class="form-control input-sm" placeholder="First Name"  required>
   
             </div>
-            <input value="Register" @click="registerStudent" class="btn btn-danger btn-block"  >
+            <input  type="button" value="Register" @click="registerStudent" class="btn btn-danger btn-block"  >
              </form>
-              <button class="btn btn-primary" @click="$router.push(`/parent/${Student.id}`)" >
+             <button class="btn btn-primary"  ></button>
   </div>
 </template>
 

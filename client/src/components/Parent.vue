@@ -13,12 +13,12 @@ export default {
   mounted(){
 
     //get fees for his child
+    axios.get('').then((response) => (this.fees = response.data.value))
     //get child marks
-    //get  child attendence
-    //get 
-axios.get('').then((response) => (this.fees = response.data.value))
-axios.get('').then((response) => (this.marks = response.data.value))
-axios.get('').then((response) => (this.attendence = response.data.value))
+    
+    axios.get('').then((response) => (this.marks = response.data.value))
+    //get  
+    axios.get('').then((response) => (this.attendence = response.data.value))
   },
 
   data (){

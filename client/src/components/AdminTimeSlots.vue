@@ -13,7 +13,7 @@
   
             </div>
             
-            <input value="Register" @click="registerTimeslots" class="btn btn-danger btn-block"  >
+            <input  type="button" value="Register" @click="registerTimeslots" class="btn btn-danger btn-block"  >
              </form>
   </div>
 </template>

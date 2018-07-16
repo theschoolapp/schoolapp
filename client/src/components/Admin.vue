@@ -2,14 +2,13 @@
   <div class="hello">
     <h1>hello  admin</h1>
 
-    <div>{{ studentPresent }} student present</div>
+    <div>{{ studentPresent  }} __ student present</div>
     <div>{{ teachersPresent }} student absent</div>
      <div>{{ events }} evenyts </div>
     <div>{{ messages }} messages</div>
      <div>{{studentAttend }} student absent</div>
-    <div>{{task.name}} 
+    <div>{{task}} 
       <br> 
-      {{task.description}}
     </div>
   </div>
 </template>
@@ -28,20 +27,20 @@ axios.get('/teachers/count').then((response) => (this.teachersPresent = response
    //total messages
    axios.get('/messages/count').then((response) => (this.messages = response.data.value))
    //tasks
-   axios.get('/tasks/').then((response) => (this.tasks = response.data.value))
+   axios.get('/tasks/').then((response) => (this.task = response.data.value))
    //get attendex 
    axios.get('/students/attendance/count').the(res=>(this.studentAttend = res.data.value))
   },
 
   data (){
-        return{
+        return{ 
 
           studentPresent:0,
           studentAttend : 0,
           teachersPresent:0 ,
           events:0,
           messages: 0,
-          tasks: tasks
+          task : 7
 
         }
   }

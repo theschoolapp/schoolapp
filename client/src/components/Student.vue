@@ -3,7 +3,10 @@
     <h1>hello child</h1>
 
     <div>
-  {{timetable}} ,{{examTimeTable}} ,{{marks}} ,{{fees}}
+  {{timetable}} timetable
+   ,{{examTimeTable}} examtimetable for the child ,{{marks}} ,{{fees}}
+
+   
     </div>
   </div>
 </template>
