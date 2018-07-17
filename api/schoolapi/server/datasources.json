@@ -4,13 +4,7 @@
     "connector": "memory"
   },
   "db": {
-    "host": "localhost",
-    "port": 27017,
-    "url": "",
-    "database": "school",
-    "password": "",
-    "name": "db",
-    "user": "",
+    "url": "mongodb://admin:123456A@ds231951.mlab.com:31951/schoolappp",
     "connector": "mongodb"
   },
   "fileStore": {
