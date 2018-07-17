@@ -1,0 +1,83 @@
+
+    #background{
+        position:relative;
+        z-index:0;
+        background:white;
+        display:block;
+       
+    }
+    
+    #mybirth{
+        position:relative;
+        z-index:1;
+    }
+    
+    #bg-text
+    {
+        color:lightgrey;
+        font-size:75px;
+        transform:rotate(300deg);
+        -webkit-transform:rotate(300deg);
+    }
+    @media print { 
+     /* All your print styles go here */
+    
+        #background{
+        position:relative;
+        z-index:0;
+        background:white;
+        display:block;
+       
+    }
+    
+    #mybirth{
+        position:relative;
+        z-index:1;
+    }
+    
+    #bg-text
+    {
+        color:lightgrey;
+        font-size:75px;
+        transform:rotate(300deg);
+        -webkit-transform:rotate(300deg);
+    
+    }
+    img{
+        position:absolute;
+        
+    }
+    #bttn{
+        position: relative;
+    }
+    .leaders {
+    overflow-x: hidden;
+    list-style:none;
+    margin:0 auto;
+    padding:0;
+    width:75%;
+    max-width:800px;
+}
+.leaders li {
+    line-height: 1.6em;
+    margin-bottom: .8em;
+    position:relative;
+    text-align:right;
+}
+.leaders li>span:first-child {
+    text-align:right;
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    right:2.5em;
+    overflow:hidden;
+    white-space:nowrap;
+}
+.leaders li>span:first-child:after {
+    content:'........................................................................................................................................................................................................................................';
+  color:#ddd;
+}
+.leaders li:last-child {
+    margin-bottom: 0
+}}

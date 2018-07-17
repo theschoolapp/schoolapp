@@ -15,13 +15,13 @@ import StudentAddAssignmemt from '@/components/StudentAddAssignment'
 import TeacherAddAssignment from '@/components/TeacherAddAssignments'
 import TeacherAddAttendence from '@/components/TeacherAddAttendence'
 import TeacherAddMarks from '@/components/TeacherAddMArks'
-
 import { isLoggedIn, getUserProfile } from '@/modules/authentication' 
+
 
 Vue.use(Router)
 
 function checkAuthentication (from, to, next) {
-  if (isLoggedIn()) return next()
+  if (isLoggedIn()) return next() 
   next('/signin')
 }
 
@@ -51,13 +51,14 @@ export default new Router({
     {
       path: '/',
       name: 'HelloWorld',
-      component: HelloWorld
+      component: HelloWorld,
+      
     },
     {
       path: '/admin',
       name: 'Admin',
-      beforeEnter:checkIfIsAdmin,
-      component: Admin
+      //beforeEnter:checkIfIsAdmin,
+      component: Admin,
     },
       
         { 
@@ -65,7 +66,6 @@ export default new Router({
           beforeEnter: checkIfIsAdmin,
            component: AdminAddStudent
            },
-
         {
           path:'/addParent',
           component:AdminAddParent,

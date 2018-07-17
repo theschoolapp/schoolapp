@@ -8,7 +8,9 @@
 <script>
 
 import axios from '@/modules/axios'
-export default {
+
+export default { 
+
 
   mounted(){
 

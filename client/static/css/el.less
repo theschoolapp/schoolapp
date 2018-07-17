@@ -1,0 +1,95 @@
+body, html {
+	padding:0;
+	margin:0;
+	height:100%;
+	width:100%;
+	display:flex;
+	font-family:sans-serif;
+	font-size:12px;
+	text-shadow:1px 1px rgba(255,255,255,0.5);
+}
+
+ul {
+	position:relative;
+	display:flex;
+	flex-direction:row;
+	align-content:center;
+	align-self:center;
+	margin:0 50px;
+	padding:0;
+	width:100%;
+	height:75%;
+	min-height:450px;
+	background:rgba(0,0,0,0.10);
+	border-left:2px dashed rgba(0,0,0,0.85);
+	border-bottom:2px dashed rgba(0,0,0,0.85);
+	box-shadow:0px 0px 10px 4px rgba(0,0,0,0.25);
+	
+	&:before {
+		content:'Global Usage';
+		position:absolute;
+		transform:rotate(-90deg);
+		left:-65px;
+		top:50%;
+	}
+	
+	&:after {
+		content:"Browsers";
+		position:absolute;
+		bottom:-30px;
+		left:50%;
+		transform:translatex(-50%);
+	}
+}
+
+li {
+	position:relative;
+	list-style:none;
+	margin:0 15px 0 0;
+	padding:0;
+	flex-grow:1;
+	align-self:flex-end;	
+	height:50%;
+	background:#808080;
+	text-align:center;
+	
+	&.green {
+		background: linear-gradient(to top, #a1ef58 0%,#60c605 100%);
+	}
+	
+	&.red {
+		background: linear-gradient(to top, tomato 0%,red 100%);
+	}
+	
+	&.orange {
+		background: linear-gradient(to top, #ffa968 0%,#ef6d09 100%);
+	}
+	
+	&.blue {
+		background: linear-gradient(to top, #7db9e8 0%,#1e5799 100%);
+	}
+	
+	&.purple {
+		background: linear-gradient(to top, #fcabf5 0%,#e509d6 100%);
+	}
+	
+	&.gray {
+		background: linear-gradient(to top, #999 0%,#555 100%);
+	}
+	
+	&:last-of-type {
+		margin:0;
+	}
+	
+	&:after {
+		content: attr(data-item);
+		position:absolute;
+		bottom:1px; left:0; right:0;
+	}
+	
+	&:before {
+		content: attr(data-value) '%';
+		position:absolute;
+		top:-20px; left:0; right:0;		
+	}
+}
