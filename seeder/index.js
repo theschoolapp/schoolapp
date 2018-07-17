@@ -1,58 +1,45 @@
 const axios = require('axios');
 const defaults = require('./defaults');
-const express = require('express');
 const path = require('path');
+const students = require('./dummyData/students50.json');
 
-const app = express();
-const port = 5000;
 
-//Check if schoolapi is up
-axios.get('http://localhost:3000/')
-  .then(response => {
-    console.log(response.data);
-    if(response.data.started){
-    	console.log('School-Api is up and running...✅');
-    	console.log('School-Api was started on ' + response.data.started + '...🕑');
-    }
-    else{
-    	console.log('School-Api is NOT running...⚠️');
-    }
-    
-  })
-  .catch(error => {
-  	console.log('An error occured...‼️');
-    console.log(error);
-    
-  });
+//Start Up
+console.log('Seeder waking up.....');
+console.log('Seeder connecting to...' + defaults.localDB);
+console.log('Base API url...' + defaults.baseUrl);
+
+//
+
+const config = {
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+};
 
 
 
-app.get('/', (req, res) => {
+//Add Students
+//for( i in students ){
 
-	axios.get('http://localhost:3000/api/admins')
-  .then(response => {
-    console.log(response.data);
-    res.send(response.data);
-  })
-  .catch(error => {
-    console.log(error);
-    res.send(error);
-  });
-    
-});
+	
+	//if (i < 1 ) {
+		console.log("'"+ students[0] + "'");
+		console.log(JSON.parse("'"+ students[0] + "'");
 
-app.listen(port, () => {
-	console.log('Server is starting...🚀');
-	console.log('Server now listening on 👨🏾‍💻...http://localhost:' + port);
-})
+		axios.post('http://localhost:3000/api/students', JSON.parse(students[0]), config)
+		  .then(function (response) {
+		    console.log(response.data);
+		  })
+		  .catch(function (error) {
+		  	console.log("error");
+		    console.log(error);
+		  });
 
-
-
+	//}
+	
 
 
-
-
-
-
+//}
 
 

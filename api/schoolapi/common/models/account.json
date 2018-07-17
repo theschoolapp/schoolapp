@@ -1,0 +1,24 @@
+{
+  "name": "account",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "accountType": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "admin": {
+      "type": "hasOne",
+      "model": "admin",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
