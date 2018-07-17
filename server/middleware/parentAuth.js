@@ -5,7 +5,8 @@ module.exports = (req, res, next) => {
 	console.log("FROM parentAUTH.........👮🏽‍♂️");
 
 	if(!req.headers.userid || !req.headers.accesstoken){
-		res.send('Headers not complete');
+		res.send('Headers not complete...');
+		console.log('No headers on request object.....');
 	}else{
 		console.log('Now extracting headers.....');
 
@@ -23,10 +24,10 @@ module.exports = (req, res, next) => {
 	  .then(response => {
 	   
 	    console.log(response.data);
-	    if(response.data.accountType === "admin"){
+	    if(response.data.accountType === "parent"){
 	    	next();
 	    }else{
-	    	res.send('You are not an admin.');
+	    	res.send('Not Authorized...');
 	    }
 	    
 	  })
