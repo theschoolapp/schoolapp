@@ -1,0 +1,1 @@
+teacherAuth.js

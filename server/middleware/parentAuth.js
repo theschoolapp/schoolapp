@@ -2,8 +2,7 @@ const axios          = require('axios');
 const urls           = require('../config/database.config.js');
 
 module.exports = (req, res, next) => {
-	console.log("FROM adminAUTH.........👮🏽‍♂️");
-	console.log(req.headers);
+	console.log("FROM parentAUTH.........👮🏽‍♂️");
 
 	if(!req.headers.userid || !req.headers.accesstoken){
 		res.send('Headers not complete');
