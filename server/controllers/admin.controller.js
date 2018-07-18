@@ -1,5 +1,7 @@
-const axios          = require('axios');
-const urls           = require('../config/database.config.js');
+const axios  = require('axios');
+const urls   = require('../config/database.config.js');
+const moment = require('moment');
+const _      = require('lodash');
 
 
 //[Get] all data for Dashboard
@@ -8,58 +10,41 @@ exports.getDashboard = (req, res) => {
     console.log('Getting Admin Dashboard');
     let adminId = req.body.adminId;
     console.log('AdminID : ' + adminId);
-    /*/Students Total
-    function numStudents() {
-      return axios.get(urls.baseUrl.concat('/students/count'));
-    }
-    //Teachers Total
-    function numTeachers() {
-      return axios.get(urls.baseUrl.concat('/teachers/count'));
-    }
-    //Events Total
-    function numEvents() {
-      return axios.get(urls.baseUrl.concat('/events/count'));
-    }
-    //Messages Total
-    function numMessages() {
-      return axios.get(urls.baseUrl.concat('/admins/' + adminId + '/messages/count'));
-    }
-
-    axios.all([
-        numStudents(), 
-        numTeachers(),
-        numEvents(),
-        numMessages()
-        ])
-      .then(axios.spread(function (nS, nT, nE, nM) {
-        let obj = {
-            nS: nS.count,
-            nT: nT.count,
-            nE: nE.count,
-            nM: nM.count
-        };
-        res.send(obj);
-        console.log(obj);
-      })); */
-      let obj = {
+    let obj = {
             nS: '',
             nT: '',
             nE: '',
-            nM: ''
+            nM: '',
+            todaysTasks: [],
+            todaysAttendence: [],
+            attendanceTrend: [],
+            teachersAttendance: {},
+            announcements: []
         };
 
      axios.all([
         axios.get(urls.baseUrl.concat('/students/count')),
         axios.get(urls.baseUrl.concat('/teachers/count')),
         axios.get(urls.baseUrl.concat('/events/count')),
-        axios.get(urls.baseUrl.concat('/admins/' + adminId + '/messages/count'))
+        axios.get(urls.baseUrl.concat('/admins/' + adminId + '/messages/count')),
+        axios.get(urls.baseUrl.concat('/tasks'))
       ])
-      .then(axios.spread(function (nS, nT, nE, nM) {
+      .then(axios.spread(function (nS, nT, nE, nM, tasks) {
         
         obj.nS = nS.data.count;
         obj.nT = nT.data.count;
         obj.nE = nE.data.count;
         obj.nM = nM.data.count;
+
+        //Get only today's tasks
+        let tsks = [];
+        _.each(tasks.data, (task)=>{
+            
+            if(moment(task.date).isSame(moment(), 'day')){
+                tsks.push(task);
+            }
+        });
+        obj.todaysTasks = tsks;
 
         res.send(obj);
         console.log(obj);
