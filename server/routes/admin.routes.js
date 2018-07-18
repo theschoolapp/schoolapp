@@ -4,8 +4,12 @@ const admin = require('../controllers/admin.controller.js');
 
 // Admin Routes
 //---------------//
+routes.post('/getDashboard', admin.getDashboard);
 
-//Inputs
+routes.get('/getAllStudents', admin.getAllStudents);
+
+routes.get('/getStudent', admin.getStudent);
+
 routes.post('/addTask', admin.addTask);
 
 
@@ -15,6 +19,6 @@ routes.post('/addTask', admin.addTask);
 
 
 
-
+routes.get('/test', admin.test);
 
 module.exports = routes;
