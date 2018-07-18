@@ -3,7 +3,6 @@ const routes         = require('express').Router();
 //Controller
 const account        = require('../controllers/account.controller.js');
 //Auth Middleware
-const accountAuth    = require('../middleware/accountsAuth.js');
 const adminAuth      = require('../middleware/adminAuth.js');
 
 // Account Routes
