@@ -10,7 +10,7 @@ routes.get('/getClassSchedule', student.getClassSchedule);
 
 routes.get('/getExamSchedule', student.getExamSchedule);
 
-routes.get('/getEventSchedule', student.getEventSchedule);
+routes.get('/getEvents', student.getEvents);
 
 routes.post('/uploadAssignment', student.uploadAssignment);
 

@@ -1,7 +1,57 @@
-const axios          = require('axios');
-const urls           = require('../config/database.config.js');
+const axios  = require('axios');
+const urls   = require('../config/database.config.js');
+const moment = require('moment');
+const _      = require('lodash');
 
 
+//[Get] all data for Dashboard
+//Requires the adminId on 
+exports.getDashboard = (req, res) => {
+    console.log('Getting Admin Dashboard');
+    let adminId = req.body.adminId;
+    console.log('AdminID : ' + adminId);
+    let obj = {
+            nS: '',
+            nT: '',
+            nE: '',
+            nM: '',
+            todaysTasks: [],
+            todaysAttendence: [],
+            attendanceTrend: [],
+            teachersAttendance: {},
+            announcements: []
+        };
+
+     axios.all([
+        axios.get(urls.baseUrl.concat('/students/count')),
+        axios.get(urls.baseUrl.concat('/teachers/count')),
+        axios.get(urls.baseUrl.concat('/events/count')),
+        axios.get(urls.baseUrl.concat('/admins/' + adminId + '/messages/count')),
+        axios.get(urls.baseUrl.concat('/tasks'))
+      ])
+      .then(axios.spread(function (nS, nT, nE, nM, tasks) {
+        
+        obj.nS = nS.data.count;
+        obj.nT = nT.data.count;
+        obj.nE = nE.data.count;
+        obj.nM = nM.data.count;
+
+        //Get only today's tasks
+        let tsks = [];
+        _.each(tasks.data, (task)=>{
+            
+            if(moment(task.date).isSame(moment(), 'day')){
+                tsks.push(task);
+            }
+        });
+        obj.todaysTasks = tsks;
+
+        res.send(obj);
+        console.log(obj);
+
+      }));
+
+};
 
 
 //Get all marks/results for a single student
@@ -10,23 +60,51 @@ exports.newAnnouncement = (req, res) => {
     res.send('New Announcement');
 };
 
+exports.test = (req, res) => {
+    
+    res.send(axios.get(urls.baseUrl.concat('/events/count')));
+};
+
 //Student Functions
 //--------------------------------------------------//
-//Get all class schedules for a single student
-//Requires the student record id as part of the request object
+//[Get] all Students
 exports.getAllStudents = (req, res) => {
     console.log('getting All students');
 
-   
-
+    axios.get(urls.baseUrl.concat('/students'))
+    .then(response => {
+        console.log(response.data);
+        res.send(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });
 };
-//Get a single student
+//[Get] a single student
 //Requires the student record id as part of the request object
 exports.getStudent = (req, res) => {
     console.log("Getting a single Student...");
+    if(!req.body.studentId){
 
+        res.send('No StudentId in request...');
+
+    }else{
+
+        let studentId = req.body.studentId;
+        let subUrl = urls.baseUrl.concat('/students');
+        let finalUrl = subUrl.concat(studentId);
+        
+        axios.get(finalUrl)
+        .then(response => {
+            console.log(response.data);
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    }
     
-
 };
 //Create new student object and save to db
 //Requires the full student record as part of the request object
@@ -133,7 +211,6 @@ exports.addTask = (req, res) => {
     
     console.log("Adding a task....");
     console.log(req.body);
-
 
     axios.post(urls.baseUrl.concat('/tasks'),req.body)
     .then(response => {
