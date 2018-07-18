@@ -7,6 +7,7 @@ module.exports = (req, res, next) => {
 
 	if(!req.headers.userid || !req.headers.accesstoken){
 		res.send('Headers not complete');
+		console.log('No headers on request object.....');
 	}else{
 		console.log('Now extracting headers.....');
 
@@ -27,7 +28,7 @@ module.exports = (req, res, next) => {
 	    if(response.data.accountType === "admin"){
 	    	next();
 	    }else{
-	    	res.send('You are not an admin.');
+	    	res.send('Not Authorized...');
 	    }
 	    
 	  })

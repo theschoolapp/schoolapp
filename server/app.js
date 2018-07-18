@@ -15,7 +15,7 @@ const accountRouter  = require('./routes/account.routes.js');
 //const studentRouter  = require('./routes/student.routes.js');
 //const teacherRouter  = require('./routes/teacher.routes.js');
 //const parentRouter   = require('./routes/parent.routes.js');
-//const adminRouter    = require('./routes/admin.routes.js');
+const adminRouter    = require('./routes/admin.routes.js');
 
 //Authorization Middleware
 const auth            = require('./middleware/authorization.js');
@@ -69,6 +69,7 @@ app.get('/', (req, res) => {
 
 
 app.use('/accounts', accountRouter);
+app.use('/admin', adminRouter);
 
 /*/Assign Routers to base paths
 app.use('/student', studentRouter);
