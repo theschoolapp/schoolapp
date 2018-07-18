@@ -134,7 +134,6 @@ exports.addTask = (req, res) => {
     console.log("Adding a task....");
     console.log(req.body);
 
-
     axios.post(urls.baseUrl.concat('/tasks'),req.body)
     .then(response => {
         console.log(response.data);
