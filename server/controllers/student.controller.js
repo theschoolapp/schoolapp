@@ -12,40 +12,40 @@ exports.getMarks = (req, res) => {
 //Get all class schedules for a single student
 //Requires the student record id as part of the request object
 exports.getClassSchedule = (req, res) => {
-    res.send('got Class Scedule');
+    console.log('got Class Scedule');
 };
 
 //Get all exam schedules for a single student
 //Requires the student record id as part of the request object
 exports.getExamSchedule = (req, res) => {
-    res.send('got Exam Schedule');
+    console.log('got Exam Schedule');
 };
 
 //Get all events schedule
 exports.getEvents = (req, res) => {
-    res.send('got Events Schedule');
+    console.log('got Events Schedule');
 };
 
 //Get all Finacial Data for a single student
 //Requires the student record id as part of the request object
 exports.getFinance = (req, res) => {
-    res.send('got Finance');
+    console.log('got Finance');
 };
 
 //Upload Assignment as file for a single student, for a given assignment
 //Requires the student record id and assignment record id as part of the request object
 exports.uploadAssignment = (req, res) => {
-    res.send('got Finance');
+    console.log('got Finance');
 };
 
 //Get all messages for a single student
 //Requires the student record id as part of the request object
 exports.getMessages = (req, res) => {
-    res.send('got Msgs');
+    console.log('got Msgs');
 };
 
 //Send a message from a single student to a single reciever
 //Requires the student record id and the receievers record id as part of the request object
 exports.sendMessage = (req, res) => {
-    res.send('sent a Msgs');
+    console.log('sent a Msgs');
 };
