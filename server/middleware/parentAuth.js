@@ -13,7 +13,6 @@ module.exports = (req, res, next) => {
 		let subUrl = '/accounts/';
 		let finalUrl = subUrl.concat(req.headers.userid);
 
-
 		axios({
 		  method:'get',
 		  url:urls.baseUrl.concat(finalUrl),
