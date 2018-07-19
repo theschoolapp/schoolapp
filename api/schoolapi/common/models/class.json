@@ -56,6 +56,11 @@
       "type": "hasMany",
       "model": "exam",
       "foreignKey": ""
+    },
+    "yearClass": {
+      "type": "belongsTo",
+      "model": "yearClass",
+      "foreignKey": ""
     }
   },
   "acls": [],

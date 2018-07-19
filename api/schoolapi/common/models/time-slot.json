@@ -13,18 +13,6 @@
       "type": "date",
       "required": true
     },
-    "class": {
-      "type": "string"
-    },
-    "teacher": {
-      "type": "string"
-    },
-    "classRoom": {
-      "type": "string"
-    },
-    "isExam": {
-      "type": "boolean"
-    },
     "slot": {
       "type": "string"
     }

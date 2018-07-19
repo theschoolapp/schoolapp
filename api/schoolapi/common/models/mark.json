@@ -6,7 +6,7 @@
     "validateUpsert": true
   },
   "properties": {
-    "class": {
+    "mark": {
       "type": "string"
     },
     "markType": {

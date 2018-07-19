@@ -2,22 +2,33 @@ const axios          = require('axios');
 const urls           = require('../config/database.config.js');
 
 
+//Creating a new account
+//req.body has :
+//    "accountType": "string",
+//    "username": "string",
+//    "email": "string",
+exports.createAccount = (req, res) => {
+    console.log('Creating an account........📬');
+    axios.post(urls.baseUrl.concat('/accounts'), req.body)
+        .then(response => {
+            res.send(response.data);
 
-exports.signUp = (req, res) => {
-    console.log('Signing Up........📬');
-
+        })
+        .catch(error => {
+            console.log(error);
+        });
 
 };
-
+//Signing a user
+//req.body has : 
+// username or email
+// password
 exports.signIn = (req, res) => {
     console.log('Signing In........📫');
     axios({
 		  method:'post',
 		  url:urls.baseUrl.concat('/accounts/login'),
-		  data: {
-		  	username: "admin",
-		    password: "admin"
-		    },
+		  data: req.body,
 		  params: {
 		  	include: "user"
 		  }

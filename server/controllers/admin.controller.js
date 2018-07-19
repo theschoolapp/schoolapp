@@ -3,7 +3,21 @@ const urls   = require('../config/database.config.js');
 const moment = require('moment');
 const _      = require('lodash');
 
-
+//Quick testing routing
+// for dev...
+exports.test = (req, res) => {
+    
+    res.send(axios.get(urls.baseUrl.concat('/events/count')));
+};
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Dashboard Function
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
 //[Get] all data for Dashboard
 //Requires the adminId on 
 exports.getDashboard = (req, res) => {
@@ -27,15 +41,19 @@ exports.getDashboard = (req, res) => {
         axios.get(urls.baseUrl.concat('/teachers/count')),
         axios.get(urls.baseUrl.concat('/events/count')),
         axios.get(urls.baseUrl.concat('/admins/' + adminId + '/messages/count')),
-        axios.get(urls.baseUrl.concat('/tasks'))
+        axios.get(urls.baseUrl.concat('/tasks')),
+        axios.get(urls.baseUrl.concat('/teacherAttendances')),
+        axios.get(urls.baseUrl.concat('/annoucements'))
+
       ])
-      .then(axios.spread(function (nS, nT, nE, nM, tasks) {
+      .then(axios.spread(function (nS, nT, nE, nM, tasks, teachersA, anns) {
         
+        // Numbers
         obj.nS = nS.data.count;
         obj.nT = nT.data.count;
         obj.nE = nE.data.count;
         obj.nM = nM.data.count;
-
+        //----------------------------------//
         //Get only today's tasks
         let tsks = [];
         _.each(tasks.data, (task)=>{
@@ -45,6 +63,32 @@ exports.getDashboard = (req, res) => {
             }
         });
         obj.todaysTasks = tsks;
+        //--------------------------------//
+        // Teacher attendance
+        tas = {
+            onLeave: 0,
+            present: 0,
+            absent: 0
+        };
+        _.each(teachersA.data, (ta)=>{
+
+            if(ta.present){
+                tas.present ++;
+            }
+            if(!ta.present && !ta.onLeave){
+                tas.absent ++;
+            }
+            if(ta.onLeave){
+                tas.onLeave ++;
+            }
+
+        });
+        obj.teachersAttendance = tas;
+        //--------------------------------//
+        // Announcements
+        obj.announcements = anns.data;
+        //--------------------------------//
+
 
         res.send(obj);
         console.log(obj);
@@ -52,20 +96,38 @@ exports.getDashboard = (req, res) => {
       }));
 
 };
-
-
-//Get all marks/results for a single student
-//Requires the student record id as part of the request object
-exports.newAnnouncement = (req, res) => {
-    res.send('New Announcement');
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Announcement Function
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Create new announcement
+//req.body has
+// - "msg"
+// - "title"
+// - "from"
+exports.addAnnouncement = (req, res) => {
+    console.log('Adding new announcement...');
+    axios.post(urls.baseUrl.concat('/annoucements'),req.body)
+    .then(response => {
+        res.send(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });
 };
-
-exports.test = (req, res) => {
-    
-    res.send(axios.get(urls.baseUrl.concat('/events/count')));
-};
-
-//Student Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Student/Parent Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
 //--------------------------------------------------//
 //[Get] all Students
 exports.getAllStudents = (req, res) => {
@@ -73,7 +135,6 @@ exports.getAllStudents = (req, res) => {
 
     axios.get(urls.baseUrl.concat('/students'))
     .then(response => {
-        console.log(response.data);
         res.send(response.data);
     })
     .catch(error => {
@@ -108,109 +169,467 @@ exports.getStudent = (req, res) => {
 };
 //Create new student object and save to db
 //Requires the full student record as part of the request object
+//  "firstName": "string",
+// "middleName": "string",
+// "lastName": "string",
+// "gender": "string",
+// "dob": "2018-07-19T06:36:07.476Z",
+// "phoneNumber": "string",
+// "email": "string",
+// "religion": "string",
+// "yearClass": "string",
+// "enrolledClasses": [ "string"],
+// "regNumber": "string",
+// "lastSchool": "string",
+// "lastSchoolMark": "string",
+// "sports": ["string"],
+//  "parentId": "string",
+// "accountId": "string"
 exports.addStudent = (req, res) => {
     console.log('Adding Student....');
 
-  
-    
+    axios.post(urls.baseUrl.concat('/students'), req.body)
+        .then(response => {
+            res.send(response.data);
+
+        })
+        .catch(error => {
+            console.log(error);
+        });
+   
+};
+//Create new student object and save to db
+//Requires the full student record as part of the request object
+//  "lastName": "string",
+//    "title": "string",
+//    "occupation": "string",
+//    "phoneNumber1": "string",
+//    "phoneNumber2": "string",
+//    "email": "string",
+//    "religion": "string",
+//    "nationality": "string",
+//    "address": "string",
+//    "accountId": "string"
+//    "studentId"
+exports.addParent = (req, res) => {
+    console.log('Adding Parent....');
+
+    axios.post(urls.baseUrl.concat('/students/' + req.body.studentId + '/parents'), req.body)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
    
 };
 //--------------------------------------------------//
 //--------------------------------------------------//
-
-
-
+//--------------------------------------------------//
+//--------------------------------------------------//
 //Teacher Functions
 //--------------------------------------------------//
-
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
 //Get all teachers
 exports.getAllTeachers = (req, res) => {
     console.log('getting All Teachers');
 
-     
+    axios.get(urls.baseUrl.concat('/teachers'))
+    .then(response => {
+        res.send(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });    
 };
-
 //Get a single Teacher
 //Requires the teacher record id as part of the request object
 exports.getTeacher = (req, res) => {
      console.log("Getting a single teacher...");
 
+     if(!req.body.teacherId){
+
+        res.send('No TeacherId in request...');
+
+    }else{
+
+        let teacherId = req.body.teacherId;
+        let subUrl = urls.baseUrl.concat('/teachers');
+        let finalUrl = subUrl.concat(teacherId);
+        
+        axios.get(finalUrl)
+        .then(response => {
+            console.log(response.data);
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    }
+
     
 };
-
 //Add a new Teacher
 //Requires the teacher record as part of the request object
+//req.body has also :
+// -  "firstName": "string",
+//   "middleName": "string",
+//  "lastName": "string",
+//   "gender": "string",
+//    "religion": "string",
+//    "email": "string",
+//    "phoneNumber1": "string",
+//    "phoneNumber2": "string",
+//    "dob": "string",
+//    "address": "string",
+//    "highestDegree": "string",
+//    "otherDegrees": ["string"],
+//   "university": "string",
+//  "graduatingYear": "string",
+//  "CGPA": "string",
+//   "id": "string",
+//    "accountId": "string"
 exports.addTeacher = (req, res) => {
     console.log('Adding Teacher....');
 
+    axios.post(urls.baseUrl.concat('/teachers'), req.body)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
 };
+//Gets all the teachers' attendances
+exports.getAllTeacherAttendance = (req, res) => {
+    console.log('getting all Teacher Attendances...');
+
+    axios.get(urls.baseUrl.concat('/teacherAttendances'))
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });   
+};
+//Add new Teacher Attendance
+//req.body has
+// -"present"
+// -"date"
+// -"onLeave"
+// -"leaveReturnDate"
+// -"teacherId"
+exports.addTeacherAttendance = (req, res) => {
+    console.log('Adding Teacher Attendance....');
+
+    axios.post(urls.baseUrl.concat('/teacherAttendances'), req.body)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+// Add teacher to class
+// req.body has : 
+//  "name": "string",
+// "classCode": "string",
+// "teacherId": "string",
+exports.addTeacherToClass = (req, res) => {
+    console.log('Adding Teacher to a Class....');
+
+    axios.post(urls.baseUrl.concat('/teachers' + req.body.teacherId + '/classes'), req.body)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+
 //--------------------------------------------------//
 //--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Class/Subject/yearClass Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Get all Classes
+exports.getAllClasses = (req, res) => {
+    console.log('Getting All Classes...');
 
+    axios.get(urls.baseUrl.concat('/classes'))
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
 
-
+};
 //Add a new Class
 //Requires the class info
 exports.addClass = (req, res) => {
-    console.log('Adding a Class....');
+    console.log('Adding a Class...');
+
+    axios.post(urls.baseUrl.concat('/classes'), req.body)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
 
 };
+//Get all Subjects
+exports.getAllSubjects = (req, res) => {
+    console.log('Getting All Subjects...');
 
+    axios.get(urls.baseUrl.concat('/subjects'))
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+};
 //Add a new Subject
 //Requires the subject info
 exports.addSubject =  (req, res) => {
+    console.log('Adding a Subject...');
+
+    axios.post(urls.baseUrl.concat('/subjects'), req.body)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+};
+//Add a Class to subject
+//Requires the classId and 
+// subjectId
+exports.addClassToSubject = (req, res) => {
+    console.log('Adding a Class to a subject...');
+
+    axios.patch(urls.baseUrl.concat('/classes' + req.body.classId), { subjectId: req.body.subjectId })
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+};
+//Get all Year Classes
+exports.getAllYearClasses = (req, res) => {
+    console.log('Getting All Year Classes...');
+
+    axios.get(urls.baseUrl.concat('/yearClasses'))
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+};
+//Add a new yearClass
+//Requires the subject info
+//  "name": "string"
+exports.addYearClass =  (req, res) => {
+    console.log('Adding a year Class...');
+
+    axios.post(urls.baseUrl.concat('/yearClasses'), req.body)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+};
+//Add a Class to yearClass
+//Requires the classId and 
+// yearClassId
+exports.addClassToYearClass = (req, res) => {
+    console.log('Adding a Class to a subject...');
+
+    axios.patch(urls.baseUrl.concat('/classes' + req.body.classId), { yearClassId: req.body.yearClassId })
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
 
 };
 
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Time Slot Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
 //Schedule Class
-//Requires the timeSlot record as part of the request object
+//req.body has :
+// - "day"
+// - "date"
+// - "slot"
+// - "teacherId"
+// - "classId"
+// - "classRoomId"
 exports.addTimeSlot = (req, res) => {
-    
-  
-    
+    console.log("Adding a Time Slot....");
+
+    axios.post(urls.baseUrl.concat('/timeSlots'),req.body)
+    .then(response => {
+        res.send(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });   
 };
+//Get all Time Slots
+exports.getAllTimeSlots = (req, res) => {
+    console.log("Adding a Time Slot....");
 
-//Attendance Functions
-//--------------------------------------------------//
-//Upload Assignment as file for a single student, for a given assignment
-//Requires the student record id and assignment record id as part of the request object
-exports.getAttendance = (req, res) => {
-    console.log('getting All Attendance');
-
-    
+    axios.get(urls.baseUrl.concat('/timeSlots'))
+    .then(response => {
+        res.send(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });   
 };
 //--------------------------------------------------//
 //--------------------------------------------------//
-
+//--------------------------------------------------//
+//--------------------------------------------------//
 //Marks Functions
 //--------------------------------------------------//
-//Get all messages for a single student
-//Requires the student record id as part of the request object
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Get all student marks
 exports.getAllMarks = (req, res) => {
-    console.log('getting All Marks');
+    console.log('getting All Marks....');
+
+    axios.get(urls.baseUrl.concat('/marks'))
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
 
 };
 //--------------------------------------------------//
 //--------------------------------------------------//
-
-//Get all messages for a single student
-//Requires the student record id as part of the request object
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Messages Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Get all messages for a admin
+//Requires the admin record id as part of the request object
 exports.getMessages = (req, res) => {
-    res.send('got Msgs');
-};
+    console.log('Getting Admin Msgs....');
 
-//Send a message from a single student to a single reciever
-//Requires the student record id and the receievers record id as part of the request object
+    if(!req.body.adminId){
+        res.send('No adminId in request...');
+    }else{
+
+        let adminId = req.body.adminId;
+        axios.get(urls.baseUrl.concat('/admins/' + adminId + '/messages'))
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    }
+
+};
+//Send a message from an admin to a single reciever
+//Requires the id of the admin's record as part of the request object (adminId)
+//Requires the id of the receiever's record as part of the request object (teacherId, studentId, parentId)
+//req.body.message has : 
+// - msg
+// - from (name)
+// - to (name)
+// - sentDate
 exports.sendMessage = (req, res) => {
-    res.send('send Msg');
+    console.log('send Msg');
+    if(!req.body.adminId){
+       res.send('No adminId in request...'); 
+   }else{
+
+     if(req.body.studentId){
+
+        axios.post(urls.baseUrl.concat('/students' + req.body.studentId + '/messages'),req.body.message)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+     }
+     if(req.body.teacherId){
+        axios.post(urls.baseUrl.concat('/teachers' + req.body.teacherId + '/messages'),req.body.message)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+     }
+     if(req.body.parentId){
+        axios.post(urls.baseUrl.concat('/parents' + req.body.parentId + '/messages'),req.body.message)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+     }
+
+   }
+
 };
-
-
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Task Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
 //Create new task
+//req.body has:
+// - title
+// - description
+// - date
 exports.addTask = (req, res) => {
     
     console.log("Adding a task....");
-    console.log(req.body);
 
     axios.post(urls.baseUrl.concat('/tasks'),req.body)
     .then(response => {
@@ -221,3 +640,35 @@ exports.addTask = (req, res) => {
         console.log(error);
     });
 };
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Events Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Create new Event
+//req.body has:
+// -  "title"
+// - "description"
+// - "date"
+exports.addEvent = (req, res) => {
+    console.log("Adding an event....");
+
+    axios.post(urls.baseUrl.concat('/events'),req.body)
+    .then(response => {
+        res.send(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });
+};
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+
+
+

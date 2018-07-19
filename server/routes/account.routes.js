@@ -8,9 +8,9 @@ const adminAuth      = require('../middleware/adminAuth.js');
 // Account Routes
 //---------------//
 
-routes.get('/signIn', account.signIn);
+routes.post('/signIn', account.signIn);
 
-routes.post('/signUp', account.signUp);
+routes.post('/createAccount', account.createAccount);
 
 routes.get('/check', [adminAuth], account.check);
 

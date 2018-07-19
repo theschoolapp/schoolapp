@@ -59,7 +59,7 @@
   "validations": [],
   "relations": {
     "classes": {
-      "type": "hasMany",
+      "type": "belongsTo",
       "model": "class",
       "foreignKey": ""
     },
@@ -86,6 +86,11 @@
     "submissions": {
       "type": "hasMany",
       "model": "submission",
+      "foreignKey": ""
+    },
+    "marks": {
+      "type": "hasMany",
+      "model": "mark",
       "foreignKey": ""
     }
   },
