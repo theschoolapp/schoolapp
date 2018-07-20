@@ -1,24 +1,22 @@
 const routes = require('express').Router();
 
 //Controllers
-const student = require('../controllers/student.controller.js');
-const admin = require('../controllers/admin.controller.js');
+const parent = require('../controllers/parent.controller.js');
 
 
-//Initial Route
-routes.get('/', (req, res)=>{
-	res.json({ "head":"Welcome to the routes",
-				"/student": ["/getMarks", "/getFees"]});
-});
+// Parent Routes
+//-----------------//
+routes.get('/getMarks', parent.getMarks);
 
+routes.post('/getClassSchedule', parent.getClassSchedule);
 
-// Student Routes
-//---------------//
-routes.get('/getMarks', student.getMarks);
+routes.get('/getExamSchedule', parent.getExamSchedule);
 
+routes.get('/getEvents', parent.getEvents);
 
+routes.get('/getMessages', parent.getMessages);
 
-
+routes.get('/sendMessage', parent.sendMessage);
 
 
 

@@ -136,6 +136,7 @@ exports.getAllStudents = (req, res) => {
     axios.get(urls.baseUrl.concat('/students'))
     .then(response => {
         res.send(response.data);
+
     })
     .catch(error => {
         console.log(error);
@@ -197,6 +198,22 @@ exports.addStudent = (req, res) => {
             console.log(error);
         });
    
+};
+//add Student To Class
+// req.body has:
+// studentId
+// classId
+exports.addStudentToClass = (req, res) => {
+    console.log('Adding Student to class....');
+    
+    axios.post(urls.baseUrl.concat('/students/' + req.body.studentId + '/classLists'), { classId: req.body.classId })
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+  
 };
 //Create new student object and save to db
 //Requires the full student record as part of the request object
@@ -350,8 +367,6 @@ exports.addTeacherToClass = (req, res) => {
             console.log(error);
         });
 };
-
-
 //--------------------------------------------------//
 //--------------------------------------------------//
 //--------------------------------------------------//

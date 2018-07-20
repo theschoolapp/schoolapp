@@ -123,5 +123,9 @@
   "account": {
     "dataSource": "db",
     "public": true
+  },
+  "classList": {
+    "dataSource": "db",
+    "public": true
   }
 }

@@ -6,7 +6,9 @@ const student = require('../controllers/student.controller.js');
 //---------------//
 routes.get('/getMarks', student.getMarks);
 
-routes.get('/getClassSchedule', student.getClassSchedule);
+routes.post('/getClassSchedule', student.getClassSchedule);
+
+routes.post('/getClasses', student.getClasses);
 
 routes.get('/getExamSchedule', student.getExamSchedule);
 

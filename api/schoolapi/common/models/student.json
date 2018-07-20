@@ -58,11 +58,6 @@
   },
   "validations": [],
   "relations": {
-    "classes": {
-      "type": "belongsTo",
-      "model": "class",
-      "foreignKey": ""
-    },
     "parents": {
       "type": "hasAndBelongsToMany",
       "model": "parent",
@@ -91,6 +86,11 @@
     "marks": {
       "type": "hasMany",
       "model": "mark",
+      "foreignKey": ""
+    },
+    "classLists": {
+      "type": "hasAndBelongsToMany",
+      "model": "classList",
       "foreignKey": ""
     }
   },

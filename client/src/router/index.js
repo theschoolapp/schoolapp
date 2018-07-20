@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import AllRequests from '@/components/AllRequests'
 import Admin from '@/components/Admin'
 import Teacher from '@/components/Teacher'
 import Child from '@/components/Child'
@@ -12,8 +12,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'AllRequests',
+      component: AllRequests
     },
     {
       path: '/admin',

@@ -52,6 +52,10 @@ routes.post('/addClassToSubject', admin.addClassToSubject);
 
 routes.post('/addClassToYearClass', admin.addClassToYearClass);
 
+routes.post('/addStudentToClass', admin.addStudentToClass);
+
+
+
 
 
 routes.post('/addTimeSlot', admin.addTimeSlot);

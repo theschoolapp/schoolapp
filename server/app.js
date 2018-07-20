@@ -5,6 +5,7 @@ const session        = require('express-session');
 const axios          = require('axios');
 const uuid           = require('uuid/v4');
 const mongoose       = require('mongoose');
+const cors           = require('cors');
 
 //Defaults
 const urls           = require('./config/database.config.js');
@@ -13,8 +14,8 @@ const urls           = require('./config/database.config.js');
 //Api Routers
 const accountRouter  = require('./routes/account.routes.js');
 const studentRouter  = require('./routes/student.routes.js');
-//const teacherRouter  = require('./routes/teacher.routes.js');
-//const parentRouter   = require('./routes/parent.routes.js');
+const teacherRouter  = require('./routes/teacher.routes.js');
+const parentRouter   = require('./routes/parent.routes.js');
 const adminRouter    = require('./routes/admin.routes.js');
 
 //Authorization Middleware
@@ -50,8 +51,8 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.urlencoded({ extended: true }));
 //Parse requests of content-type - application/json
 app.use(bodyParser.json());
-
-//app.use(auth);
+//CORS
+app.use(cors());
 
 
 //Starter route
@@ -71,13 +72,10 @@ app.get('/', (req, res) => {
 app.use('/accounts', accountRouter);
 app.use('/admin', adminRouter);
 app.use('/student', studentRouter);
-
-/*/Assign Routers to base paths
-app.use('/student', studentRouter);
-app.use('/teacher', teacherRouter);
 app.use('/parent', parentRouter);
-app.use('/admin', adminRouter);
-*/
+app.use('/teacher', teacherRouter);
+
+
 
 //Start server listening on port :5000
 app.listen( port, () => {

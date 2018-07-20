@@ -22,11 +22,6 @@
       "model": "subject",
       "foreignKey": ""
     },
-    "students": {
-      "type": "hasMany",
-      "model": "student",
-      "foreignKey": ""
-    },
     "teacher": {
       "type": "belongsTo",
       "model": "teacher",
@@ -60,6 +55,11 @@
     "yearClass": {
       "type": "belongsTo",
       "model": "yearClass",
+      "foreignKey": ""
+    },
+    "classLists": {
+      "type": "hasOne",
+      "model": "classList",
       "foreignKey": ""
     }
   },
