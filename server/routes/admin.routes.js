@@ -79,7 +79,6 @@ routes.post('/addEvent', admin.addEvent);
 routes.post('/addAnnouncement', admin.addAnnouncement);
 
 
-
 routes.get('/test', admin.test);
 
 

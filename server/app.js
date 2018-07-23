@@ -1,11 +1,13 @@
 //Express + middleware
 const express        = require('express');
 const bodyParser     = require('body-parser');
-const session        = require('express-session');
+//const session        = require('express-session');
 const axios          = require('axios');
-const uuid           = require('uuid/v4');
 const mongoose       = require('mongoose');
 const cors           = require('cors');
+
+const csurf = require('csurf');
+const cookieParser = require('cookie-parser');
 
 //Defaults
 const urls           = require('./config/database.config.js');
@@ -45,12 +47,22 @@ axios.get('http://localhost:3000/')
 const app  = express();
 //Enviroment Port
 const port = process.env.PORT || 5000;
+
+
+//CSURF
+const csrfMiddleware = csurf({
+  cookie: true
+});
  
 
 //Parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 //Parse requests of content-type - application/json
 app.use(bodyParser.json());
+//Cookie muncher
+app.use(cookieParser());
+//CSRF Middleware
+//app.use(csrfMiddleware);
 //CORS
 app.use(cors());
 
