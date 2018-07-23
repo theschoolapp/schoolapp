@@ -16,6 +16,12 @@
     },
     "from": {
       "type": "string"
+    },
+    "forTeachers": {
+      "type": "boolean"
+    },
+    "forStudents": {
+      "type": "boolean"
     }
   },
   "validations": [],

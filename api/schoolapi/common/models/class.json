@@ -61,6 +61,11 @@
       "type": "hasOne",
       "model": "classList",
       "foreignKey": ""
+    },
+    "classSections": {
+      "type": "hasMany",
+      "model": "classSection",
+      "foreignKey": ""
     }
   },
   "acls": [],

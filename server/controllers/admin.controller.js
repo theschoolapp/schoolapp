@@ -115,6 +115,7 @@ exports.addAnnouncement = (req, res) => {
     axios.post(urls.baseUrl.concat('/annoucements'),req.body)
     .then(response => {
         res.send(response.data);
+        
     })
     .catch(error => {
         console.log(error);

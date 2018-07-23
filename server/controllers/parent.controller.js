@@ -3,26 +3,68 @@ const urls           = require('../config/database.config.js');
 const moment = require('moment');
 const _      = require('lodash');
 
+
 //Get marks
+// req.body has
+// studentId
 exports.getMarks = (req, res) => {
     
-    console.log("Getting parent's student marks....");
+    console.log("Getting All Marks....");
+    console.log(req.body);
 
     axios.get(urls.baseUrl.concat('/students' + req.body.studentId + '/marks'))
     .then(response => {
+        console.log(response.data);
         res.send(response.data);
     })
     .catch(error => {
         console.log(error);
     });
-
-    
 };
 
-//Get all class schedules for a single student
+
+
+//Get Student's classes
+// req.body has
+// studentId
+exports.getClasses = (req, res) => {
+    
+   console.log("Getting Student's Classes....");
+
+    axios.get(urls.baseUrl.concat('/students/' + req.body.studentId + '/classLists'))
+        .then(response => {
+            //res.send(response.data);
+            console.log(response.data);
+            let linkArray = [];
+            let classes = [];
+            _.each(response.data, (cl) => {
+                
+                linkArray.push(urls.baseUrl.concat('/classes/' + cl.classId));
+
+                
+            });
+
+            axios.all(linkArray.map(l => axios.get(l)))
+              .then(axios.spread(function (...ress) {
+                
+                
+                _.each(ress,(ts)=>{  classes.push(ts.data);});
+                res.send(classes);
+              }));
+              
+            
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+//Get class schedules
+// req.body has
+// studentId
 exports.getClassSchedule = (req, res) => {
     
-    console.log("Getting Student's Class Scedule....");
+   console.log("Getting Student's Class Scedule....");
 
     axios.get(urls.baseUrl.concat('/students/' + req.body.studentId + '/classLists'))
         .then(response => {
@@ -56,25 +98,41 @@ exports.getClassSchedule = (req, res) => {
 exports.getExamSchedule = (req, res) => {
     
     console.log("got Exam Schedule....");
-    console.log(req.body);
+    axios.get(urls.baseUrl.concat('/students/' + req.body.studentId + '/classLists'))
+        .then(response => {
+            //res.send(response.data);
+            console.log(response.data);
+            let linkArray = [];
+            let timeSlots = [];
+            _.each(response.data, (cl) => {
+                
+                linkArray.push(urls.baseUrl.concat('/classes/' + cl.classId + '/exams'));
+                
+            });
 
-    axios.post(urls.baseUrl.concat('/exams'),req.body)
-    .then(response => {
-        console.log(response.data);
-        res.send(response.data);
-    })
-    .catch(error => {
-        console.log(error);
-    });
+            axios.all(linkArray.map(l => axios.get(l)))
+              .then(axios.spread(function (...ress) {
+                
+                console.log(res.length);
+                _.each(ress,(ts)=>{ _.each(ts.data,(a)=>{ timeSlots.push(a) }); });
+                res.send(timeSlots);
+              }));
+              
+            
+        })
+        .catch(error => {
+            console.log(error);
+        });
 };
 
-//Get all events schedule
+//Get all events
 exports.getEvents = (req, res) => {
     
-    console.log("Getting Events Schedule....");
+    console.log("got Events Schedule....");
 
     axios.get(urls.baseUrl.concat('/events'))
     .then(response => {
+        console.log(response.data);
         res.send(response.data);
     })
     .catch(error => {

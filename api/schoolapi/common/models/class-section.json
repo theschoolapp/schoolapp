@@ -1,0 +1,23 @@
+{
+  "name": "classSection",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "section": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "class": {
+      "type": "belongsTo",
+      "model": "class",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

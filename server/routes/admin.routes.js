@@ -57,7 +57,6 @@ routes.post('/addStudentToClass', admin.addStudentToClass);
 
 
 
-
 routes.post('/addTimeSlot', admin.addTimeSlot);
 
 routes.post('/getAllTimeSlots', admin.getAllTimeSlots);

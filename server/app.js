@@ -18,8 +18,8 @@ const teacherRouter  = require('./routes/teacher.routes.js');
 const parentRouter   = require('./routes/parent.routes.js');
 const adminRouter    = require('./routes/admin.routes.js');
 
-//Authorization Middleware
-const auth            = require('./middleware/authorization.js');
+
+
 
 
 //Check if schoolapi is up
@@ -35,7 +35,7 @@ axios.get('http://localhost:3000/')
     
   })
   .catch(error => {
-  	console.log('An error occured...‼️');
+  	console.log('An error occured...⚠️');
   	console.log('Could not access School-Api...‼️');
   	process.exit(0);
     //console.log(error);

@@ -127,5 +127,9 @@
   "classList": {
     "dataSource": "db",
     "public": true
+  },
+  "classSection": {
+    "dataSource": "db",
+    "public": true
   }
 }

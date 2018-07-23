@@ -1,24 +1,36 @@
-const routes = require('express').Router();
-
+const routes          = require('express').Router();
 //Controllers
-const parent = require('../controllers/parent.controller.js');
+const parent          = require('../controllers/parent.controller.js');
+//Auth Middleware
+const parentAuth      = require('../middleware/parentAuth.js');
 
 
 // Parent Routes
 //-----------------//
-routes.get('/getMarks', parent.getMarks);
+routes.post('/getMarks', parent.getMarks);
+
+
 
 routes.post('/getClassSchedule', parent.getClassSchedule);
 
-routes.get('/getExamSchedule', parent.getExamSchedule);
+routes.post('/getClasses', parent.getClasses);
+
+routes.post('/getExamSchedule', parent.getExamSchedule);
+
+
 
 routes.get('/getEvents', parent.getEvents);
 
-routes.get('/getMessages', parent.getMessages);
-
-routes.get('/sendMessage', parent.sendMessage);
 
 
+routes.post('/getFinance', parent.getFinance);
+
+
+
+
+routes.post('/getMessages', parent.getMessages);
+
+routes.post('/sendMessage', parent.sendMessage);
 
 
 module.exports = routes;

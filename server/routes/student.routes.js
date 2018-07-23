@@ -1,22 +1,38 @@
-const routes = require('express').Router();
-const student = require('../controllers/student.controller.js');
+const routes           = require('express').Router();
+const student 		   = require('../controllers/student.controller.js');
+//Auth Middleware
+const studentAuth      = require('../middleware/studentAuth.js');
 
 
 // Student Routes
 //---------------//
-routes.get('/getMarks', student.getMarks);
+routes.post('/getMarks', student.getMarks);
+
+
 
 routes.post('/getClassSchedule', student.getClassSchedule);
 
 routes.post('/getClasses', student.getClasses);
 
-routes.get('/getExamSchedule', student.getExamSchedule);
+routes.post('/getExamSchedule', student.getExamSchedule);
+
+
 
 routes.get('/getEvents', student.getEvents);
 
+routes.get('/getAnnouncements', student.getAnnouncements);
+
+
+
+routes.post('/getAssignments', student.getAssignments);
+
 routes.post('/uploadAssignment', student.uploadAssignment);
 
-routes.get('/getMarks', student.getMarks);
+
+
+routes.post('/getMessages', student.getMessages);
+
+routes.post('/sendMessage', student.sendMessage);
 
 
 
