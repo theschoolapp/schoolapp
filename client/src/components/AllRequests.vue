@@ -134,7 +134,15 @@ export default {
               console.log(event);
             }
             let url = "http://localhost:5000/accounts/signIn";
-            this.axios.post(url, this.login).then(res => {
+            this.axios({
+              method: 'post',
+              url: url,
+              data: this.login,
+              params: {
+                include: 'user'
+              }
+            })
+            .then(res => {
               console.log(res.data);
               this.resData = res.data;
               this.hideRes = false;

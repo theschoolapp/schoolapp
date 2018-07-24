@@ -279,3 +279,25 @@ exports.sendMessage = (req, res) => {
    }
 
 };
+
+
+
+
+exports.getStudentAttendance = (req, res) => {
+   console.log("Getting Student's Attendance.....");
+    
+    if(!req.body.studentId){
+        res.send('No studentId in request...');
+    }else{
+
+        let parentId = req.body.parentId;
+        axios.get(urls.baseUrl.concat('/students/' + req.body.studentId + '/attendances'))
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    } 
+};

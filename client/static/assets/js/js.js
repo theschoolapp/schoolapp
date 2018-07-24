@@ -62,8 +62,8 @@ jQuery(document).ready(function($){
 		});
 	}
 	//Datepicker
-	jQuery("#studentDOB").datepicker();
-	jQuery("#dptDate").datepicker();
+	//jQuery("#studentDOB").datepicker();
+	//jQuery("#dptDate").datepicker();
 	
 	//accordion
 	jQuery( "#pathshalaAccordion" ).accordion({

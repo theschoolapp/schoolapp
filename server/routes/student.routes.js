@@ -17,6 +17,9 @@ routes.post('/getClasses', student.getClasses);
 routes.post('/getExamSchedule', student.getExamSchedule);
 
 
+routes.post('/getStudentAttendance', student.getStudentAttendance);
+
+
 
 routes.get('/getEvents', student.getEvents);
 

@@ -69,15 +69,7 @@ app.use(cors());
 
 //Starter route
 app.get('/', (req, res) => {
-
-    axios.get( urls.baseUrl.concat('/admins') )
-	  .then(response => {
-	    console.log(response.data);
-	    res.send(response.data);
-	  })
-	  .catch(error => {
-	    console.log(error);
-	  });
+  res.send('School Api Server...');
 });
 
 

@@ -25,7 +25,7 @@ routes.get('/getEvents', parent.getEvents);
 
 routes.post('/getFinance', parent.getFinance);
 
-
+routes.post('/getStudentAttendance', parent.getStudentAttendance);
 
 
 routes.post('/getMessages', parent.getMessages);
