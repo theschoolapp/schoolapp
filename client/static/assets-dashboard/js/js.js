@@ -112,6 +112,7 @@ jQuery(document).ready(function($){
 	});
 	
 	//Student attendence summary bar chart
+	
 	var myChart = new Chart( $('#studentAttendenceBar'), {
 		type: 'bar',
 		data: {

@@ -273,13 +273,21 @@
 </template>
 
 <script>
+import Chart from 'chart.js';
+
 export default {
   name: 'AdminHome',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+
+  created() {
+    
+    console.log("I'm up...")
   }
+
 }
 </script>
 

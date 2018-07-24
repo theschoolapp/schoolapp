@@ -262,7 +262,7 @@ export default {
             .then(res => {
               console.log(res.data);
               if(res.data.accountType == 'admin'){
-              	this.$router.push('/');
+              	this.$router.push('/adminHome');
               }
               
 
@@ -277,5 +277,5 @@ export default {
 </script>
 
 <style scoped>
-	
+	@import '../../static/assets/css/style.css'
 </style>

@@ -82,10 +82,10 @@
               <li>
                 <div class="list-msg">
                   <div class="col-xs-2 image clear-padding">
-                    <img src="assets/img/parent/parent2.jpg" alt="user" />
+                    <img src="/static/assets-dashboard/img/parent/parent2.jpg" alt="user" />
                   </div>
                   <div class="col-sm-10 desc">
-                    <h5><a href="#">John Doe</a></h5>
+                    <h5><a href="#">John Doey</a></h5>
                     <p>Lorem Ipsum is simply dummy text.</p>
                     <h6><i class="fa fa-clock-o"></i> 1 day ago</h6>
                   </div>
@@ -114,7 +114,7 @@
           </li>
           <li class="user dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span><img src="assets/img/parent/parent2.jpg" alt="user">JOHN DOE<span class="caret"></span></span>
+              <span><img src="/static/assets-dashboard/img/parent/parent2.jpg" alt="user">JOHN DOEY<span class="caret"></span></span>
             </a>
             <ul class="dropdown-menu notification-list">
               <li>
@@ -282,6 +282,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+@import '../../../static/assets-dashboard/css/style.css'
 
 .adminDash {
   overflow: hidden !important;
