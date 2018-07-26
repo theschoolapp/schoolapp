@@ -1,27 +1,16 @@
 <template>
   <div class="admin">
-
-    Table Test
-    <DataTable></DataTable>
-
-    
+    View Classes
   </div>
 </template>
 
 <script>
-import DataTable from './datatables/DataTable.vue';
-
-
 export default {
-  name: 'Admin',
+  name: 'AdminViewClasses',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
-  },
-
-  components: {
-    DataTable
   }
 }
 </script>

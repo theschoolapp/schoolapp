@@ -11,7 +11,7 @@
 									<div class="stat-item">
 										<div class="stats">
 											<div class="col-xs-8 count">
-												<h1>199</h1>
+												<h1>{{dashData.nS}}</h1>
 												<p>STUDENTS</p>
 											</div>
 											<div class="col-xs-4 icon">
@@ -29,7 +29,7 @@
 									<div class="stat-item">
 										<div class="stats">
 											<div class="col-xs-8 count">
-												<h1>111</h1>
+												<h1>{{dashData.nT}}</h1>
 												<p>TEACHERS</p>
 											</div>
 											<div class="col-xs-4 icon">
@@ -48,7 +48,7 @@
 									<div class="stat-item">
 										<div class="stats">
 											<div class="col-xs-8 count">
-												<h1>900</h1>
+												<h1>{{dashData.nE}}</h1>
 												<p>EVENTS</p>
 											</div>
 											<div class="col-xs-4 icon">
@@ -66,7 +66,7 @@
 									<div class="stat-item">
 										<div class="stats">
 											<div class="col-xs-8 count">
-												<h1>799</h1>
+												<h1>{{dashData.nM}}</h1>
 												<p>MESSAGES</p>
 											</div>
 											<div class="col-xs-4 icon">
@@ -279,14 +279,170 @@ export default {
   name: 'AdminHome',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      dashData: {
+      	nT: 0,
+      	nS: 0,
+      	nE: 0,
+      	nM: 0
+      },
+      chartData: {}
     }
   },
 
+  methods: {
+  	createCharts(){
+// Chart 1
+  		const ctx = document.getElementById('studentAttendenceBar');
+  		const myChart = new Chart(ctx, {
+		type: 'bar',
+		data: {
+			labels: ["STD 5", "STD 6", "STD 7", "STD 8", "STD 9", "STD 10"],
+			datasets: [
+					{
+						data: [23, 21, 18 , 19, 15, 29],
+						backgroundColor: 'rgba(255, 118, 118, 1)',
+						borderWidth: 0
+					},
+					{
+						data: [15, 20, 21, 22, 24, 28],
+						backgroundColor:'rgba(255, 195, 109, 1)',
+						borderWidth: 0
+					},
+					{
+						data: [26, 25, 23, 26, 26, 28],
+						backgroundColor: 'rgba(39, 174, 96, 1)',
+						borderWidth: 0
+					}
+				]
+				},
+				options: {
+					scales: {
+						xAxes: [{
+							ticks: {
+								beginAtZero:true
+							},
+							gridLines: {
+								display:false
+							}
+						}],
+						yAxes: [{
+							gridLines: {
+								display:false
+							},
+							//barPercentage: 0.5,
+							categoryPercentage: 0.5,
+							ticks: {
+								beginAtZero:true
+							}
+						}]
+					},
+					legend: {
+						display: false
+					}
+				}
+			});
+// Chart 2
+		const ctx2 = document.getElementById('studentAttendenceLine');
+		const myChart2 = new Chart(ctx2, {
+		type: 'line',
+		data: {
+			labels: ["21 Jul", "22 Jul", "23 Jul", "24 Jul", "25 Jul", "26 Jul", "27 Jul"],
+			datasets: [
+				{
+					data: [10, 11, 12, 9, 8, 15, 11],
+					borderColor: "#FF7676",
+					fill: false
+				},
+				{
+					data: [15, 11, 14, 5, 11, 4, 9],
+					borderColor: "#FFC36D",
+					fill: false
+				},
+				{
+					data: [25, 21, 24, 25, 21, 20, 24],
+					borderColor: "#27AE60",
+					fill: false
+				},
+			]
+		},
+		options: {
+			scales: {
+				xAxes: [{
+					ticks: {
+						beginAtZero:true
+					},
+					gridLines: {
+						display:false
+					}
+				}],
+				yAxes: [{
+					gridLines: {
+						display:false
+					},
+					//barPercentage: 0.2,
+					categoryPercentage: 0.5,
+					ticks: {
+						beginAtZero:true
+					}
+				}]
+			},
+			legend: {
+				display: false
+			}
+		}
+	});
+
+
+// Chart 3
+
+	var myChart3 = new Chart( $('#studentPie'), {
+		type: 'pie',
+		data: {
+			labels: ["Absent", "Leave", "Present"],
+			datasets: [{
+			  backgroundColor: [
+				"#FF7676",
+				"#FFC36D",
+				"#27AE60"
+			  ],
+			  data: [20, 10, 70]
+			}]
+		},
+		options: {
+			legend: {
+				display: false
+			}
+		}
+	});
+
+  	},
+
+  	getDashData(){
+
+  		let dashUrl = 'http://localhost:5000/admin/getDashboard';
+  		let reqObj = { adminId: '5b51b0c4d3f4bcbda8a133e7'};
+  		this.axios.post(dashUrl, reqObj ).then(res => {
+              console.log(res.data);
+              this.dashData.nT = res.data.nT;
+              this.dashData.nS = res.data.nS;
+              this.dashData.nE = res.data.nE;
+              this.dashData.nM = res.data.nM;
+            }).catch( err =>{
+              console.log(err);
+            });
+  	}
+
+  },
+
   created() {
-    
+    this.getDashData();
     console.log("I'm up...")
-  }
+  },
+
+  mounted() {
+	  this.createCharts();
+	  
+	}
 
 }
 </script>

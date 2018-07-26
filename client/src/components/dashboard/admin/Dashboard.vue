@@ -157,11 +157,12 @@
             </a>
             <ul class="dropdown-menu">
               <li>              
-                <!--<a href="admin-add-student.html"><i class="fa fa-caret-right"></i>ADD</a> -->
+            
                 <router-link to="/adminAddStudent" > <i class="fa fa-caret-right"></i>ADD </router-link>
               </li>
               <li>
-                <a href="admin-student-list.html"><i class="fa fa-caret-right"></i>ALL STUDENT  </a>
+                
+                <router-link to="/adminAllStudents" > <i class="fa fa-caret-right"></i>ALL STUDENTS </router-link>
               </li>
             </ul>
             <div class="clearfix"></div>
@@ -172,19 +173,23 @@
             </a>
             <ul class="dropdown-menu">
               <li>              
-                <a href="admin-add-teacher.html"><i class="fa fa-caret-right"></i>ADD</a>
+                
+                <router-link to="/adminAddTeacher" > <i class="fa fa-caret-right"></i>ADD </router-link>
               </li>
               <li>
-                <a href="admin-teacher-list.html"><i class="fa fa-caret-right"></i>ALL TEACHER</a>
+                
+                <router-link to="/adminTeacherList" > <i class="fa fa-caret-right"></i>ALL TEACHERS </router-link>
               </li>
             </ul>
             <div class="clearfix"></div>
           </li>
           <li>
-            <a href="message.html"><i class="fa fa-envelope menu-icon"></i> MY MESSAGES</a>
+            
+            <router-link to="/adminMessages" > <i class="fa fa-envelope menu-icon"></i> MY MESSAGES </router-link>
           </li>
           <li>
-            <a href="admin-add-announcement.html"><i class="fa fa-bullhorn menu-icon"></i> ANNOUNCEMENTS</a>
+            
+            <router-link to="/adminAddAnnouncement" > <i class="fa fa-bullhorn menu-icon"></i> ANNOUNCEMENTS </router-link>
           </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -192,16 +197,20 @@
             </a>
             <ul class="dropdown-menu">
               <li>              
-                <a href="admin-add-class.html"><i class="fa fa-caret-right"></i>ADD CLASS</a>
+                <router-link to="/adminAddClass" > <i class="fa fa-caret-right"></i>ADD CLASS </router-link>
               </li>
               <li>
-                <a href="admin-add-section.html"><i class="fa fa-caret-right"></i>ADD SECTION</a>
+                
+                <router-link to="/adminAddSection" > <i class="fa fa-caret-right"></i>ADD SECTION </router-link>
               </li>
               <li>
-                <a href="admin-add-class.html"><i class="fa fa-caret-right"></i>VIEW SECTIONS</a>
+                
+                <router-link to="/adminViewSections" > <i class="fa fa-caret-right"></i>VIEW SECTIONS </router-link>
               </li>
               <li>
-                <a href="admin-add-section.html"><i class="fa fa-caret-right"></i>VIEW CLASSES</a>
+                
+                 <router-link to="/adminViewClasses" > <i class="fa fa-caret-right"></i>VIEW CLASSES </router-link>
+                
               </li>
             </ul>
             <div class="clearfix"></div>
@@ -212,10 +221,12 @@
             </a>
             <ul class="dropdown-menu">
               <li>              
-                <a href="admin-add-subject.html"><i class="fa fa-caret-right"></i>ADD</a>
+                
+                <router-link to="/adminAddSubject" > <i class="fa fa-caret-right"></i>ADD </router-link>
               </li>
               <li>
-                <a href="admin-add-subject.html"><i class="fa fa-caret-right"></i>VIEW SUBJECTS</a>
+                
+                <router-link to="/adminViewSubjects" > <i class="fa fa-caret-right"></i>VIEW SUBJECTS </router-link>
               </li>
             </ul>
             <div class="clearfix"></div>
@@ -226,10 +237,12 @@
             </a>
             <ul class="dropdown-menu">
               <li>              
-                <a href="admin-create-timetable.html"><i class="fa fa-caret-right"></i>CREATE</a>
+                
+                <router-link to="/adminCreateTimeTable" > <i class="fa fa-caret-right"></i>CREATE TIMETABLE </router-link>
               </li>
               <li>
-                <a href="admin-class-timetable.html"><i class="fa fa-caret-right"></i>VIEW</a>
+                
+                <router-link to="/adminClassTimeTable" > <i class="fa fa-caret-right"></i>VIEW TIMETABLE </router-link>
               </li>
             </ul>
             <div class="clearfix"></div>
@@ -240,10 +253,12 @@
             </a>
             <ul class="dropdown-menu">
               <li>              
-                <a href="teacher-attendence-report.html"><i class="fa fa-caret-right"></i>ATTENDENCE</a>
+                
+                <router-link to="/adminAttendanceReport" > <i class="fa fa-caret-right"></i>ATTENDENCE </router-link>
               </li>
               <li>
-                <a href="teacher-marks-report.html"><i class="fa fa-caret-right"></i>MARKS</a>
+                
+                <router-link to="/adminMarksReport" > <i class="fa fa-caret-right"></i>MARKS </router-link>
               </li>
             </ul>
             <div class="clearfix"></div>
