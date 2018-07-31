@@ -24,6 +24,9 @@ import AdminViewClasses from '@/components/dashboard/admin/AdminViewClasses'
 import AdminViewSections from '@/components/dashboard/admin/AdminViewSections'
 import AdminAttendanceReport from '@/components/dashboard/admin/AdminAttendanceReport'
 import AdminMarksReport from '@/components/dashboard/admin/AdminMarksReport'
+//Parent Dashboard
+import ParentDashboard from '@/components/dashboard/parent/ParentDashboard'
+import ParentHome from '@/components/dashboard/parent/ParentHome'
 
 
 
@@ -130,6 +133,18 @@ export default new Router({
           path: '/adminMarksReport',
           name: 'AdminMarksReport',
           component: AdminMarksReport
+        }
+      ]
+    },
+    {
+      path: '/parentDashboard',
+      name: 'ParentAdmin',
+      component: ParentDashboard,
+      children: [
+        {
+          path: '/parentHome',
+          name: 'ParentHome',
+          component: ParentHome
         }
       ]
     },

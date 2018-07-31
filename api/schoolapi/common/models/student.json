@@ -92,6 +92,11 @@
       "type": "hasAndBelongsToMany",
       "model": "classList",
       "foreignKey": ""
+    },
+    "payments": {
+      "type": "hasMany",
+      "model": "payment",
+      "foreignKey": ""
     }
   },
   "acls": [],

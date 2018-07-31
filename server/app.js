@@ -19,6 +19,7 @@ const studentRouter  = require('./routes/student.routes.js');
 const teacherRouter  = require('./routes/teacher.routes.js');
 const parentRouter   = require('./routes/parent.routes.js');
 const adminRouter    = require('./routes/admin.routes.js');
+const paynowRouter   = require('./routes/paynow.routes.js');
 
 
 
@@ -78,6 +79,8 @@ app.use('/admin', adminRouter);
 app.use('/student', studentRouter);
 app.use('/parent', parentRouter);
 app.use('/teacher', teacherRouter);
+
+app.use('/payments', paynowRouter);
 
 
 

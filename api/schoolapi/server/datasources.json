@@ -3,9 +3,9 @@
     "name": "memoryDB",
     "connector": "memory"
   },
-  "db": {
+  "localDB": {
     "url": "mongodb://admin:123456A@ds231951.mlab.com:31951/schoolappp",
-    "name": "db",
+    "name": "localDB",
     "connector": "mongodb"
   },
   "fileStore": {
@@ -13,5 +13,15 @@
     "connector": "loopback-component-storage",
     "provider": "filesystem",
     "root": "./server/storage"
+  },
+  "db": {
+    "host": "localhost",
+    "port": 27017,
+    "url": "",
+    "database": "schoolDB",
+    "password": "",
+    "name": "db",
+    "user": "",
+    "connector": "mongodb"
   }
 }

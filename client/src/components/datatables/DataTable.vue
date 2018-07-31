@@ -1,7 +1,8 @@
 <template>
-  <div>
+ 
+<div class="tableContainer">
 
-    <table class="table table-striped table-bordered display responsive nowrap" id="attendenceDetailedTable" cellspacing="0" width="100%">
+    <table class="table table-striped table-bordered display responsive nowrap" id="a" cellspacing="0" width="100%">
                     <thead>
                       <tr role="row"><th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Date
                         : activate to sort column ascending" style="width: 111px;">Date
@@ -14,101 +15,54 @@
                     </th></tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>JOHN DOE</td>
-                      <td>PTH2017001</td>
+                    <tr v-for="person in data" :key="person.id">
+                      <td>{{person.name}}</td>
+                      <td>PTH2017002</td>
                       <td>STD 5</td>
                       <td>PTH05A</td>
                       <td>PTH05A01</td>
 
                       <td class="action-link">
                         <a class="edit" href="#" title="Edit" data-toggle="modal" data-target="#editDetailModal"><i class="fa fa-edit"></i></a>
-                        <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal"><i class="fa fa-remove"></i></a>
+                        <a class="delete" v-on:click="openModal()" title="Delete" data-toggle="modal" data-target="#deleteDetailModal"><i class="fa fa-remove"></i></a>
                       </td>
                     </tr>
-                    <tr>
-                      <td>LENNORE DOE</td>
-                      <td>PTH2017001</td>
-                      <td>STD 5</td>
-                      <td>PTH05A</td>
-                      <td>PTH05A01</td>
-                      <td class="action-link">
-                        <a class="edit" href="#" title="Edit" data-toggle="modal" data-target="#editDetailModal"><i class="fa fa-edit"></i></a>
-                        <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal"><i class="fa fa-remove"></i></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>JOHN DOE</td>
-                      <td>PTH2017001</td>
-                      <td>STD 5</td>
-                      <td>PTH05A</td>
-                      <td>PTH05A01</td>
-                      <td class="action-link">
-                        <a class="edit" href="#" title="Edit" data-toggle="modal" data-target="#editDetailModal"><i class="fa fa-edit"></i></a>
-                        <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal"><i class="fa fa-remove"></i></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>LENNORE DOE</td>
-                      <td>PTH2017001</td>
-                      <td>STD 5</td>
-                      <td>PTH05A</td>
-                      <td>PTH05A01</td>
-                      <td class="action-link">
-                        <a class="edit" href="#" title="Edit" data-toggle="modal" data-target="#editDetailModal"><i class="fa fa-edit"></i></a>
-                        <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal"><i class="fa fa-remove"></i></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>JOHN DOE</td>
-                      <td>PTH2017001</td>
-                      <td>STD 5</td>
-                      <td>PTH05A</td>
-                      <td>PTH05A01</td>
-                      <td class="action-link">
-                        <button type="button" class="btn btn-primary btn-xs dt-edit" style="margin-right:16px;">
-                          <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                        <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal"><i class="fa fa-remove"></i></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>LENNORE DOE</td>
-                      <td>PTH2017001</td>
-                      <td>STD 5</td>
-                      <td>PTH05A</td>
-                      <td>PTH05A01</td>
-                      <td class="action-link">
-                        <a class="edit" href="#" title="Edit" data-toggle="modal" data-target="#editDetailModal"><i class="fa fa-edit"></i></a>
-                        <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal"><i class="fa fa-remove"></i></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>JOHN DOE</td>
-                      <td>PTH2017001</td>
-                      <td>STD 3</td>
-                      <td>PTH03A</td>
-                      <td>PTH05A01</td>
-                      <td class="action-link">
-                        <a class="edit" href="#" title="Edit" data-toggle="modal" data-target="#editDetailModal"><i class="fa fa-edit"></i></a>
-                        <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal"><i class="fa fa-remove"></i></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>LENNORE DOE</td>
-                      <td>PTH2017001</td>
-                      <td>STD 8</td>
-                      <td>PTH08A</td>
-                      <td>PTH05A01</td>
-                      <td class="action-link">
-                        <a class="edit" href="#" title="Edit" data-toggle="modal" data-target="#editDetailModal"><i class="fa fa-edit"></i></a>
-                        <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal"><i class="fa fa-remove"></i></a>
-                      </td>
-                    </tr>
+                    
+                    
+                   
+                   
                   </tbody>
                 </table>
-    
-  </div>
+
+
+
+                 <modal 
+                  name='hello2'
+                  :height="134" 
+                  :width="598"
+
+                 >
+
+                 
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-trash"></i>DELETE STUDENT</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="table-action-box">
+                          <a href="#" class="save"><i class="fa fa-check"></i>YES</a>
+                          <a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  
+                  
+                </modal>
+    </div>
+  
 </template>
 
 <script>
@@ -116,20 +70,34 @@ export default {
   name: 'DataTable',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      data: this.tableData
     }
   },
 
   props: [ 'tableData' ],
 
   mounted: function() {
-    $(this.$el).DataTable();
+    $('#a').DataTable();
+    console.log(this.data);
+  },
+
+   methods: {
+    openModal() {
+      this.$modal.show('hello2');
+    }
   }
+
 }
 </script>
 
 
 <style scoped>
+
+.tableContainer {
+  padding-left: 25px;
+  padding-right: 25px;
+}
 
 
 </style>
