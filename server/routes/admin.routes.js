@@ -14,9 +14,9 @@ routes.get('/getAllStudents', admin.getAllStudents);
 
 routes.post('/getStudent', admin.getStudent);
 
-routes.post('/addStudent', admin.addStudent);
+routes.post('/addStudent', admin.addStudent); //Now creates both student + parent records
 
-routes.post('/addParent', admin.addStudent);
+//routes.post('/addParent', admin.addStudent);
 
 
 

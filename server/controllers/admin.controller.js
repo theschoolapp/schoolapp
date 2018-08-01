@@ -187,7 +187,7 @@ exports.getStudent = (req, res) => {
 // "sports": ["string"],
 //  "parentId": "string",
 // "accountId": "string"
-exports.addStudent = (req, res) => {
+exports.addStudent2 = (req, res) => {
     console.log('Adding Student....');
 
     axios.post(urls.baseUrl.concat('/students'), req.body)
@@ -216,31 +216,7 @@ exports.addStudentToClass = (req, res) => {
         });
   
 };
-//Create new student object and save to db
-//Requires the full student record as part of the request object
-//  "lastName": "string",
-//    "title": "string",
-//    "occupation": "string",
-//    "phoneNumber1": "string",
-//    "phoneNumber2": "string",
-//    "email": "string",
-//    "religion": "string",
-//    "nationality": "string",
-//    "address": "string",
-//    "accountId": "string"
-//    "studentId"
-exports.addParent = (req, res) => {
-    console.log('Adding Parent....');
 
-    axios.post(urls.baseUrl.concat('/students/' + req.body.studentId + '/parents'), req.body)
-        .then(response => {
-            res.send(response.data);
-        })
-        .catch(error => {
-            console.log(error);
-        });
-   
-};
 //--------------------------------------------------//
 //--------------------------------------------------//
 //--------------------------------------------------//
@@ -293,33 +269,83 @@ exports.getTeacher = (req, res) => {
 //Add a new Teacher
 //Requires the teacher record as part of the request object
 //req.body has also :
-// -  "firstName": "string",
-//   "middleName": "string",
-//  "lastName": "string",
-//   "gender": "string",
-//    "religion": "string",
-//    "email": "string",
-//    "phoneNumber1": "string",
-//    "phoneNumber2": "string",
-//    "dob": "string",
-//    "address": "string",
-//    "highestDegree": "string",
-//    "otherDegrees": ["string"],
-//   "university": "string",
-//  "graduatingYear": "string",
-//  "CGPA": "string",
-//   "id": "string",
-//    "accountId": "string"
+// validated: boolean
+// teacher: {
+        // -  "firstName": "string",
+        //   "middleName": "string",
+        //  "lastName": "string",
+        //   "gender": "string",
+        //    "religion": "string",
+        //    "email": "string",
+        //    "phoneNumber1": "string",
+        //    "phoneNumber2": "string",
+        //    "dob": "string",
+        //    "address": "string",
+        //    "highestDegree": "string",
+        //    "otherDegrees": ["string"],
+        //   "university": "string",
+        //  "graduatingYear": "string",
+        //  "CGPA": "string",
+        //   "id": "string",
+        //    "accountId": "string"
+// }
 exports.addTeacher = (req, res) => {
     console.log('Adding Teacher....');
+    let teacherAccount = {
+        accountType: 'teacher',
+        username: '',
+        email: '',
+        password: ''
 
-    axios.post(urls.baseUrl.concat('/teachers'), req.body)
+    }
+    function newTeacher(teacher){
+
+        axios.post(urls.baseUrl.concat('/teachers'), teacher)
         .then(response => {
-            res.send(response.data);
+            console.log('New teacher created (id) : ' + response.data.id);
+            res.send({ success: true, teacher: response.data });
         })
         .catch(error => {
             console.log(error);
+        }); 
+    };
+
+    function createTeacher(id){
+
+        if (req.body.teacher){
+         let teacher = {};
+         teacher = req.body.teacher;
+         teacher.accountId = id;
+
+         newTeacher(teacher);
+        }
+    };
+
+    function newTeacherAccount(account){
+
+        axios.post(urls.baseUrl.concat('/accounts'), account)
+        .then(response => {
+            console.log('New teacher ACCOUNT created (id) : ' + response.data.id);
+            let teacherAccountId = response.data.id;
+            createTeacher(teacherAccountId);
+        })
+        .catch(error => {
+            console.log(error.Error);
         });
+    };
+
+    if(!req.body.validated){
+        res.send('Validation : False');
+    }
+    else {
+
+        teacherAccount.email = req.body.teacher.email;
+        teacherAccount.username = req.body.teacher.firstName;
+        teacherAccount.password = req.body.teacher.email;
+
+        newTeacherAccount(teacherAccount);
+    }
+
 
 };
 //Gets all the teachers' attendances
@@ -685,6 +711,143 @@ exports.addEvent = (req, res) => {
 //--------------------------------------------------//
 //--------------------------------------------------//
 //--------------------------------------------------//
+//Create new Student + Parent
+//req.body has:
+// - validated : boolean
+// - student : { }
+// - parent : { }
+exports.addStudent = (req, res) => {
+    console.log('Creating an Student Account........📬');
+    let studentAccount = {
+        accountType: 'student',
+        username: '',
+        email: '',
+        password: ''
+        };
+    let parentAccount = {
+        accountType: 'parent',
+        username: '',
+        email: '',
+        password: ''
+        };
+    
+    function linkStudent2Parent(pId, sId) {
+        console.log("Linking Student 2 Parent -  parentId - studentId" );
+        console.log(pId + " - " + sId);
+        axios.patch(urls.baseUrl.concat('/students/' + sId), { parentId: pId })
+        .then(response => {
+
+            console.log('New student linked to new parent');
+            res.send({ success: true, parentId: pId, studentId: sId });
+            
+        })
+        .catch(error => {
+            console.log(error.Error);
+        });
+
+    }
+
+    function newStudent(student){
+
+        axios.post(urls.baseUrl.concat('/students'), student)
+        .then(response => {
+
+            console.log('New student created (id) : ' + response.data.id);
+            let studentId = response.data.id;
+            newParentAccount(parentAccount, studentId);
+        })
+        .catch(error => {
+            console.log(error.Error);
+        }); 
+    };
+
+    function newParent(parent){
+
+        axios.post(urls.baseUrl.concat('/parents'), parent)
+        .then(response => {
+            console.log('New parent created (id) : ' + response.data.id);
+            let parentId = response.data.id;
+            let studentId = response.data.studentId;
+            linkStudent2Parent(parentId, studentId);
+
+        })
+        .catch(error => {
+            console.log(error);
+        }); 
+    };
+
+
+
+    function createStudent(id){
+
+        if (req.body.student){
+         let student = {};
+         student = req.body.student;
+         student.accountId = id;
+
+         newStudent(student);
+        }
+    };
+
+    function createParent(id, studentId){
+
+        if (req.body.parent){
+         let parent = {};
+         parent = req.body.parent;
+         parent.accountId = id;
+         parent.studentId = studentId;
+
+         newParent(parent);
+        }
+    };
+
+
+    function newStudentAccount(studentAccount){
+
+        axios.post(urls.baseUrl.concat('/accounts'), studentAccount)
+        .then(response => {
+            console.log('New student ACCOUNT created (id) : ' + response.data.id);
+            let studentAccountId = response.data.id;
+            createStudent(studentAccountId);
+        })
+        .catch(error => {
+            console.log(error.Error);
+        }); 
+    };
+
+     function newParentAccount(parentAccount, studentId){
+
+        axios.post(urls.baseUrl.concat('/accounts'), parentAccount)
+        .then(response => {
+            console.log('New parent ACCOUNT created (id) : ' + response.data.id);
+            let parentAccountId = response.data.id;
+            createParent(parentAccountId, studentId);
+        })
+        .catch(error => {
+            console.log(error.Error);
+        }); 
+    };
+
+
+    if(!req.body.validated){
+        res.send('Validation : False');
+    }
+    else {
+
+        studentAccount.email = req.body.student.email;
+        studentAccount.username = req.body.student.firstName;
+        studentAccount.password = req.body.student.regNumber;
+
+
+        parentAccount.email = req.body.parent.email;
+        parentAccount.username = req.body.parent.lastName;
+        parentAccount.password = req.body.parent.email;
+
+        newStudentAccount(studentAccount);
+    }
+
+};
+
 
 
 

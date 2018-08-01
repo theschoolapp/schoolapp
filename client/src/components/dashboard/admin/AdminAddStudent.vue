@@ -69,20 +69,16 @@
 									<div class="inner-item">
 										<div class="dash-form">
 											<div class="col-sm-3">
-												<label class="clear-top-margin"><i class="fa fa-user-circle-o"></i>FATHER NAME</label>
-												<input type="text" v-model="parent.fatherName" placeholder="Father's Name" />
+												<label class="clear-top-margin"><i class="fa fa-user-circle-o"></i>Title</label>
+												<input type="text" v-model="parent.title" placeholder="Title" />
 											</div>
 											<div class="col-sm-3">
-												<label class="clear-top-margin"><i class="fa fa-user-circle-o"></i>MOTHER NAME</label>
-												<input type="text" v-model="parent.motherName" placeholder="Mother's Name" />
+												<label class="clear-top-margin"><i class="fa fa-user-circle-o"></i>Last NAME</label>
+												<input type="text" v-model="parent.lastName" placeholder="Last Name" />
 											</div>
 											<div class="col-sm-3">
 												<label class="clear-top-margin"><i class="fa fa-briefcase"></i>OCCUPATION</label>
-												<select v-model="parent.occupation">
-													<option>-- Select --</option>
-													<option>Teacher</option>
-													<option>Doctor</option>
-												</select>
+												<input type="text" v-model="parent.occupation" placeholder="Occupation" />
 											</div>
 											<div class="col-sm-3">
 												<label class="clear-top-margin"><i class="fa fa-phone"></i>CONTACT #</label>
@@ -121,26 +117,12 @@
 												<input type="text" v-model="parent.address" placeholder="Street Address" />
 											</div>
 											<div class="col-sm-3">
-												<label><i class="fa fa-flag"></i>COUNTRY</label>
-												<select v-model="parent.country">
-													<option>-- Select --</option>
-													<option>Zimbabwe</option>
-													<option>Canada</option>
-													<option>India</option>
-													<option>Japan</option>
-												</select>
+												
 											</div>
 											<div class="col-sm-3">
-												<label><i class="fa fa-id-card"></i>STATE</label>
-												<select v-model="parent.state">
-													<option>-- Select --</option>
-													<option>British Columbia</option>
-													<option>Ontario</option>
-												</select>
+												
 											</div>
 											<div class="col-sm-3">
-												<label><i class="fa fa-code"></i>ZIP</label>
-												<input type="text" v-model="parent.zip" placeholder="90890" />
 											</div>
 											<div class="clearfix"></div>
 								
@@ -167,7 +149,7 @@
 											</div>
 											<div class="col-sm-3">
 												<label class="clear-top-margin"><i class="fa fa-cogs"></i>SECTION</label>
-												<select v-model="student.section">
+												<select>
 													<option>-- Select --</option>
 													<option>PTH05A</option>
 													<option>PTH05B</option>
@@ -175,7 +157,7 @@
 											</div>
 											<div class="col-sm-3">
 												<label class="clear-top-margin"><i class="fa fa-puzzle-piece"></i>ROLL #</label>
-												<input type="text" v-model="student.rollNumber" placeholder="PTH05A01" />
+												<input type="text"  placeholder="PTH05A01" />
 											</div>
 											<div class="clearfix"></div>
 											<div class="col-sm-3">
@@ -184,7 +166,7 @@
 											</div>
 											<div class="col-sm-3">
 												<label><i class="fa fa-star"></i>LAST STD</label>
-												<input type="text" v-model="student.lastStd" placeholder="4 STD" />
+												<input type="text"  placeholder="4 STD" />
 											</div>
 											<div class="col-sm-3">
 												<label><i class="fa fa-code"></i>MARKS OBTAINED</label>
@@ -192,7 +174,7 @@
 											</div>
 											<div class="col-sm-3">
 												<label><i class="fa fa-futbol-o"></i>SPORTS</label>
-												<select v-model="student.sports">
+												<select v-model="student.sports[0]">
 													<option>-- Select --</option>
 													<option>Cricket</option>
 													<option>Football</option>
@@ -201,7 +183,14 @@
 											</div>
 											<div class="clearfix"></div>
 											<div class="col-sm-12">
-												<a href="#"><i class="fa fa-paper-plane"></i> SAVE</a>
+												<a @click="submitForm($event)"><i class="fa fa-paper-plane"></i> SAVE</a>
+											</div>
+											<div class="clearfix"></div>
+											<div v-if="showAlert" class="col-sm-12">
+												<div class="alert alert-success alert-dismissible vue-alert" role="alert">
+												  <button type="button" @click="cleanUp()" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+												  <strong><i class="fa fa-check-square-o" aria-hidden="true"></i> Success</strong> New student and new parent created successfully.
+												</div>
 											</div>
 										</div>
 										<div class="clearfix"></div>
@@ -225,6 +214,9 @@ export default {
   name: 'AdminAddStudent',
   data () {
     return {
+
+      showAlert: false,
+      
       student: {
       	firstName: '',
       	middleName: '',
@@ -234,32 +226,81 @@ export default {
       	religion: '-- Select --',
       	email: '',
       	phoneNumber: '',
-      	sports: '',
+      	sports: [ ],
       	lastSchoolMarks: '',
-      	lastStd: '',
       	lastSchool: '',
-      	rollNumber: '',
-      	regNumber: '',
+      	regNumber: ''
 
 
 
       },
       parent: {
-      	fatherName: '',
-      	motherName: '',
-      	occupation: '-- Select --',
+      	title: '',
+      	lastName: '',
+      	occupation: '',
       	contact1: '',
       	contact2: '',
       	email: '',
       	religion: '-- Select --',
       	nationality: '-- Select --',
-      	address: '',
-      	country: '-- Select --',
-      	state: '-- Select --',
-      	zip: ''
-
+      	address: ''
+      	
       }
+
     }
+  },
+
+  methods: {
+  	submitForm(event){
+  		event.preventDefault();
+  		console.log('Submit');
+  		let data = {
+  			validated: true,
+  			student: this.student,
+  			parent: this.parent
+  		}
+  		this.axios.post("http://localhost:5000/admin/addStudent", data)
+  		.then((resp) => {
+  			console.log(resp.data);
+  			if(resp.data.success){
+  				this.showAlert = true;	
+  			}
+  		})
+  		.catch((err) => {
+  			console.log(err);
+  		});
+
+  	},
+  	cleanUp(){
+ 		this.showAlert = false;
+  		this.student = {
+		      	firstName: '',
+		      	middleName: '',
+		      	lastName: '',
+		      	gender: '-- Select --',
+		      	dob: '',
+		      	religion: '-- Select --',
+		      	email: '',
+		      	phoneNumber: '',
+		      	sports: [ ],
+		      	lastSchoolMarks: '',
+		      	lastSchool: '',
+		      	regNumber: ''
+		      };
+		this.parent = {
+		      	title: '',
+		      	lastName: '',
+		      	occupation: '',
+		      	contact1: '',
+		      	contact2: '',
+		      	email: '',
+		      	religion: '-- Select --',
+		      	nationality: '-- Select --',
+		      	address: ''
+		      	
+		      };
+
+  	}
   }
 }
 </script>
@@ -285,6 +326,10 @@ export default {
 .page-title {
 	color: #333;
 	text-align: left;
+}
+
+.vue-alert {
+	margin-top: 10px !important;
 }
 
 </style>

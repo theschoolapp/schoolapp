@@ -3,11 +3,6 @@
     "name": "memoryDB",
     "connector": "memory"
   },
-  "localDB": {
-    "url": "mongodb://admin:123456A@ds231951.mlab.com:31951/schoolappp",
-    "name": "localDB",
-    "connector": "mongodb"
-  },
   "fileStore": {
     "name": "fileStore",
     "connector": "loopback-component-storage",

@@ -9,7 +9,15 @@ export default {
   name: 'AdminAddSubject',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      announcement: {
+        msg :  "",
+        title :  "",
+        from :  "",
+        forTeachers : false,
+        forStudents : false,
+        id :  ""
+      }
     }
   }
 }
