@@ -1,5 +1,5 @@
 {
-  "name": "yearClass",
+  "name": "libSubject",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -7,20 +7,19 @@
   },
   "properties": {
     "name": {
-      "type": "string",
-      "required": true
+      "type": "string"
     }
   },
   "validations": [],
   "relations": {
-    "classes": {
-      "type": "hasMany",
-      "model": "class",
-      "foreignKey": ""
-    },
     "libResources": {
       "type": "hasMany",
       "model": "libResource",
+      "foreignKey": ""
+    },
+    "libRegistrations": {
+      "type": "hasMany",
+      "model": "libRegistration",
       "foreignKey": ""
     }
   },

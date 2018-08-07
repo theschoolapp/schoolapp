@@ -17,6 +17,11 @@
       "type": "hasMany",
       "model": "class",
       "foreignKey": ""
+    },
+    "libSubjects": {
+      "type": "hasMany",
+      "model": "libSubject",
+      "foreignKey": ""
     }
   },
   "acls": [],

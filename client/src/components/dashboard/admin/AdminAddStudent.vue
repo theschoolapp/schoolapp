@@ -132,6 +132,52 @@
 									<div class="clearfix"></div>
 								</div>
 								<div class="dash-item">
+									<h6 class="item-title"><i class="fa fa-user-secret"></i>HEALTH INFO</h6>
+									<div class="inner-item">
+										<div class="dash-form">
+											<div class="col-sm-3">
+												<label class="clear-top-margin"><i class="fa fa-user-circle-o"></i>MEDICAL AID</label>
+												<select v-model="healthRecord.medicalAid">
+													<option>-- Select --</option>
+													<option>CISMAS</option>
+													<option>First Mutual</option>
+													<option>None</option>
+												</select>
+											</div>
+											<div class="col-sm-3">
+												<label class="clear-top-margin"><i class="fa fa-user-circle-o"></i>MEDICAL AID NUMBER</label>
+												<input type="text" v-model="healthRecord.medicalAidNumber" placeholder="Your Medical Aid Number" />
+											</div>
+											<div class="col-sm-3">
+												<label class="clear-top-margin"><i class="fa fa-briefcase"></i>DOCTOR</label>
+												<input type="text" v-model="healthRecord.doctor" placeholder="Doctor's Name" />
+											</div>
+											<div class="col-sm-3">
+												<label class="clear-top-margin"><i class="fa fa-phone"></i>DOCTOR CONTACT #</label>
+												<input type="text" v-model="healthRecord.doctorContact" placeholder="0700 000 000" />
+											</div>
+											<div class="clearfix"></div>
+											<div class="col-sm-6">
+												<label><i class="fa fa-phone"></i>ALLERGIES</label>
+												
+												<textarea type="text" v-model="healthRecord.allergies[0]" placeholder="E.g pollen allergy, fish allergy"></textarea>
+											</div>
+											<div class="col-sm-6">
+												<label><i class="fa fa-envelope-o"></i>HEALTH NOTES</label>
+												<textarea type="text" v-model="healthRecord.healthNotes" placeholder="Health notes..."></textarea>
+											</div>
+											
+											
+											<div class="clearfix"></div>
+											
+											<div class="clearfix"></div>
+								
+										</div>
+										<div class="clearfix"></div>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+								<div class="dash-item">
 									<h6 class="item-title"><i class="fa fa-book"></i>ACADEMIC INFO</h6>
 									<div class="inner-item">
 										<div class="dash-form">
@@ -245,9 +291,19 @@ export default {
       	nationality: '-- Select --',
       	address: ''
       	
-      }
+      },
+      healthRecord: {
+    	medicalAid: '-- Select --',
+    	medicalAidNumber: '',
+    	allergies: [],
+    	doctor: '',
+    	doctorContact: '',
+    	healthNotes: ''
 
     }
+
+    }
+
   },
 
   methods: {
@@ -257,7 +313,8 @@ export default {
   		let data = {
   			validated: true,
   			student: this.student,
-  			parent: this.parent
+  			parent: this.parent,
+  			healthRecord: this.healthRecord
   		}
   		this.axios.post("http://localhost:5000/admin/addStudent", data)
   		.then((resp) => {
@@ -299,6 +356,15 @@ export default {
 		      	address: ''
 		      	
 		      };
+		this.healthRecord = {
+		    	medicalAid: '-- Select --',
+		    	medicalAidNumber: '',
+		    	allergies: [ ],
+		    	doctor: '',
+		    	doctorContact: '',
+		    	healthNotes: ''
+
+    			};
 
   	}
   }

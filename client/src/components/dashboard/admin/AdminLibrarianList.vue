@@ -3,7 +3,7 @@
     <div class="container-fluid vue-page2-container">
       <div class="row">
           <div class="col-lg-12 clear-padding-xs">
-            <h5 class="page-title"><i class="fa fa-users"></i>ALL STUDENT</h5>
+            <h5 class="page-title"><i class="fa fa-users"></i>ALL LIBRARIANS</h5>
             <div class="section-divider"></div>
           </div>
         </div>
@@ -11,15 +11,15 @@
           <div class="col-lg-12 clear-padding-xs">
             <div class="col-lg-12">
               <div class="dash-item first-dash-item">
-                <h6 class="item-title"><i class="fa fa-user"></i>STUDENTS</h6>
+                <h6 class="item-title"><i class="fa fa-user"></i>LIBRARIANS</h6>
                 <div class="inner-item">
-                  <StudentList 
-                  v-bind:table-data="students" 
+                  <LibList 
+                  v-bind:table-data="libs" 
                   v-bind:edit-data="obj"  
-                  v-on:deleteStudent="deleteStu($event)"
-                  v-on:editStudent="editStu($event)"
-                  v-on:editedStudent="changeStu($event)"
-                  ></StudentList>
+                  v-on:deleteLib="deleteRecord($event)"
+                  v-on:editLib="editRecord($event)"
+                  v-on:doEdit="changeRecord($event)"
+                  ></LibList>
               </div>
             </div>
           </div>
@@ -34,42 +34,44 @@
 </template>
 
 <script>
-import StudentList from '../../datatables/StudentList.vue'
+import LibList from '../../datatables/LibrarianList.vue'
 export default {
-  name: 'AdminStudentList',
+  name: 'AdminLibrarianList',
   data () {
     return {
       obj: {},
-      students: [
+      libs: [
       {
 
-            dob : " ",
-            email : " ",
-            enrolledClasses : " ",
-            firstName : " ",
-            gender : " ",
-            id : " ",
-            lastName : " ",
-            lastSchool : " ",
-            lastSchoolMark : " ",
-            middleName : " ",
-            phoneNumber : " ",
-            regNumber : " ",
-            religion : " ",
-            sports : " ",
-            yearClass : " "
+            firstName: "",
+            id: "",
+            accountId: "",
+            middleName: "",
+            lastName : "",
+            gender : "-- Select --",
+            religion : "-- Select --",
+            email : "",
+            phoneNumber1 : "",
+            phoneNumber2 : "",
+            dob : "",
+            address : "",
+            highestDegree : "",
+            otherDegrees : [ ],
+            university: "",
+            graduatingYear : "",
+            CGPA : ""
       }]
       
     }
   },
 
   methods: {
-    getStudents(){
+    getLibs(){
 
-      let apiUrl = 'http://localhost:5000/admin/getAllStudents';
+      let apiUrl = 'http://localhost:5000/admin/getAllLibrarians';
       this.axios.get(apiUrl).then(res => {
               console.log(res.data);
-              this.students = res.data;
+              this.libs = res.data;
               
               
             }).catch( err =>{
@@ -78,28 +80,25 @@ export default {
 
     },
 
-    gotMsg(){
-      console.log('Got Event');
-    },
-
-    deleteStu(event){
+  
+    deleteRecord(event){
       console.log('Got Delete Event');
       console.log(event);
     },
 
-    editStu(event){
-      this.obj = this.students.find(x => x.regNumber == event[0]);
+    editRecord(event){
+      this.obj = this.libs.find(x => x.email == event[2]);
       console.log(this.obj);
       if(this.obj.id){
         console.log(this.obj.id);
       }
       
     },
-    changeStu(event){
+    changeRecord(event){
       console.log('Got Edit Event');
       console.log(event);
       let obj = event;
-      let apiUrl = 'http://localhost:5000/admin/editStudent';
+      let apiUrl = 'http://localhost:5000/admin/editLibrarian';
       this.axios.post(apiUrl, obj)
       .then(resp => {
         console.log(resp);
@@ -113,11 +112,11 @@ export default {
   },
 
   components: {
-    StudentList
+    LibList
   },
 
   created() {
-    this.getStudents();
+    this.getLibs();
     
   },
 

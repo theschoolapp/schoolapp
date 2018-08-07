@@ -15,27 +15,44 @@
                   <h6 class="item-title"><i class="fa fa-plus-circle"></i>ADD ANNOUNCEMENT</h6>
                   <div class="inner-item">
                     <div class="dash-form">
-                      <label class="clear-top-margin"><i class="fa fa-cogs"></i>TYPE</label>
-                      <select>
+                      <label class="clear-top-margin"><i class="fa fa-cogs"></i>FROM</label>
+                      <select v-model="announcement.from">
                         <option>-- Select --</option>
-                        <option>Academic</option>
-                        <option>Administrative</option>
+                        <option>Academics</option>
+                        <option>Administration</option>
                         <option>Sports</option>
                       </select>
+
+
                       <label><i class="fa fa-user-secret"></i>FOR</label>
-                      <select>
+                      <select v-model="forWho">
                         <option>-- Select --</option>
                         <option>All</option>
                         <option>Teacher</option>
                         <option>Student</option>
                       </select>
-                      <label><i class="fa fa-code"></i>SUBJECT</label>
-                      <input type="text" placeholder="Subject" />
-                      <label><i class="fa fa-info-circle"></i>DESCRIPTION</label>
-                      <textarea placeholder="Enter Description Here"></textarea>
+
+
+                      <label><i class="fa fa-code"></i>TITLE</label>
+                      <input type="text" v-model="announcement.title" placeholder="Announcement Title" />
+
+
+                      <label><i class="fa fa-info-circle"></i>Message</label>
+                      <textarea v-model="announcement.msg" placeholder="Enter Message Here"></textarea>
+
+
                       <div>
-                        <a href="#"><i class="fa fa-paper-plane"></i> CREATE</a>
+                        <a @click="submitForm($event)"><i class="fa fa-paper-plane"></i> CREATE</a>
                       </div>
+
+                      <div v-if="showAlert" class="">
+                        <div class="alert alert-success alert-dismissible vue-alert" role="alert">
+                          <button type="button" @click="cleanUp()" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <strong><i class="fa fa-check-square-o" aria-hidden="true"></i> Success</strong> New student and new parent created successfully.
+                        </div>
+                      </div> 
+
+
                     </div>
                     <div class="clearfix"></div>
                   </div>
@@ -71,6 +88,9 @@
                         </tr>
                       </tbody>
                     </table>
+
+                    
+
                   </div>
                 </div>
               </div>
@@ -86,13 +106,62 @@
 </template>
 
 <script>
+
+
 export default {
-  name: 'Admin',
+  name: 'AdminAddAnnouncement',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      forWho: "-- Select --",
+      showAlert: true,
+      announcement: {
+        msg :  "",
+        title :  "",
+        from :  "-- Select --",
+        forTeachers : false,
+        forStudents : false
+      }
+
+
+    }
+  },
+
+   methods: {
+      submitForm(event){
+      event.preventDefault();
+      console.log('Submitting...');
+      let data = {
+        validated: true,
+        announcement: this.announcement
+      }
+      this.axios.post("http://localhost:5000/admin/addAnnouncement", data)
+      .then((resp) => {
+
+        console.log(resp.data);
+        if(resp.data.success){
+          this.showAlert = true;
+        }
+        
+        
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    },
+    cleanUp(){
+    this.showAlert = false;
+    this.announcement = {
+        msg :  "",
+        title :  "",
+        from :  "",
+        forTeachers : false,
+        forStudents : false
+      }
+     
     }
   }
+
 }
 </script>
 
@@ -117,6 +186,10 @@ export default {
 .page-title {
   color: #333;
   text-align: left;
+}
+
+.vue-alert {
+  margin-top: 10px !important;
 }
 
 </style>

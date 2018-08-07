@@ -1,21 +1,21 @@
 {
-  "name": "payment",
+  "name": "libRequest",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "amount": {
+    "timeframe": {
       "type": "string"
     },
-    "description": {
+    "bookId": {
       "type": "string"
     },
-    "reference": {
+    "studentId": {
       "type": "string"
     },
-    "status": {
+    "teacherId": {
       "type": "string"
     }
   },

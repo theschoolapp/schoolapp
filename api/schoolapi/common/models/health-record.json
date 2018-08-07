@@ -1,0 +1,40 @@
+{
+  "name": "healthRecord",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "medicalAid": {
+      "type": "string"
+    },
+    "medicalAidNumber": {
+      "type": "string"
+    },
+    "allergies": {
+      "type": [
+        "string"
+      ]
+    },
+    "doctor": {
+      "type": "string"
+    },
+    "doctorContact": {
+      "type": "string"
+    },
+    "healthNotes": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "student": {
+      "type": "belongsTo",
+      "model": "student",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

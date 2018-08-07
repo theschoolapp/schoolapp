@@ -24,6 +24,10 @@ import AdminViewClasses from '@/components/dashboard/admin/AdminViewClasses'
 import AdminViewSections from '@/components/dashboard/admin/AdminViewSections'
 import AdminAttendanceReport from '@/components/dashboard/admin/AdminAttendanceReport'
 import AdminMarksReport from '@/components/dashboard/admin/AdminMarksReport'
+import AdminAddLibrarian from '@/components/dashboard/admin/AdminAddLibrarian'
+import AdminLibrarianList from '@/components/dashboard/admin/AdminLibrarianList'
+import AdminAddFinanceAdmin from '@/components/dashboard/admin/AdminAddFinanceAdmin'
+import AdminFinanceAdminsList from '@/components/dashboard/admin/AdminFinanceAdminsList'
 //Parent Dashboard
 import ParentDashboard from '@/components/dashboard/parent/ParentDashboard'
 import ParentHome from '@/components/dashboard/parent/ParentHome'
@@ -133,6 +137,26 @@ export default new Router({
           path: '/adminMarksReport',
           name: 'AdminMarksReport',
           component: AdminMarksReport
+        },
+        {
+          path: '/adminAddLibrarian',
+          name: 'AdminAddLibrarian',
+          component: AdminAddLibrarian
+        },
+        {
+          path: '/adminLibrarianList',
+          name: 'AdminLibrarianList',
+          component: AdminLibrarianList
+        },
+        {
+          path: '/adminAddFinanceAdmin',
+          name: 'AdminAddFinanceAdmin',
+          component: AdminAddFinanceAdmin
+        },
+        {
+          path: '/adminFinanceAdminsList',
+          name: 'AdminFinanceAdminsList',
+          component: AdminFinanceAdminsList
         }
       ]
     },

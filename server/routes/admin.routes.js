@@ -14,9 +14,9 @@ routes.get('/getAllStudents', admin.getAllStudents);
 
 routes.post('/getStudent', admin.getStudent);
 
-routes.post('/addStudent', admin.addStudent); //Now creates both student + parent records
+routes.post('/addStudent', admin.addStudent); //Now creates both student + parent records...
 
-//routes.post('/addParent', admin.addStudent);
+routes.post('/editStudent', admin.editStudent);
 
 
 
@@ -26,11 +26,29 @@ routes.post('/getTeacher', admin.getTeacher);
 
 routes.post('/addTeacher', admin.addTeacher);
 
+routes.post('/editTeacher', admin.editTeacher);
+
 routes.get('/getAllTeacherAttendance', admin.getAllTeacherAttendance);
 
 routes.post('/addTeacherAttendance', admin.addTeacherAttendance);
 
 routes.post('/addTeacherToClass', admin.addTeacherToClass);
+
+
+
+routes.post('/addLibrarian', admin.addLibrarian);
+
+routes.get('/getAllLibrarians', admin.getAllLibrarians);
+
+routes.post('/editLibrarian', admin.editLibrarian);
+
+
+
+routes.post('/addFinanceAdmin', admin.addFinanceAdmin);
+
+routes.get('/getAllFinanceAdmins', admin.getAllFinanceAdmins);
+
+routes.post('/editFinanceAdmin', admin.editFinanceAdmin);
 
 
 

@@ -1,6 +1,89 @@
 <template>
   <div class="admin">
-    Add Subject
+   
+
+     <div class="container-fluid vue-page-container">
+          <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+              <h5 class="page-title"><i class="fa fa-bullhorn"></i>SUBJECTS</h5>
+              <div class="section-divider"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 clear-padding-xs">
+              <div class="col-sm-4">
+                <div class="dash-item first-dash-item">
+                  <h6 class="item-title"><i class="fa fa-plus-circle"></i>ADD SUBJECT</h6>
+                  <div class="inner-item">
+                    <div class="dash-form">
+                      <label class="clear-top-margin"><i class="fa fa-cogs"></i>TYPE</label>
+                      <select>
+                        <option>-- Select --</option>
+                        <option>Academic</option>
+                        <option>Administrative</option>
+                        <option>Sports</option>
+                      </select>
+                      <label><i class="fa fa-user-secret"></i>FOR</label>
+                      <select>
+                        <option>-- Select --</option>
+                        <option>All</option>
+                        <option>Teacher</option>
+                        <option>Student</option>
+                      </select>
+                      <label><i class="fa fa-code"></i>SUBJECT</label>
+                      <input type="text" placeholder="Subject" />
+                      <label><i class="fa fa-info-circle"></i>DESCRIPTION</label>
+                      <textarea placeholder="Enter Description Here"></textarea>
+                      <div>
+                        <a href="#"><i class="fa fa-paper-plane"></i> CREATE</a>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+              <div class="col-sm-8">
+                <div class="dash-item first-dash-item">
+                  <h6 class="item-title"><i class="fa fa-bullhorn"></i>ALL ANNOUNCEMENTS</h6>
+                  <div class="inner-item">
+                    <table id="attendenceDetailedTable" class="display responsive nowrap" cellspacing="0" width="100%">
+                      <thead>
+                        <tr>
+                          <th><i class="fa fa-cogs"></i>TYPE</th>
+                          <th><i class="fa fa-user-secret"></i>FOR</th>
+                          <th><i class="fa fa-user-info"></i>SUBJECT</th>
+                          <th><i class="fa fa-info-circle"></i>DESCRIPTION</th>
+                          <th><i class="fa fa-user"></i>CREATED BY</th>
+                          <th><i class="fa fa-sliders"></i>ACTION</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Academic</td>
+                          <td>All</td>
+                          <td>End Term Exam</td>
+                          <td>Description goes here.</td>
+                          <td>John Doe</td>
+                          <td class="action-link">
+                            <a class="edit" href="#" title="Edit" data-toggle="modal" data-target="#editDetailModal"><i class="fa fa-edit"></i></a>
+                            <a class="delete" href="#" title="Delete" data-toggle="modal" data-target="#deleteDetailModal"><i class="fa fa-remove"></i></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-footer col-lg-12">
+          <p>Copyright Prototype</p>
+        </div>
+
+
   </div>
 </template>
 
@@ -9,15 +92,52 @@ export default {
   name: 'AdminAddSubject',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
+      
       announcement: {
         msg :  "",
         title :  "",
         from :  "",
         forTeachers : false,
-        forStudents : false,
-        id :  ""
+        forStudents : false
       }
+
+
+    }
+  },
+
+  methods: {
+      submitForm(event){
+      event.preventDefault();
+      console.log('Submitting...');
+      let data = {
+        validated: true,
+        subject: this.subject
+      }
+      this.axios.post("http://localhost:5000/admin/addAnnouncement", data)
+      .then((resp) => {
+
+        console.log(resp.data);
+        if(resp.data.success){
+          this.showAlert = true;
+        }
+        
+        
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    },
+    cleanUp(){
+    this.showAlert = false;
+    this.announcement = {
+        msg :  "",
+        title :  "",
+        from :  "",
+        forTeachers : false,
+        forStudents : false
+      }
+     
     }
   }
 }
@@ -34,7 +154,7 @@ export default {
   background-color: #f7f7f7;
 }
 
-.vue-page2-container {
+.vue-page-container {
   padding-left: 0px !important;
   padding-right: 0px !important;
   padding-top: 20px !important;

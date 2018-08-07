@@ -1,21 +1,24 @@
 {
-  "name": "payment",
+  "name": "libRegistration",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "amount": {
+    "name": {
       "type": "string"
     },
     "description": {
       "type": "string"
     },
-    "reference": {
+    "bookCondition": {
       "type": "string"
     },
-    "status": {
+    "requestNumber": {
+      "type": "number"
+    },
+    "bookId": {
       "type": "string"
     }
   },

@@ -1,21 +1,21 @@
 {
-  "name": "payment",
+  "name": "libResource",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "amount": {
+    "url": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "type": {
       "type": "string"
     },
     "description": {
-      "type": "string"
-    },
-    "reference": {
-      "type": "string"
-    },
-    "status": {
       "type": "string"
     }
   },

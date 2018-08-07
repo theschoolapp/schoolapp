@@ -4,8 +4,7 @@
 
     <table class="table table-striped table-bordered display responsive nowrap" id="studentList" cellspacing="0" width="100%" >
                     <thead>
-                      <tr role="row"><th class="sorting_disabled" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 100px;"> StudentId
-                      </th>
+                      <tr role="row">
 
                       <th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="From: activate to sort column descending" style="width: 262px;" aria-sort="ascending">Reg Number</th>
 
@@ -21,7 +20,7 @@
                   <tbody>
                     <tr v-for="student in tableData" :key="student.id">
                       
-                       <td>{{ student.id }}</td>
+                       
 
                        <td>{{student.regNumber}}</td>
 
@@ -48,18 +47,23 @@
 
                  <modal 
                   name='DeleteStudent'
-                  :height="134" 
+                  :height="200" 
                   :width="598">
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button type="button" class="close" @click="closeDModal($event)">&times;</button>
                         <h4 class="modal-title"><i class="fa fa-trash"></i>DELETE STUDENT</h4>
                       </div>
                       <div class="modal-body">
+                            
+                            <div class="alert alert-success vue-alert" role="alert">
+                              <strong><i class="fa fa-check-square-o" aria-hidden="true"></i> Are you sure you want to delete this student, </strong> {{deleteStudent[2]}} {{deleteStudent[1]}} , {{deleteStudent[0]}}<strong> ?</strong>
+                            </div>
+                          
                         <div class="table-action-box">
-                          <a href="#" class="save"><i class="fa fa-check"></i>YES</a>
-                          <a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+                          <a @click="deleteAStudent($event)" class="save"><i class="fa fa-check"></i>YES</a>
+                          <a @click="closeDModal($event)" class="cancel"><i class="fa fa-ban"></i>CLOSE</a>
                         </div>
                         <div class="clearfix"></div>
                       </div>
@@ -68,54 +72,136 @@
 
                 <modal 
                   name='EditStudent'
-                  :height="134" 
-                  :width="598">
+                  :height="500" 
+                  :width="800"
+                  >
                     <!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<button type="button" class="close" @click="closeEModal($event)">&times;</button>
 						<h4 class="modal-title"><i class="fa fa-edit"></i>EDIT STUDENT DETAILS</h4>
 					</div>
-					<div class="modal-body dash-form">
-						<div class="col-sm-3">
-							<label class="clear-top-margin"><i class="fa fa-user"></i>FIRST NAME</label>
-							<input type="text" placeholder="First Name" value="John" />
-						</div>
-						<div class="col-sm-3">
-							<label class="clear-top-margin"><i class="fa fa-user"></i>MIDDLE NAME</label>
-							<input type="text" placeholder="Middle Name" value="Fidler" />
-						</div>
-						<div class="col-sm-3">
-							<label class="clear-top-margin"><i class="fa fa-user"></i>LAST NAME</label>
-							<input type="text" placeholder="Last Name" value="Doe" />
-						</div>
-						<div class="col-sm-3">
-							<label class="clear-top-margin"><i class="fa fa-book"></i>CLASS</label>
-							<input type="text" placeholder="Standard" value="5 STD" />
-						</div>
-						<div class="clearfix"></div>
-						<div class="col-sm-3">
-							<label><i class="fa fa-cogs"></i>SECTION</label>
-							<input type="text" placeholder="Section" value="PTH05A" />
-						</div>
-						<div class="col-sm-3">
-							<label><i class="fa fa-puzzle-piece"></i>ROLL #</label>
-							<input type="text" placeholder="Roll Number" value="Fidler" />
-						</div>
-						<div class="col-sm-3">
-							<label><i class="fa fa-phone"></i>CONTACT #</label>
-							<input type="text" placeholder="Contact Number" value="1234567890" />
-						</div>
-						<div class="col-sm-3">
-							<label><i class="fa fa-envelope-o"></i>EMAIL</label>
-							<input type="text" placeholder="Email" value="john@gmail.com" />
-						</div>
-						<div class="clearfix"></div>
-					</div>
+
+					<div class="modal-body editModal-body">
+
+            <div class="dash-item first-dash-item">
+                  <h6 class="item-title"><i class="fa fa-user"></i>STUDENT INFO</h6>
+                  <div class="inner-item">
+                    <div class="dash-form">
+                      <div class="col-sm-3">
+                        <label class="clear-top-margin"><i class="fa fa-user-circle-o"></i>FIRST NAME</label>
+                        <input type="text" v-model="editStudent.firstName" placeholder="First Name" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="clear-top-margin"><i class="fa fa-user-circle-o"></i>MIDDLE NAME</label>
+                        <input type="text" v-model="editStudent.middleName" placeholder="Middle Name" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="clear-top-margin"><i class="fa fa-user-circle-o"></i>LAST NAME</label>
+                        <input type="text" v-model="editStudent.lastName" placeholder="Last Name" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="clear-top-margin"><i class="fa fa-venus"></i>GENDER</label>
+                        <select v-model="editStudent.gender" >
+                          <option>-- Select --</option>
+                          <option>Male</option>
+                          <option>Female</option>
+                        </select>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="col-sm-3">
+                        <label><i class="fa fa-calendar"></i>DATE OF BIRTH</label>
+                        <input type="text" v-model="editStudent.dob" placeholder="MM/DD/YYYY" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label><i class="fa fa-phone"></i>PHONE #</label>
+                        <input type="text" v-model="editStudent.phoneNumber" placeholder="0700 000 000" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label><i class="fa fa-envelope-o"></i>EMAIL</label>
+                        <input type="email" v-model="editStudent.email" placeholder="email@host.com" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label><i class="fa fa-bell-o"></i>RELIGION</label>
+                        <select v-model="editStudent.religion">
+                          <option>-- Select --</option>
+                          <option>Atheism</option>
+                          <option>Buddhism</option>
+                          <option>Christian</option>
+                          <option>Hinduism</option>
+                        </select>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+
+                <div class="dash-item">
+                  <h6 class="item-title"><i class="fa fa-book"></i>ACADEMIC INFO</h6>
+                  <div class="inner-item">
+                    <div class="dash-form">
+                      <div class="col-sm-3">
+                        <label class="clear-top-margin"><i class="fa fa-id-card"></i>REGISTRATION #</label>
+                        <input type="text" v-model="editStudent.regNumber" placeholder="PTH2017001" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="clear-top-margin"><i class="fa fa-book"></i>CLASS</label>
+                        <select v-model="editStudent.yearClass">
+                          <option>-- Select --</option>
+                          <option>5 STD</option>
+                          <option>6 STD</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="clear-top-margin"><i class="fa fa-cogs"></i>SECTION</label>
+                        <select>
+                          <option>-- Select --</option>
+                          <option>PTH05A</option>
+                          <option>PTH05B</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="clear-top-margin"><i class="fa fa-puzzle-piece"></i>ROLL #</label>
+                        <input type="text"  placeholder="PTH05A01" />
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="col-sm-3">
+                        <label><i class="fa fa-graduation-cap"></i>LAST SCHOOL</label>
+                        <input type="text" v-model="editStudent.lastSchool" placeholder="ABC SCHOOL" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label><i class="fa fa-star"></i>LAST STD</label>
+                        <input type="text"  placeholder="4 STD" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label><i class="fa fa-code"></i>MARKS OBTAINED</label>
+                        <input type="text" v-model="editStudent.lastSchoolMarks" placeholder="76%" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label><i class="fa fa-futbol-o"></i>SPORTS</label>
+                        <select v-model="editStudent.sports[0]">
+                          <option>-- Select --</option>
+                          <option>Cricket</option>
+                          <option>Football</option>
+                          <option>Tenis</option>
+                        </select>
+                      </div>
+                      <div class="clearfix"></div>
+                      
+                      
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+            
+          </div>
 					<div class="modal-footer">
 						<div class="table-action-box">
-							<a href="#" class="save"><i class="fa fa-check"></i>SAVE</a>
-							<a href="#" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
+							<a @click="editAStudent($event)" class="save"><i class="fa fa-check"></i>SAVE CHANGES</a>
+							<a @click="closeEModal($event)" class="cancel" data-dismiss="modal"><i class="fa fa-ban"></i>CLOSE</a>
 						</div>
 					</div>
 				</div>
@@ -131,19 +217,36 @@ export default {
     return {
       data: [ ],
       table: {},
-      deletedStudent: {
-      	studentId: ''
+      deleteStudent: [],
+      editStudent: {
+            firstName: '',
+            middleName: '',
+            lastName: '',
+            gender: '-- Select --',
+            dob: '',
+            religion: '-- Select --',
+            email: '',
+            phoneNumber: '',
+            sports: [ ],
+            lastSchoolMarks: '',
+            lastSchool: '',
+            regNumber: ''
       },
-      dRow:[ ]
+      dRow:[ ],
+      es: []
+
     }
   },
 
-  props: [ 'tableData' ],
+  props: [ 'tableData', 'editData' ],
 
   watch: { 
-      	tableData: function(newVal, oldVal) { // watch it
-          console.log('Prop changed: ', newVal, ' | was: ', oldVal);
-          console.log(this.table)
+      	tableData: function(newVal, oldVal) { 
+          console.log('TableData changed: ', newVal, ' | was: ', oldVal);
+        },
+        editData: function(newVal, oldVal){
+          console.log('Edit changed: ', newVal, ' | was: ', oldVal);
+          this.editStudent = newVal;
         }
       },
 
@@ -151,33 +254,98 @@ export default {
 
     this.createTable();
     this.data = this.tableData;
+    
 
 
     
   },
 
    methods: {
-
+//------------------------------------------------------------DELETE MODAL
     deleteModal(event) {
     	event.preventDefault();
+      
+      
+      let target = $( event.target )
+      if(target.is("i")){
+        
+        this.dRow = event.target.parentElement.parentElement.parentElement;
+      }
+      if(target.is("a")){
+         
+         this.dRow = event.target.parentElement.parentElement;
+      }
+
+      let $rowData = $(this.dRow).find("td");
+      let dStudent = [];
+      $.each($rowData, function() {             
+          
+          dStudent.push($(this).text());
+               
+      });
+      this.deleteStudent = dStudent;
+
+    
+      
+
+     
+      
+      
       this.$modal.show('DeleteStudent');
-      
-      this.dRow = this.table.row(event.target.parentElement.parentElement.parentElement).data();
-      
-      console.log(this.table);
-      
 
     },
-
+    closeDModal(event){
+      event.preventDefault();
+      this.$modal.hide('DeleteStudent');
+    },
+//------------------------------------------------------------EDIT MODAL
     editModal(event) {
       this.$modal.show('EditStudent');
+      let target = $( event.target )
+      if(target.is("i")){
+        
+        this.dRow = event.target.parentElement.parentElement.parentElement;
+      }
+      if(target.is("a")){
+         
+         this.dRow = event.target.parentElement.parentElement;
+      }
+
+      let $rowData = $(this.dRow).find("td");
+      let eStudent = [];
+      $.each($rowData, function() {             
+          console.log($(this).text());
+          eStudent.push($(this).text());
+                  
+      });
+
+      this.es = eStudent;
+      this.$emit('editStudent', this.es);
       
-      console.log($(event.target).parent().parent().parent());
+    },
+
+    closeEModal(event){
+      event.preventDefault();
+      this.$modal.hide('EditStudent');
     },
 
     createTable(){
     	this.table = $('#studentList').DataTable();
     	
+    },
+
+    deleteAStudent(event){
+      event.preventDefault();
+      this.$modal.hide('DeleteStudent');
+      this.$emit('deleteStudent', this.deleteStudent);
+     
+    },
+
+     editAStudent(event){
+      event.preventDefault();
+      this.$modal.hide('EditStudent');
+      this.$emit('editedStudent', this.editStudent);
+     
     }
 
     
@@ -189,6 +357,10 @@ export default {
 
 <style scoped>
 
+  .editModal-body {
+    height: 360px;
+    overflow-y: scroll;
+  }
 
 
 </style>

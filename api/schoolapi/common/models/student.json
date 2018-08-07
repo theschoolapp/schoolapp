@@ -74,7 +74,7 @@
       "foreignKey": ""
     },
     "financeRecords": {
-      "type": "hasMany",
+      "type": "hasOne",
       "model": "financeRecord",
       "foreignKey": ""
     },

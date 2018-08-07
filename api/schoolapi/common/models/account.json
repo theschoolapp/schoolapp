@@ -33,6 +33,16 @@
       "type": "hasOne",
       "model": "parent",
       "foreignKey": ""
+    },
+    "financeAdmins": {
+      "type": "hasOne",
+      "model": "financeAdmin",
+      "foreignKey": ""
+    },
+    "librarians": {
+      "type": "hasOne",
+      "model": "librarian",
+      "foreignKey": ""
     }
   },
   "acls": [

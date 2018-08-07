@@ -80,12 +80,20 @@ let paynow = (req, res) => {
 
 };
 
+let resultHandler = (req, res) => {
+    if(req.body){
+        console.log(req.body);
 
-
+    }else{
+        console.log("No data object sent from paynow...");
+    }
+};
 
 
 
 routes.post('/makePayment', paynow);
+
+routes.post('/pn-result', resultHandler)
 
 
 

@@ -169,36 +169,24 @@ exports.getStudent = (req, res) => {
     }
     
 };
-//Create new student object and save to db
-//Requires the full student record as part of the request object
-//  "firstName": "string",
-// "middleName": "string",
-// "lastName": "string",
-// "gender": "string",
-// "dob": "2018-07-19T06:36:07.476Z",
-// "phoneNumber": "string",
-// "email": "string",
-// "religion": "string",
-// "yearClass": "string",
-// "enrolledClasses": [ "string"],
-// "regNumber": "string",
-// "lastSchool": "string",
-// "lastSchoolMark": "string",
-// "sports": ["string"],
-//  "parentId": "string",
-// "accountId": "string"
-exports.addStudent2 = (req, res) => {
-    console.log('Adding Student....');
 
-    axios.post(urls.baseUrl.concat('/students'), req.body)
-        .then(response => {
+//Delete a student Record
+//Edit a student request must contain
+// studentId
+// any other property to be changed
+exports.editStudent = (req, res) => {
+    console.log('Editing A Student Record....' + req.body.id);
+    let studentId = req.body.id;
+    let newStudent = req.body
+    delete newStudent.id;
+    console.log(newStudent);
+    axios.patch(urls.baseUrl.concat('/students/' + studentId), newStudent)
+    .then(response => {
             res.send(response.data);
-
         })
         .catch(error => {
             console.log(error);
         });
-   
 };
 //add Student To Class
 // req.body has:
@@ -237,6 +225,21 @@ exports.getAllTeachers = (req, res) => {
     .catch(error => {
         console.log(error);
     });    
+};
+//Edit a teacher
+exports.editTeacher = (req, res) => {
+    console.log('Editing A Teacher Record....' + req.body.id);
+    let libId = req.body.id;
+    let newLib = req.body
+    delete newLib.id;
+    console.log(newLib);
+    axios.patch(urls.baseUrl.concat('/teachers/' + libId), newLib)
+    .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });   
 };
 //Get a single Teacher
 //Requires the teacher record id as part of the request object
@@ -730,6 +733,15 @@ exports.addStudent = (req, res) => {
         email: '',
         password: ''
         };
+    let healthRecord = {
+        medicalAid: "",
+        medicalAidNumber: "",
+        allergies: [],
+        doctor: " ",
+        doctorContact: " ",
+        healthNotes: " ",
+        studentId: " "
+    };
     
     function linkStudent2Parent(pId, sId) {
         console.log("Linking Student 2 Parent -  parentId - studentId" );
@@ -755,6 +767,7 @@ exports.addStudent = (req, res) => {
             console.log('New student created (id) : ' + response.data.id);
             let studentId = response.data.id;
             newParentAccount(parentAccount, studentId);
+            newHealthRecord(studentId);
         })
         .catch(error => {
             console.log(error.Error);
@@ -776,6 +789,20 @@ exports.addStudent = (req, res) => {
         }); 
     };
 
+    function newHealthRecord(studentId) {
+        healthRecord = req.body.healthRecord;
+        healthRecord.studentId = studentId;
+        axios.post(urls.baseUrl.concat('/healthRecords'), healthRecord)
+        .then(response => {
+            console.log('New health Record created (studentId) : ' + response.data.studentId);
+         
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    };
+
 
 
     function createStudent(id){
@@ -787,6 +814,7 @@ exports.addStudent = (req, res) => {
 
          newStudent(student);
         }
+        
     };
 
     function createParent(id, studentId){
@@ -796,9 +824,10 @@ exports.addStudent = (req, res) => {
          parent = req.body.parent;
          parent.accountId = id;
          parent.studentId = studentId;
-
          newParent(parent);
+         
         }
+       
     };
 
 
@@ -847,6 +876,218 @@ exports.addStudent = (req, res) => {
     }
 
 };
+
+
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Librarian Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+exports.addLibrarian = (req, res) => {
+    console.log('Adding Librarian....');
+    let libAccount = {
+        accountType: 'librarian',
+        username: '',
+        email: '',
+        password: ''
+
+    }
+    function newLibrarian(lib){
+
+        axios.post(urls.baseUrl.concat('/librarians'), lib)
+        .then(response => {
+            console.log('New librarian created (id) : ' + response.data.id);
+            res.send({ success: true, librarian: response.data });
+        })
+        .catch(error => {
+            console.log(error);
+        }); 
+    };
+
+    function createLibrarian(id){
+
+        if (req.body.librarian){
+         let lib = {};
+         lib = req.body.librarian;
+         lib.accountId = id;
+
+         newLibrarian(lib);
+        }
+    };
+
+    function newLibAccount(account){
+
+        axios.post(urls.baseUrl.concat('/accounts'), account)
+        .then(response => {
+            console.log('New librarian ACCOUNT created (id) : ' + response.data.id);
+            let libAccountId = response.data.id;
+            createLibrarian(libAccountId);
+        })
+        .catch(error => {
+            console.log(error.Error);
+        });
+    };
+
+    if(!req.body.validated){
+        res.send('Validation : False');
+    }
+    else {
+
+        libAccount.email = req.body.librarian.email;
+        libAccount.username = req.body.librarian.firstName;
+        libAccount.password = req.body.librarian.email;
+
+        newLibAccount(libAccount);
+    }
+
+
+};
+
+
+exports.getAllLibrarians = (req, res) => {
+    console.log('Getting All Librarians...');
+
+    axios.get(urls.baseUrl.concat('/librarians'))
+    .then(response => {
+        res.send(response.data);
+
+    })
+    .catch(error => {
+        console.log(error);
+    });
+
+};
+
+
+exports.editLibrarian = (req, res) => {
+    console.log('Editing A Librarian Record....' + req.body.id);
+    let libId = req.body.id;
+    let newLib = req.body
+    delete newLib.id;
+    console.log(newLib);
+    axios.patch(urls.baseUrl.concat('/librarians/' + libId), newLib)
+    .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+};
+
+
+
+
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Finance Admins Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+exports.addFinanceAdmin = (req, res) => {
+    console.log('Adding Finance Admin....');
+    let finAccount = {
+        accountType: 'finance-admin',
+        username: '',
+        email: '',
+        password: ''
+
+    }
+    function newFA(fin){
+
+        axios.post(urls.baseUrl.concat('/financeAdmins'), fin)
+        .then(response => {
+            console.log('New Finance Admin created (id) : ' + response.data.id);
+            res.send({ success: true, financeAdmin: response.data });
+        })
+        .catch(error => {
+            console.log(error);
+        }); 
+    };
+
+    function createFA(id){
+
+        if (req.body.financeAdmin){
+         let fin = {};
+         fin = req.body.financeAdmin;
+         fin.accountId = id;
+
+         newFA(fin);
+        }
+    };
+
+    function newFinAccount(account){
+
+        axios.post(urls.baseUrl.concat('/accounts'), account)
+        .then(response => {
+            console.log('New Finance Admin ACCOUNT created (id) : ' + response.data.id);
+            let finAccountId = response.data.id;
+            createFA(finAccountId);
+        })
+        .catch(error => {
+            console.log(error.Error);
+        });
+    };
+
+    if(!req.body.validated){
+        res.send('Validation : False');
+    }
+    else {
+
+        finAccount.email = req.body.financeAdmin.email;
+        finAccount.username = req.body.financeAdmin.firstName;
+        finAccount.password = req.body.financeAdmin.email;
+
+        newFinAccount(finAccount);
+    }
+
+
+};
+
+
+exports.getAllFinanceAdmins = (req, res) => {
+    console.log('Getting All Finance Admins...');
+
+    axios.get(urls.baseUrl.concat('/financeAdmins'))
+    .then(response => {
+        res.send(response.data);
+
+    })
+    .catch(error => {
+        console.log(error);
+    });
+
+};
+
+exports.editFinanceAdmin = (req, res) => {
+    console.log('Editing A Finance Admin Record....' + req.body.id);
+    let libId = req.body.id;
+    let newLib = req.body
+    delete newLib.id;
+    console.log(newLib);
+    axios.patch(urls.baseUrl.concat('/financeAdmins/' + libId), newLib)
+    .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+
+};
+
+
+
+
+
+
 
 
 

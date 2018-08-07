@@ -247,6 +247,42 @@
             </ul>
             <div class="clearfix"></div>
           </li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-book menu-icon"></i> LIBRARY <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>              
+                
+                <router-link to="/adminAddLibrarian" > <i class="fa fa-caret-right"></i>ADD LIBRARIAN</router-link>
+              </li>
+              <li>
+                
+                <router-link to="/adminLibrarianList" > <i class="fa fa-caret-right"></i>VIEW LIBRARIANS </router-link>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-book menu-icon"></i> FINANCE <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>              
+                
+                <router-link to="/adminAddFinanceAdmin" > <i class="fa fa-caret-right"></i>ADD FINANCE ADMIN </router-link>
+              </li>
+              <li>
+                
+                <router-link to="/adminFinanceAdminsList" > <i class="fa fa-caret-right"></i>VIEW FINANCE ADMINS </router-link>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </li>
+
+
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-address-card menu-icon"></i> REPORTS <span class="caret"></span>

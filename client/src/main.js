@@ -5,13 +5,16 @@ import App from './App';
 import router from './router';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-import VModal from 'vue-js-modal'
+import VModal from 'vue-js-modal';
+import {ClientTable, Event} from 'vue-tables-2';
+
 
 
 
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
 Vue.use(VModal);
+Vue.use(ClientTable);
 
 
 /* eslint-disable no-new */

@@ -135,5 +135,41 @@
   "payment": {
     "dataSource": "db",
     "public": true
+  },
+  "libResource": {
+    "dataSource": "db",
+    "public": true
+  },
+  "libSubject": {
+    "dataSource": "db",
+    "public": true
+  },
+  "libRegistration": {
+    "dataSource": "db",
+    "public": true
+  },
+  "libBorrowing": {
+    "dataSource": "db",
+    "public": true
+  },
+  "libRequest": {
+    "dataSource": "db",
+    "public": true
+  },
+  "localPayment": {
+    "dataSource": "db",
+    "public": true
+  },
+  "healthRecord": {
+    "dataSource": "db",
+    "public": true
+  },
+  "financeAdmin": {
+    "dataSource": "db",
+    "public": true
+  },
+  "librarian": {
+    "dataSource": "db",
+    "public": true
   }
 }
