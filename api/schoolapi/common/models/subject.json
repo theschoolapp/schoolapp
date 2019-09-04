@@ -1,0 +1,29 @@
+{
+  "name": "subject",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "classes": {
+      "type": "hasMany",
+      "model": "class",
+      "foreignKey": ""
+    },
+    "libSubjects": {
+      "type": "hasMany",
+      "model": "libSubject",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

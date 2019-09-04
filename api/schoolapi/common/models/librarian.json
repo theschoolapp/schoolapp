@@ -1,0 +1,61 @@
+{
+  "name": "librarian",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "middleName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string"
+    },
+    "religion": {
+      "type": "string"
+    },
+    "phoneNumber1": {
+      "type": "string"
+    },
+    "phoneNumber2": {
+      "type": "string"
+    },
+    "dob": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "highestDegree": {
+      "type": "string"
+    },
+    "otherDegrees": {
+      "type": [
+        "string"
+      ]
+    },
+    "university": {
+      "type": "string"
+    },
+    "graduatingYear": {
+      "type": "string"
+    },
+    "CGPA": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

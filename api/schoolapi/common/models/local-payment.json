@@ -1,0 +1,32 @@
+{
+  "name": "localPayment",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "amount": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "reference": {
+      "type": "string"
+    },
+    "studentId": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "receiptNumber": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

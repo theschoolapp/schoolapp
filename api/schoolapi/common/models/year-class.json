@@ -1,0 +1,29 @@
+{
+  "name": "yearClass",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "classes": {
+      "type": "hasMany",
+      "model": "class",
+      "foreignKey": ""
+    },
+    "libResources": {
+      "type": "hasMany",
+      "model": "libResource",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

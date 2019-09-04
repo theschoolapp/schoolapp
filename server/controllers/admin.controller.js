@@ -1,324 +1,1094 @@
-//Required Models
-const adminModel       = require('../models/admin.model.js');
-const subjectModel     = require('../models/subject.model.js');
-const studentModel     = require('../models/student.model.js');
-const teacherModel     = require('../models/teacher.model.js');
-const classModel       = require('../models/class.model.js');
-const timeSlotModel    = require('../models/timeslot.model.js');
-const markModel        = require('../models/mark.model.js');
-const attendanceModel  = require('../models/attendance.model.js');
+const axios  = require('axios');
+const urls   = require('../config/database.config.js');
+const moment = require('moment');
+const _      = require('lodash');
 
-
-
-
-//Get all marks/results for a single student
-//Requires the student record id as part of the request object
-exports.newAnnouncement = (req, res) => {
-    res.send('New Announcement');
+//Quick testing routing
+// for dev...
+exports.test = (req, res) => {
+    
+    res.send(axios.get(urls.baseUrl.concat('/events/count')));
 };
-
-//Student Functions
 //--------------------------------------------------//
-//Get all class schedules for a single student
-//Requires the student record id as part of the request object
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Dashboard Function
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//[Get] all data for Dashboard
+//Requires the adminId on 
+exports.getDashboard = (req, res) => {
+    console.log('Getting Admin Dashboard');
+    let adminId = req.body.adminId;
+    console.log('AdminID : ' + adminId);
+    let obj = {
+            nS: '',
+            nT: '',
+            nE: '',
+            nM: '',
+            todaysTasks: [],
+            todaysAttendence: [],
+            attendanceTrend: [],
+            teachersAttendance: {},
+            announcements: []
+        };
+
+     axios.all([
+        axios.get(urls.baseUrl.concat('/students/count')),
+        axios.get(urls.baseUrl.concat('/teachers/count')),
+        axios.get(urls.baseUrl.concat('/events/count')),
+        axios.get(urls.baseUrl.concat('/admins/' + adminId + '/messages/count')),
+        axios.get(urls.baseUrl.concat('/tasks')),
+        axios.get(urls.baseUrl.concat('/teacherAttendances')),
+        axios.get(urls.baseUrl.concat('/annoucements'))
+
+      ])
+      .then(axios.spread(function (nS, nT, nE, nM, tasks, teachersA, anns) {
+        
+        // Numbers
+        obj.nS = nS.data.count;
+        obj.nT = nT.data.count;
+        obj.nE = nE.data.count;
+        obj.nM = nM.data.count;
+        //----------------------------------//
+        //Get only today's tasks
+        let tsks = [];
+        _.each(tasks.data, (task)=>{
+            
+            if(moment(task.date).isSame(moment(), 'day')){
+                tsks.push(task);
+            }
+        });
+        obj.todaysTasks = tsks;
+        //--------------------------------//
+        // Teacher attendance
+        tas = {
+            onLeave: 0,
+            present: 0,
+            absent: 0
+        };
+        _.each(teachersA.data, (ta)=>{
+
+            if(ta.present){
+                tas.present ++;
+            }
+            if(!ta.present && !ta.onLeave){
+                tas.absent ++;
+            }
+            if(ta.onLeave){
+                tas.onLeave ++;
+            }
+
+        });
+        obj.teachersAttendance = tas;
+        //--------------------------------//
+        // Announcements
+        obj.announcements = anns.data;
+        //--------------------------------//
+
+
+        res.send(obj);
+        console.log(obj);
+
+      }));
+
+};
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Announcement Function
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Create new announcement
+//req.body has
+// - "msg"
+// - "title"
+// - "from"
+exports.addAnnouncement = (req, res) => {
+    console.log('Adding new announcement...');
+    axios.post(urls.baseUrl.concat('/annoucements'),req.body)
+    .then(response => {
+        res.send(response.data);
+        
+    })
+    .catch(error => {
+        console.log(error);
+    });
+};
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Student/Parent Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//[Get] all Students
 exports.getAllStudents = (req, res) => {
     console.log('getting All students');
 
-     studentModel.find()
-    .then(students => {
-        res.send(students);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while retrieving students."
-        });
-    });
+    axios.get(urls.baseUrl.concat('/students'))
+    .then(response => {
+        res.send(response.data);
 
+    })
+    .catch(error => {
+        console.log(error);
+    });
 };
-//Get a single student
+//[Get] a single student
 //Requires the student record id as part of the request object
 exports.getStudent = (req, res) => {
     console.log("Getting a single Student...");
+    if(!req.body.studentId){
 
-    studentModel.findOne(req.params.firstName)
-    .then(student => {
-        if(!student) {
-            return res.status(404).send({
-                message: "Student not found with name " + student.firstName
-            });            
-        }
-        res.send(student);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Student not found with name " + student.firstName
-            });                
-        }
-        return res.status(500).send({
-            message: "Error retrieving student with name " + student.firstName
+        res.send('No StudentId in request...');
+
+    }else{
+
+        let studentId = req.body.studentId;
+        let subUrl = urls.baseUrl.concat('/students');
+        let finalUrl = subUrl.concat(studentId);
+        
+        axios.get(finalUrl)
+        .then(response => {
+            console.log(response.data);
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
         });
-    });
 
-};
-//Create new student object and save to db
-//Requires the full student record as part of the request object
-exports.addStudent = (req, res) => {
-    console.log('Adding Student....');
-
-    //Validate request
-    if(!req.body.userId) {
-        return res.status(400).send({
-            message: "userId"
-        });
     }
-    //Create a new Student model object
-    const student = new studentModel({
-        userId: req.body.userId,
-        email: req.body.email,
-        password: req.body.password,
-        firstName: req.body.firstName,
-        secondName: req.body.secondName,
-        lastName: req.body.lastName,
-        gender: req.body.gender,
-        DOB: req.body.dob,
-        phoneNumber: req.body.phoneNumber,
-        religion: req.body.religion,
-        regNumber: req.body.regNumber,
-        lastSchool: req.body.lastSchool,
-        lastSchoolMarks: req.body.lastSchoolMarks,
-        sports: req.body.sports
-    });
-    //Save Student to the database
-    student.save().then(data => {
-        res.send(data);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while creating the Note."
-        });
-    });
-   
+    
 };
+
+//Delete a student Record
+//Edit a student request must contain
+// studentId
+// any other property to be changed
+exports.editStudent = (req, res) => {
+    console.log('Editing A Student Record....' + req.body.id);
+    let studentId = req.body.id;
+    let newStudent = req.body
+    delete newStudent.id;
+    console.log(newStudent);
+    axios.patch(urls.baseUrl.concat('/students/' + studentId), newStudent)
+    .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+//add Student To Class
+// req.body has:
+// studentId
+// classId
+exports.addStudentToClass = (req, res) => {
+    console.log('Adding Student to class....');
+    
+    axios.post(urls.baseUrl.concat('/students/' + req.body.studentId + '/classLists'), { classId: req.body.classId })
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+  
+};
+
 //--------------------------------------------------//
 //--------------------------------------------------//
-
-
-
+//--------------------------------------------------//
+//--------------------------------------------------//
 //Teacher Functions
 //--------------------------------------------------//
-
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
 //Get all teachers
 exports.getAllTeachers = (req, res) => {
     console.log('getting All Teachers');
 
-     teacherModel.find()
-    .then(teachers => {
-        res.send(teachers);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while retrieving students."
-        });
-    });
+    axios.get(urls.baseUrl.concat('/teachers'))
+    .then(response => {
+        res.send(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });    
 };
-
+//Edit a teacher
+exports.editTeacher = (req, res) => {
+    console.log('Editing A Teacher Record....' + req.body.id);
+    let libId = req.body.id;
+    let newLib = req.body
+    delete newLib.id;
+    console.log(newLib);
+    axios.patch(urls.baseUrl.concat('/teachers/' + libId), newLib)
+    .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });   
+};
 //Get a single Teacher
 //Requires the teacher record id as part of the request object
 exports.getTeacher = (req, res) => {
      console.log("Getting a single teacher...");
 
-    teacherModel.findOne(req.params.firstName)
-    .then(data => {
-        if(!data) {
-            return res.status(404).send({
-                message: "Student not found with name " + student.firstName
-            });            
-        }
-        res.send(data);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "Student not found with name " + student.firstName
-            });                
-        }
-        return res.status(500).send({
-            message: "Error retrieving student with name " + student.firstName
-        });
-    });
-};
+     if(!req.body.teacherId){
 
+        res.send('No TeacherId in request...');
+
+    }else{
+
+        let teacherId = req.body.teacherId;
+        let subUrl = urls.baseUrl.concat('/teachers');
+        let finalUrl = subUrl.concat(teacherId);
+        
+        axios.get(finalUrl)
+        .then(response => {
+            console.log(response.data);
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    }
+
+    
+};
 //Add a new Teacher
 //Requires the teacher record as part of the request object
+//req.body has also :
+// validated: boolean
+// teacher: {
+        // -  "firstName": "string",
+        //   "middleName": "string",
+        //  "lastName": "string",
+        //   "gender": "string",
+        //    "religion": "string",
+        //    "email": "string",
+        //    "phoneNumber1": "string",
+        //    "phoneNumber2": "string",
+        //    "dob": "string",
+        //    "address": "string",
+        //    "highestDegree": "string",
+        //    "otherDegrees": ["string"],
+        //   "university": "string",
+        //  "graduatingYear": "string",
+        //  "CGPA": "string",
+        //   "id": "string",
+        //    "accountId": "string"
+// }
 exports.addTeacher = (req, res) => {
     console.log('Adding Teacher....');
+    let teacherAccount = {
+        accountType: 'teacher',
+        username: '',
+        email: '',
+        password: ''
 
-    //Validate request
-    if(!req.body.userId) {
-        return res.status(400).send({
-            message: "userId"
-        });
     }
-    //Create a new Teacher model object
-    const teacher = new teacherModel({
-        userId: req.body.userId,
-        email: req.body.email,
-        password: req.body.password,
-        firstName: req.body.firstName,
-        secondName: req.body.secondName,
-        lastName: req.body.lastName,
-        gender: req.body.gender,
-        DOB: req.body.dob,
-        phoneNumber1: req.body.phoneNumber1,
-        phoneNumber2: req.body.phoneNumber2,
-        religion: req.body.religion,
-        highestDegree: req.body.highestDegree,
-        university: req.body.university,
-        graduatingYear: req.body.graduatingYear,
-        cgpa: req.body.cgpa,
-        otherDegrees: req.body.otherDegrees
-    });
-    //Save TEacher to the database
-    teacher.save().then(data => {
-        res.send(data);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while creating the Teacher"
+    function newTeacher(teacher){
+
+        axios.post(urls.baseUrl.concat('/teachers'), teacher)
+        .then(response => {
+            console.log('New teacher created (id) : ' + response.data.id);
+            res.send({ success: true, teacher: response.data });
+        })
+        .catch(error => {
+            console.log(error);
+        }); 
+    };
+
+    function createTeacher(id){
+
+        if (req.body.teacher){
+         let teacher = {};
+         teacher = req.body.teacher;
+         teacher.accountId = id;
+
+         newTeacher(teacher);
+        }
+    };
+
+    function newTeacherAccount(account){
+
+        axios.post(urls.baseUrl.concat('/accounts'), account)
+        .then(response => {
+            console.log('New teacher ACCOUNT created (id) : ' + response.data.id);
+            let teacherAccountId = response.data.id;
+            createTeacher(teacherAccountId);
+        })
+        .catch(error => {
+            console.log(error.Error);
         });
-    });
+    };
+
+    if(!req.body.validated){
+        res.send('Validation : False');
+    }
+    else {
+
+        teacherAccount.email = req.body.teacher.email;
+        teacherAccount.username = req.body.teacher.firstName;
+        teacherAccount.password = req.body.teacher.email;
+
+        newTeacherAccount(teacherAccount);
+    }
+
+
+};
+//Gets all the teachers' attendances
+exports.getAllTeacherAttendance = (req, res) => {
+    console.log('getting all Teacher Attendances...');
+
+    axios.get(urls.baseUrl.concat('/teacherAttendances'))
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });   
+};
+//Add new Teacher Attendance
+//req.body has
+// -"present"
+// -"date"
+// -"onLeave"
+// -"leaveReturnDate"
+// -"teacherId"
+exports.addTeacherAttendance = (req, res) => {
+    console.log('Adding Teacher Attendance....');
+
+    axios.post(urls.baseUrl.concat('/teacherAttendances'), req.body)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+// Add teacher to class
+// req.body has : 
+//  "name": "string",
+// "classCode": "string",
+// "teacherId": "string",
+exports.addTeacherToClass = (req, res) => {
+    console.log('Adding Teacher to a Class....');
+
+    axios.post(urls.baseUrl.concat('/teachers' + req.body.teacherId + '/classes'), req.body)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
 };
 //--------------------------------------------------//
 //--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Class/Subject/yearClass Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Get all Classes
+exports.getAllClasses = (req, res) => {
+    console.log('Getting All Classes...');
 
+    axios.get(urls.baseUrl.concat('/classes'))
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
 
-
+};
 //Add a new Class
 //Requires the class info
 exports.addClass = (req, res) => {
-    console.log('Adding a Class....');
+    console.log('Adding a Class...');
 
-    //Validate request
-    if(!req.body.className) {
-        return res.status(400).send({
-            message: "no class found from request..."
+    axios.post(urls.baseUrl.concat('/classes'), req.body)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
         });
-    }
-    //Create a new timeSlot model object
-    const newClass = new classModel({
-        className: req.body.className,
-        classCode: req.body.classCode,
-        subject: req.body.subject,
-        teacher: req.body.teacher,
-        classId: req.body.classId,
-        description: req.body.description
-    });
-    //Save Teacher to the database
-    newClass.save().then(data => {
-        res.send(data);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while creating the Class"
-        });
-    });
+
 };
+//Get all Subjects
+exports.getAllSubjects = (req, res) => {
+    console.log('Getting All Subjects...');
 
+    axios.get(urls.baseUrl.concat('/subjects'))
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+};
 //Add a new Subject
 //Requires the subject info
 exports.addSubject =  (req, res) => {
-   if(!req.body.subject) {
-        return res.status(400).send({
-            message: "enter subject name"
+    console.log('Adding a Subject...');
+
+    axios.post(urls.baseUrl.concat('/subjects'), req.body)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
         });
-    }
-    //Create a new timeSlot model object
-    const subject = new subjectModel({
-        name: req.body.name
-    }); 
-    newSubject.save().then(data => {
-        res.send(data);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "An error occurred while adding subject"
+
+};
+//Add a Class to subject
+//Requires the classId and 
+// subjectId
+exports.addClassToSubject = (req, res) => {
+    console.log('Adding a Class to a subject...');
+
+    axios.patch(urls.baseUrl.concat('/classes' + req.body.classId), { subjectId: req.body.subjectId })
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
         });
-    });
+
+};
+//Get all Year Classes
+exports.getAllYearClasses = (req, res) => {
+    console.log('Getting All Year Classes...');
+
+    axios.get(urls.baseUrl.concat('/yearClasses'))
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+};
+//Add a new yearClass
+//Requires the subject info
+//  "name": "string"
+exports.addYearClass =  (req, res) => {
+    console.log('Adding a year Class...');
+
+    axios.post(urls.baseUrl.concat('/yearClasses'), req.body)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+};
+//Add a Class to yearClass
+//Requires the classId and 
+// yearClassId
+exports.addClassToYearClass = (req, res) => {
+    console.log('Adding a Class to a subject...');
+
+    axios.patch(urls.baseUrl.concat('/classes' + req.body.classId), { yearClassId: req.body.yearClassId })
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
 };
 
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Time Slot Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
 //Schedule Class
-//Requires the timeSlot record as part of the request object
+//req.body has :
+// - "day"
+// - "date"
+// - "slot"
+// - "teacherId"
+// - "classId"
+// - "classRoomId"
 exports.addTimeSlot = (req, res) => {
-    
-    console.log('Adding TimeSlot....');
+    console.log("Adding a Time Slot....");
 
-    //Validate request
-    if(!req.body.slot) {
-        return res.status(400).send({
-            message: "no slot found"
-        });
-    }
-    //Create a new timeSlot model object
-    const timeSlot = new timeSlotModel({
-        day: req.body.day,
-        date: req.body.date,
-        slot: req.body.slot,
-        class: req.body.class,
-        subject: req.body.subject,
-        teacher: req.body.teacher,
-        classRoom: req.body.classRoom,
-        isExam: req.body.isExam
-    });
-    //Save TEacher to the database
-    timeSlot.save().then(data => {
-        res.send(data);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while creating the Timeslot"
-        });
-    });
-    
+    axios.post(urls.baseUrl.concat('/timeSlots'),req.body)
+    .then(response => {
+        res.send(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });   
 };
+//Get all Time Slots
+exports.getAllTimeSlots = (req, res) => {
+    console.log("Adding a Time Slot....");
 
-//Attendance Functions
-//--------------------------------------------------//
-//Upload Assignment as file for a single student, for a given assignment
-//Requires the student record id and assignment record id as part of the request object
-exports.getAttendance = (req, res) => {
-    console.log('getting All Attendance');
-
-     attendanceModel.find()
-    .then(data => {
-        res.send(data);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while retrieving students."
-        });
-    });
+    axios.get(urls.baseUrl.concat('/timeSlots'))
+    .then(response => {
+        res.send(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });   
 };
 //--------------------------------------------------//
 //--------------------------------------------------//
-
+//--------------------------------------------------//
+//--------------------------------------------------//
 //Marks Functions
 //--------------------------------------------------//
-//Get all messages for a single student
-//Requires the student record id as part of the request object
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Get all student marks
 exports.getAllMarks = (req, res) => {
-    console.log('getting All Marks');
+    console.log('getting All Marks....');
 
-     markModel.find()
-    .then(data => {
-        res.send(data);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while retrieving students."
+    axios.get(urls.baseUrl.concat('/marks'))
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
         });
+
+};
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Messages Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Get all messages for a admin
+//Requires the admin record id as part of the request object
+exports.getMessages = (req, res) => {
+    console.log('Getting Admin Msgs....');
+
+    if(!req.body.adminId){
+        res.send('No adminId in request...');
+    }else{
+
+        let adminId = req.body.adminId;
+        axios.get(urls.baseUrl.concat('/admins/' + adminId + '/messages'))
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    }
+
+};
+//Send a message from an admin to a single reciever
+//Requires the id of the admin's record as part of the request object (adminId)
+//Requires the id of the receiever's record as part of the request object (teacherId, studentId, parentId)
+//req.body.message has : 
+// - msg
+// - from (name)
+// - to (name)
+// - sentDate
+exports.sendMessage = (req, res) => {
+    console.log('send Msg');
+    if(!req.body.adminId){
+       res.send('No adminId in request...'); 
+   }else{
+
+     if(req.body.studentId){
+
+        axios.post(urls.baseUrl.concat('/students' + req.body.studentId + '/messages'),req.body.message)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+     }
+     if(req.body.teacherId){
+        axios.post(urls.baseUrl.concat('/teachers' + req.body.teacherId + '/messages'),req.body.message)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+     }
+     if(req.body.parentId){
+        axios.post(urls.baseUrl.concat('/parents' + req.body.parentId + '/messages'),req.body.message)
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+     }
+
+   }
+
+};
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Task Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Create new task
+//req.body has:
+// - title
+// - description
+// - date
+exports.addTask = (req, res) => {
+    
+    console.log("Adding a task....");
+
+    axios.post(urls.baseUrl.concat('/tasks'),req.body)
+    .then(response => {
+        console.log(response.data);
+        res.send(response.data);
+    })
+    .catch(error => {
+        console.log(error);
     });
 };
 //--------------------------------------------------//
 //--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Events Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Create new Event
+//req.body has:
+// -  "title"
+// - "description"
+// - "date"
+exports.addEvent = (req, res) => {
+    console.log("Adding an event....");
 
-//Get all messages for a single student
-//Requires the student record id as part of the request object
-exports.getMessages = (req, res) => {
-    res.send('got Msgs');
+    axios.post(urls.baseUrl.concat('/events'),req.body)
+    .then(response => {
+        res.send(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });
+};
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Create new Student + Parent
+//req.body has:
+// - validated : boolean
+// - student : { }
+// - parent : { }
+exports.addStudent = (req, res) => {
+    console.log('Creating an Student Account........📬');
+    let studentAccount = {
+        accountType: 'student',
+        username: '',
+        email: '',
+        password: ''
+        };
+    let parentAccount = {
+        accountType: 'parent',
+        username: '',
+        email: '',
+        password: ''
+        };
+    let healthRecord = {
+        medicalAid: "",
+        medicalAidNumber: "",
+        allergies: [],
+        doctor: " ",
+        doctorContact: " ",
+        healthNotes: " ",
+        studentId: " "
+    };
+    
+    function linkStudent2Parent(pId, sId) {
+        console.log("Linking Student 2 Parent -  parentId - studentId" );
+        console.log(pId + " - " + sId);
+        axios.patch(urls.baseUrl.concat('/students/' + sId), { parentId: pId })
+        .then(response => {
+
+            console.log('New student linked to new parent');
+            res.send({ success: true, parentId: pId, studentId: sId });
+            
+        })
+        .catch(error => {
+            console.log(error.Error);
+        });
+
+    }
+
+    function newStudent(student){
+
+        axios.post(urls.baseUrl.concat('/students'), student)
+        .then(response => {
+
+            console.log('New student created (id) : ' + response.data.id);
+            let studentId = response.data.id;
+            newParentAccount(parentAccount, studentId);
+            newHealthRecord(studentId);
+        })
+        .catch(error => {
+            console.log(error.Error);
+        }); 
+    };
+
+    function newParent(parent){
+
+        axios.post(urls.baseUrl.concat('/parents'), parent)
+        .then(response => {
+            console.log('New parent created (id) : ' + response.data.id);
+            let parentId = response.data.id;
+            let studentId = response.data.studentId;
+            linkStudent2Parent(parentId, studentId);
+
+        })
+        .catch(error => {
+            console.log(error);
+        }); 
+    };
+
+    function newHealthRecord(studentId) {
+        healthRecord = req.body.healthRecord;
+        healthRecord.studentId = studentId;
+        axios.post(urls.baseUrl.concat('/healthRecords'), healthRecord)
+        .then(response => {
+            console.log('New health Record created (studentId) : ' + response.data.studentId);
+         
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    };
+
+
+
+    function createStudent(id){
+
+        if (req.body.student){
+         let student = {};
+         student = req.body.student;
+         student.accountId = id;
+
+         newStudent(student);
+        }
+        
+    };
+
+    function createParent(id, studentId){
+
+        if (req.body.parent){
+         let parent = {};
+         parent = req.body.parent;
+         parent.accountId = id;
+         parent.studentId = studentId;
+         newParent(parent);
+         
+        }
+       
+    };
+
+
+    function newStudentAccount(studentAccount){
+
+        axios.post(urls.baseUrl.concat('/accounts'), studentAccount)
+        .then(response => {
+            console.log('New student ACCOUNT created (id) : ' + response.data.id);
+            let studentAccountId = response.data.id;
+            createStudent(studentAccountId);
+        })
+        .catch(error => {
+            console.log(error.Error);
+        }); 
+    };
+
+     function newParentAccount(parentAccount, studentId){
+
+        axios.post(urls.baseUrl.concat('/accounts'), parentAccount)
+        .then(response => {
+            console.log('New parent ACCOUNT created (id) : ' + response.data.id);
+            let parentAccountId = response.data.id;
+            createParent(parentAccountId, studentId);
+        })
+        .catch(error => {
+            console.log(error.Error);
+        }); 
+    };
+
+
+    if(!req.body.validated){
+        res.send('Validation : False');
+    }
+    else {
+
+        studentAccount.email = req.body.student.email;
+        studentAccount.username = req.body.student.firstName;
+        studentAccount.password = req.body.student.regNumber;
+
+
+        parentAccount.email = req.body.parent.email;
+        parentAccount.username = req.body.parent.lastName;
+        parentAccount.password = req.body.parent.email;
+
+        newStudentAccount(studentAccount);
+    }
+
 };
 
-//Send a message from a single student to a single reciever
-//Requires the student record id and the receievers record id as part of the request object
-exports.sendMessage = (req, res) => {
-    res.send('send Msg');
+
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Librarian Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+exports.addLibrarian = (req, res) => {
+    console.log('Adding Librarian....');
+    let libAccount = {
+        accountType: 'librarian',
+        username: '',
+        email: '',
+        password: ''
+
+    }
+    function newLibrarian(lib){
+
+        axios.post(urls.baseUrl.concat('/librarians'), lib)
+        .then(response => {
+            console.log('New librarian created (id) : ' + response.data.id);
+            res.send({ success: true, librarian: response.data });
+        })
+        .catch(error => {
+            console.log(error);
+        }); 
+    };
+
+    function createLibrarian(id){
+
+        if (req.body.librarian){
+         let lib = {};
+         lib = req.body.librarian;
+         lib.accountId = id;
+
+         newLibrarian(lib);
+        }
+    };
+
+    function newLibAccount(account){
+
+        axios.post(urls.baseUrl.concat('/accounts'), account)
+        .then(response => {
+            console.log('New librarian ACCOUNT created (id) : ' + response.data.id);
+            let libAccountId = response.data.id;
+            createLibrarian(libAccountId);
+        })
+        .catch(error => {
+            console.log(error.Error);
+        });
+    };
+
+    if(!req.body.validated){
+        res.send('Validation : False');
+    }
+    else {
+
+        libAccount.email = req.body.librarian.email;
+        libAccount.username = req.body.librarian.firstName;
+        libAccount.password = req.body.librarian.email;
+
+        newLibAccount(libAccount);
+    }
+
+
 };
+
+
+exports.getAllLibrarians = (req, res) => {
+    console.log('Getting All Librarians...');
+
+    axios.get(urls.baseUrl.concat('/librarians'))
+    .then(response => {
+        res.send(response.data);
+
+    })
+    .catch(error => {
+        console.log(error);
+    });
+
+};
+
+
+exports.editLibrarian = (req, res) => {
+    console.log('Editing A Librarian Record....' + req.body.id);
+    let libId = req.body.id;
+    let newLib = req.body
+    delete newLib.id;
+    console.log(newLib);
+    axios.patch(urls.baseUrl.concat('/librarians/' + libId), newLib)
+    .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+};
+
+
+
+
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//Finance Admins Functions
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+//--------------------------------------------------//
+exports.addFinanceAdmin = (req, res) => {
+    console.log('Adding Finance Admin....');
+    let finAccount = {
+        accountType: 'finance-admin',
+        username: '',
+        email: '',
+        password: ''
+
+    }
+    function newFA(fin){
+
+        axios.post(urls.baseUrl.concat('/financeAdmins'), fin)
+        .then(response => {
+            console.log('New Finance Admin created (id) : ' + response.data.id);
+            res.send({ success: true, financeAdmin: response.data });
+        })
+        .catch(error => {
+            console.log(error);
+        }); 
+    };
+
+    function createFA(id){
+
+        if (req.body.financeAdmin){
+         let fin = {};
+         fin = req.body.financeAdmin;
+         fin.accountId = id;
+
+         newFA(fin);
+        }
+    };
+
+    function newFinAccount(account){
+
+        axios.post(urls.baseUrl.concat('/accounts'), account)
+        .then(response => {
+            console.log('New Finance Admin ACCOUNT created (id) : ' + response.data.id);
+            let finAccountId = response.data.id;
+            createFA(finAccountId);
+        })
+        .catch(error => {
+            console.log(error.Error);
+        });
+    };
+
+    if(!req.body.validated){
+        res.send('Validation : False');
+    }
+    else {
+
+        finAccount.email = req.body.financeAdmin.email;
+        finAccount.username = req.body.financeAdmin.firstName;
+        finAccount.password = req.body.financeAdmin.email;
+
+        newFinAccount(finAccount);
+    }
+
+
+};
+
+
+exports.getAllFinanceAdmins = (req, res) => {
+    console.log('Getting All Finance Admins...');
+
+    axios.get(urls.baseUrl.concat('/financeAdmins'))
+    .then(response => {
+        res.send(response.data);
+
+    })
+    .catch(error => {
+        console.log(error);
+    });
+
+};
+
+exports.editFinanceAdmin = (req, res) => {
+    console.log('Editing A Finance Admin Record....' + req.body.id);
+    let libId = req.body.id;
+    let newLib = req.body
+    delete newLib.id;
+    console.log(newLib);
+    axios.patch(urls.baseUrl.concat('/financeAdmins/' + libId), newLib)
+    .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+
+};
+
+
+
+
+
+
+
+
+
+

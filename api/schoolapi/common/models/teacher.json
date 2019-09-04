@@ -1,0 +1,90 @@
+{
+  "name": "teacher",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "middleName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "gender": {
+      "type": "string"
+    },
+    "religion": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phoneNumber1": {
+      "type": "string"
+    },
+    "phoneNumber2": {
+      "type": "string"
+    },
+    "dob": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "highestDegree": {
+      "type": "string"
+    },
+    "otherDegrees": {
+      "type": [
+        "string"
+      ]
+    },
+    "university": {
+      "type": "string"
+    },
+    "graduatingYear": {
+      "type": "string"
+    },
+    "CGPA": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "classes": {
+      "type": "hasMany",
+      "model": "class",
+      "foreignKey": ""
+    },
+    "teacherAttendances": {
+      "type": "hasMany",
+      "model": "teacherAttendance",
+      "foreignKey": ""
+    },
+    "messages": {
+      "type": "hasMany",
+      "model": "messages",
+      "foreignKey": ""
+    },
+    "timeSlots": {
+      "type": "hasMany",
+      "model": "timeSlot",
+      "foreignKey": ""
+    },
+    "classAssignments": {
+      "type": "hasMany",
+      "model": "classAssignment",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

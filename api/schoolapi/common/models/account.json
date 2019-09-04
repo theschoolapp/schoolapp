@@ -1,0 +1,79 @@
+{
+  "name": "account",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "inheritAcls": false,
+  "properties": {
+    "accountType": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "admin": {
+      "type": "hasOne",
+      "model": "admin",
+      "foreignKey": ""
+    },
+    "students": {
+      "type": "hasOne",
+      "model": "student",
+      "foreignKey": ""
+    },
+    "teachers": {
+      "type": "hasOne",
+      "model": "teacher",
+      "foreignKey": ""
+    },
+    "parents": {
+      "type": "hasOne",
+      "model": "parent",
+      "foreignKey": ""
+    },
+    "financeAdmins": {
+      "type": "hasOne",
+      "model": "financeAdmin",
+      "foreignKey": ""
+    },
+    "librarians": {
+      "type": "hasOne",
+      "model": "librarian",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "__get__admin"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "__get__students"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "__get__parents"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "__get__teachers"
+    }
+  ],
+  "methods": {}
+}

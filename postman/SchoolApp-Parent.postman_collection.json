@@ -1,0 +1,399 @@
+{
+	"info": {
+		"_postman_id": "051ac844-7816-492e-8fa3-c735592065dc",
+		"name": "SchoolApp-Parent",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Students Associated",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6b1d0d50-9654-4113-9024-57199f6051fc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"parentId\", \"someParent\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/parents/{{parentId}}/students",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"parents",
+						"{{parentId}}",
+						"students"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Student's Finance Record",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6b1d0d50-9654-4113-9024-57199f6051fc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"parentId\", \"someParent\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/students/{{studentId}}/financeRecords",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"students",
+						"{{studentId}}",
+						"financeRecords"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Student's Attendance",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6b1d0d50-9654-4113-9024-57199f6051fc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"parentId\", \"someParent\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/students/{{studentId}}/attendances",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"students",
+						"{{studentId}}",
+						"attendances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Student's Classes",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6b1d0d50-9654-4113-9024-57199f6051fc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"parentId\", \"someParent\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/students/{{studentId}}/classes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"students",
+						"{{studentId}}",
+						"classes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Student's Class Time Slots",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6b1d0d50-9654-4113-9024-57199f6051fc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"parentId\", \"someParent\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/classes/{{classId}}/timeSlots",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"classes",
+						"{{classId}}",
+						"timeSlots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Events",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6b1d0d50-9654-4113-9024-57199f6051fc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"parentId\", \"someParent\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Announcements",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6b1d0d50-9654-4113-9024-57199f6051fc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"parentId\", \"someParent\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/annoucements",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"annoucements"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Student Marks",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e7947d0c-56f9-4325-b4d8-b3b402f8da3f",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"studentId\", \"someStudent\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/students/{{studentId}}/marks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"students",
+						"{{studentId}}",
+						"marks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Messages",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "07e14f69-4071-489a-bdd8-d036e3d87146",
+						"type": "text/javascript",
+						"exec": [
+							"pm.environment.set(\"parentId\", \"someId\");",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/parents/{{parentId}}/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"parents",
+						"{{parentId}}",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Message to Admin",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3865a5a9-245f-433d-8c20-939c9a053832",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/admins/{{adminId}}/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admins",
+						"{{adminId}}",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Message to Teacher",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3865a5a9-245f-433d-8c20-939c9a053832",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/api/teachers/{{teacherId}}/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"teachers",
+						"{{teacherId}}",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,37 +1,41 @@
-const routes = require('express').Router();
-
-//Controllers
-const student = require('../controllers/student.controller.js');
-const admin = require('../controllers/admin.controller.js');
-const teacher = require('../controllers/teacher.controller.js');
-
-//Initial Route
-routes.get('/', (req, res)=>{
-	res.json({ "head":"Welcome to the routes",
-				"/student": ["/getMarks", "/getFees"]});
-});
+const routes           = require('express').Router();
+const student 		   = require('../controllers/student.controller.js');
+//Auth Middleware
+const studentAuth      = require('../middleware/studentAuth.js');
 
 
 // Student Routes
 //---------------//
-routes.get('/getMarks', student.getMarks);
+routes.post('/getMarks', student.getMarks);
 
-routes.get('/getClassSchedule', student.getClassSchedule);
 
-routes.get('/getExamSchedule', student.getExamSchedule);
 
-routes.get('/getEventSchedule', student.getEventSchedule);
+routes.post('/getClassSchedule', student.getClassSchedule);
+
+routes.post('/getClasses', student.getClasses);
+
+routes.post('/getExamSchedule', student.getExamSchedule);
+
+
+routes.post('/getStudentAttendance', student.getStudentAttendance);
+
+
+
+routes.get('/getEvents', student.getEvents);
+
+routes.get('/getAnnouncements', student.getAnnouncements);
+
+
+
+routes.post('/getAssignments', student.getAssignments);
 
 routes.post('/uploadAssignment', student.uploadAssignment);
 
-routes.get('/getMarks', student.getMarks);
 
 
+routes.post('/getMessages', student.getMessages);
 
-
-
-
-
+routes.post('/sendMessage', student.sendMessage);
 
 
 

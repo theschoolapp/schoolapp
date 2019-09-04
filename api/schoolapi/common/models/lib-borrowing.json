@@ -1,0 +1,41 @@
+{
+  "name": "libBorrowing",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "borrowDate": {
+      "type": "date"
+    },
+    "returnDate": {
+      "type": "date"
+    },
+    "fine": {
+      "type": "number"
+    },
+    "returned": {
+      "type": "boolean"
+    },
+    "owing": {
+      "type": "number"
+    },
+    "teacherId": {
+      "type": "string"
+    },
+    "studentId": {
+      "type": "string"
+    },
+    "bookId": {
+      "type": "string"
+    },
+    "bookCondition": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

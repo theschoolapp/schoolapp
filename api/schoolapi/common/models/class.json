@@ -1,0 +1,78 @@
+{
+  "name": "class",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "classCode": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "subject": {
+      "type": "belongsTo",
+      "model": "subject",
+      "foreignKey": ""
+    },
+    "teacher": {
+      "type": "belongsTo",
+      "model": "teacher",
+      "foreignKey": ""
+    },
+    "attendances": {
+      "type": "hasMany",
+      "model": "attendance",
+      "foreignKey": ""
+    },
+    "timeSlots": {
+      "type": "hasMany",
+      "model": "timeSlot",
+      "foreignKey": ""
+    },
+    "marks": {
+      "type": "hasMany",
+      "model": "mark",
+      "foreignKey": ""
+    },
+    "classAssignments": {
+      "type": "hasMany",
+      "model": "classAssignment",
+      "foreignKey": ""
+    },
+    "exams": {
+      "type": "hasMany",
+      "model": "exam",
+      "foreignKey": ""
+    },
+    "yearClass": {
+      "type": "belongsTo",
+      "model": "yearClass",
+      "foreignKey": ""
+    },
+    "classLists": {
+      "type": "hasOne",
+      "model": "classList",
+      "foreignKey": ""
+    },
+    "classSections": {
+      "type": "hasMany",
+      "model": "classSection",
+      "foreignKey": ""
+    },
+    "libResources": {
+      "type": "hasMany",
+      "model": "libResource",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

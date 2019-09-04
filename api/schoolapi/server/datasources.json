@@ -1,0 +1,22 @@
+{
+  "memoryDB": {
+    "name": "memoryDB",
+    "connector": "memory"
+  },
+  "fileStore": {
+    "name": "fileStore",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./server/storage"
+  },
+  "db": {
+    "host": "localhost",
+    "port": 27017,
+    "url": "",
+    "database": "schoolDB",
+    "password": "",
+    "name": "db",
+    "user": "",
+    "connector": "mongodb"
+  }
+}

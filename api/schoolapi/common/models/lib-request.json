@@ -1,0 +1,26 @@
+{
+  "name": "libRequest",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "timeframe": {
+      "type": "string"
+    },
+    "bookId": {
+      "type": "string"
+    },
+    "studentId": {
+      "type": "string"
+    },
+    "teacherId": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

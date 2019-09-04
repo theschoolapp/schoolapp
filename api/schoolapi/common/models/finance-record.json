@@ -1,0 +1,26 @@
+{
+  "name": "financeRecord",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "balance": {
+      "type": "number"
+    },
+    "lastPaid": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "student": {
+      "type": "belongsTo",
+      "model": "student",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
